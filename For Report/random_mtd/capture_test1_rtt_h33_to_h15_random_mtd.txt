@@ -1,0 +1,278 @@
+PING 10.0.0.39 (10.0.0.39) 56(84) bytes of data.
+64 bytes from 10.0.0.39: icmp_seq=1 ttl=64 time=298 ms
+64 bytes from 10.0.0.39: icmp_seq=2 ttl=64 time=118 ms
+64 bytes from 10.0.0.39: icmp_seq=3 ttl=64 time=173 ms
+64 bytes from 10.0.0.39: icmp_seq=4 ttl=64 time=147 ms
+64 bytes from 10.0.0.39: icmp_seq=5 ttl=64 time=154 ms
+64 bytes from 10.0.0.39: icmp_seq=6 ttl=64 time=159 ms
+64 bytes from 10.0.0.39: icmp_seq=7 ttl=64 time=107 ms
+64 bytes from 10.0.0.39: icmp_seq=8 ttl=64 time=113 ms
+64 bytes from 10.0.0.39: icmp_seq=9 ttl=64 time=113 ms
+64 bytes from 10.0.0.39: icmp_seq=10 ttl=64 time=108 ms
+64 bytes from 10.0.0.39: icmp_seq=11 ttl=64 time=117 ms
+64 bytes from 10.0.0.39: icmp_seq=12 ttl=64 time=114 ms
+64 bytes from 10.0.0.39: icmp_seq=13 ttl=64 time=123 ms
+64 bytes from 10.0.0.39: icmp_seq=14 ttl=64 time=111 ms
+64 bytes from 10.0.0.39: icmp_seq=15 ttl=64 time=112 ms
+64 bytes from 10.0.0.39: icmp_seq=16 ttl=64 time=157 ms
+64 bytes from 10.0.0.39: icmp_seq=17 ttl=64 time=1128 ms
+64 bytes from 10.0.0.39: icmp_seq=18 ttl=64 time=118 ms
+64 bytes from 10.0.0.39: icmp_seq=19 ttl=64 time=128 ms
+64 bytes from 10.0.0.39: icmp_seq=20 ttl=64 time=142 ms
+64 bytes from 10.0.0.39: icmp_seq=21 ttl=64 time=131 ms
+64 bytes from 10.0.0.39: icmp_seq=22 ttl=64 time=127 ms
+64 bytes from 10.0.0.39: icmp_seq=23 ttl=64 time=136 ms
+64 bytes from 10.0.0.39: icmp_seq=24 ttl=64 time=1995 ms
+64 bytes from 10.0.0.39: icmp_seq=25 ttl=64 time=4037 ms
+64 bytes from 10.0.0.39: icmp_seq=26 ttl=64 time=5993 ms
+64 bytes from 10.0.0.39: icmp_seq=27 ttl=64 time=7001 ms
+64 bytes from 10.0.0.39: icmp_seq=28 ttl=64 time=5997 ms
+64 bytes from 10.0.0.39: icmp_seq=29 ttl=64 time=4036 ms
+64 bytes from 10.0.0.39: icmp_seq=30 ttl=64 time=3120 ms
+64 bytes from 10.0.0.39: icmp_seq=32 ttl=64 time=127 ms
+64 bytes from 10.0.0.39: icmp_seq=31 ttl=64 time=1146 ms
+64 bytes from 10.0.0.39: icmp_seq=33 ttl=64 time=4997 ms
+64 bytes from 10.0.0.39: icmp_seq=34 ttl=64 time=5028 ms
+64 bytes from 10.0.0.39: icmp_seq=35 ttl=64 time=4644 ms
+64 bytes from 10.0.0.39: icmp_seq=36 ttl=64 time=3190 ms
+64 bytes from 10.0.0.39: icmp_seq=38 ttl=64 time=232 ms
+64 bytes from 10.0.0.39: icmp_seq=37 ttl=64 time=1312 ms
+64 bytes from 10.0.0.39: icmp_seq=39 ttl=64 time=1164 ms
+64 bytes from 10.0.0.39: icmp_seq=40 ttl=64 time=185 ms
+64 bytes from 10.0.0.39: icmp_seq=41 ttl=64 time=148 ms
+64 bytes from 10.0.0.39: icmp_seq=43 ttl=64 time=146 ms
+64 bytes from 10.0.0.39: icmp_seq=44 ttl=64 time=2999 ms
+64 bytes from 10.0.0.39: icmp_seq=45 ttl=64 time=2675 ms
+64 bytes from 10.0.0.39: icmp_seq=46 ttl=64 time=2024 ms
+64 bytes from 10.0.0.39: icmp_seq=47 ttl=64 time=985 ms
+64 bytes from 10.0.0.39: icmp_seq=48 ttl=64 time=175 ms
+64 bytes from 10.0.0.39: icmp_seq=49 ttl=64 time=3336 ms
+64 bytes from 10.0.0.39: icmp_seq=50 ttl=64 time=4002 ms
+64 bytes from 10.0.0.39: icmp_seq=51 ttl=64 time=4018 ms
+64 bytes from 10.0.0.39: icmp_seq=52 ttl=64 time=5022 ms
+64 bytes from 10.0.0.39: icmp_seq=53 ttl=64 time=4028 ms
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=3922 ms
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=1928 ms
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=2207 ms
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=4242 ms
+64 bytes from 10.0.0.39: icmp_seq=58 ttl=64 time=3237 ms
+64 bytes from 10.0.0.39: icmp_seq=59 ttl=64 time=1240 ms
+64 bytes from 10.0.0.39: icmp_seq=60 ttl=64 time=6008 ms
+64 bytes from 10.0.0.39: icmp_seq=61 ttl=64 time=4385 ms
+64 bytes from 10.0.0.39: icmp_seq=62 ttl=64 time=2401 ms
+64 bytes from 10.0.0.39: icmp_seq=63 ttl=64 time=472 ms
+64 bytes from 10.0.0.39: icmp_seq=64 ttl=64 time=7999 ms
+64 bytes from 10.0.0.39: icmp_seq=65 ttl=64 time=5998 ms
+64 bytes from 10.0.0.39: icmp_seq=66 ttl=64 time=5013 ms
+64 bytes from 10.0.0.39: icmp_seq=67 ttl=64 time=5014 ms
+64 bytes from 10.0.0.39: icmp_seq=68 ttl=64 time=5986 ms
+64 bytes from 10.0.0.39: icmp_seq=69 ttl=64 time=5998 ms
+64 bytes from 10.0.0.39: icmp_seq=70 ttl=64 time=5015 ms
+64 bytes from 10.0.0.39: icmp_seq=71 ttl=64 time=4087 ms
+64 bytes from 10.0.0.39: icmp_seq=72 ttl=64 time=2092 ms
+64 bytes from 10.0.0.39: icmp_seq=73 ttl=64 time=1100 ms
+64 bytes from 10.0.0.39: icmp_seq=74 ttl=64 time=119 ms
+64 bytes from 10.0.0.39: icmp_seq=75 ttl=64 time=114 ms
+64 bytes from 10.0.0.39: icmp_seq=76 ttl=64 time=116 ms
+64 bytes from 10.0.0.39: icmp_seq=77 ttl=64 time=1073 ms
+64 bytes from 10.0.0.39: icmp_seq=78 ttl=64 time=114 ms
+64 bytes from 10.0.0.39: icmp_seq=79 ttl=64 time=119 ms
+64 bytes from 10.0.0.39: icmp_seq=80 ttl=64 time=124 ms
+64 bytes from 10.0.0.39: icmp_seq=81 ttl=64 time=111 ms
+64 bytes from 10.0.0.39: icmp_seq=82 ttl=64 time=111 ms
+64 bytes from 10.0.0.39: icmp_seq=83 ttl=64 time=117 ms
+64 bytes from 10.0.0.39: icmp_seq=84 ttl=64 time=114 ms
+64 bytes from 10.0.0.39: icmp_seq=85 ttl=64 time=5015 ms
+64 bytes from 10.0.0.39: icmp_seq=86 ttl=64 time=6977 ms
+64 bytes from 10.0.0.39: icmp_seq=87 ttl=64 time=5025 ms
+64 bytes from 10.0.0.39: icmp_seq=88 ttl=64 time=4998 ms
+64 bytes from 10.0.0.39: icmp_seq=89 ttl=64 time=4027 ms
+64 bytes from 10.0.0.39: icmp_seq=97 ttl=64 time=4131 ms
+64 bytes from 10.0.0.39: icmp_seq=103 ttl=64 time=126 ms
+64 bytes from 10.0.0.39: icmp_seq=104 ttl=64 time=112 ms
+64 bytes from 10.0.0.39: icmp_seq=105 ttl=64 time=3031 ms
+64 bytes from 10.0.0.39: icmp_seq=106 ttl=64 time=1070 ms
+64 bytes from 10.0.0.39: icmp_seq=107 ttl=64 time=2969 ms
+64 bytes from 10.0.0.39: icmp_seq=108 ttl=64 time=4029 ms
+64 bytes from 10.0.0.39: icmp_seq=109 ttl=64 time=4987 ms
+64 bytes from 10.0.0.39: icmp_seq=110 ttl=64 time=4003 ms
+64 bytes from 10.0.0.39: icmp_seq=111 ttl=64 time=3034 ms
+64 bytes from 10.0.0.39: icmp_seq=112 ttl=64 time=1093 ms
+64 bytes from 10.0.0.39: icmp_seq=113 ttl=64 time=115 ms
+64 bytes from 10.0.0.39: icmp_seq=114 ttl=64 time=112 ms
+64 bytes from 10.0.0.39: icmp_seq=115 ttl=64 time=991 ms
+64 bytes from 10.0.0.39: icmp_seq=116 ttl=64 time=3045 ms
+64 bytes from 10.0.0.39: icmp_seq=117 ttl=64 time=2963 ms
+64 bytes from 10.0.0.39: icmp_seq=118 ttl=64 time=2004 ms
+64 bytes from 10.0.0.39: icmp_seq=119 ttl=64 time=1097 ms
+64 bytes from 10.0.0.39: icmp_seq=120 ttl=64 time=1031 ms
+64 bytes from 10.0.0.39: icmp_seq=121 ttl=64 time=1154 ms
+64 bytes from 10.0.0.39: icmp_seq=122 ttl=64 time=188 ms
+64 bytes from 10.0.0.39: icmp_seq=123 ttl=64 time=187 ms
+64 bytes from 10.0.0.39: icmp_seq=124 ttl=64 time=6996 ms
+64 bytes from 10.0.0.39: icmp_seq=125 ttl=64 time=7005 ms
+64 bytes from 10.0.0.39: icmp_seq=126 ttl=64 time=5088 ms
+64 bytes from 10.0.0.39: icmp_seq=127 ttl=64 time=3279 ms
+64 bytes from 10.0.0.39: icmp_seq=101 ttl=64 time=39292 ms
+64 bytes from 10.0.0.39: icmp_seq=100 ttl=64 time=41256 ms
+64 bytes from 10.0.0.39: icmp_seq=90 ttl=64 time=56313 ms
+64 bytes from 10.0.0.39: icmp_seq=92 ttl=64 time=54299 ms
+64 bytes from 10.0.0.39: icmp_seq=102 ttl=64 time=37311 ms
+64 bytes from 10.0.0.39: icmp_seq=99 ttl=64 time=42297 ms
+64 bytes from 10.0.0.39: icmp_seq=94 ttl=64 time=50308 ms
+64 bytes from 10.0.0.39: icmp_seq=91 ttl=64 time=55310 ms
+64 bytes from 10.0.0.39: icmp_seq=96 ttl=64 time=47302 ms
+64 bytes from 10.0.0.39: icmp_seq=98 ttl=64 time=43329 ms
+64 bytes from 10.0.0.39: icmp_seq=93 ttl=64 time=52330 ms
+64 bytes from 10.0.0.39: icmp_seq=95 ttl=64 time=48330 ms
+64 bytes from 10.0.0.39: icmp_seq=128 ttl=64 time=3990 ms
+64 bytes from 10.0.0.39: icmp_seq=129 ttl=64 time=1999 ms
+64 bytes from 10.0.0.39: icmp_seq=130 ttl=64 time=13057 ms
+64 bytes from 10.0.0.39: icmp_seq=131 ttl=64 time=12067 ms
+64 bytes from 10.0.0.39: icmp_seq=132 ttl=64 time=10061 ms
+64 bytes from 10.0.0.39: icmp_seq=134 ttl=64 time=6069 ms
+64 bytes from 10.0.0.39: icmp_seq=133 ttl=64 time=8078 ms
+64 bytes from 10.0.0.39: icmp_seq=135 ttl=64 time=4089 ms
+64 bytes from 10.0.0.39: icmp_seq=136 ttl=64 time=3090 ms
+64 bytes from 10.0.0.39: icmp_seq=137 ttl=64 time=6001 ms
+64 bytes from 10.0.0.39: icmp_seq=138 ttl=64 time=16991 ms
+64 bytes from 10.0.0.39: icmp_seq=139 ttl=64 time=19981 ms
+64 bytes from 10.0.0.39: icmp_seq=144 ttl=64 time=9993 ms
+64 bytes from 10.0.0.39: icmp_seq=144 ttl=64 time=10016 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=140 ttl=64 time=18007 ms
+64 bytes from 10.0.0.39: icmp_seq=145 ttl=64 time=8016 ms
+64 bytes from 10.0.0.39: icmp_seq=145 ttl=64 time=8016 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=146 ttl=64 time=6020 ms
+64 bytes from 10.0.0.39: icmp_seq=146 ttl=64 time=6996 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=147 ttl=64 time=5998 ms
+64 bytes from 10.0.0.39: icmp_seq=148 ttl=64 time=5008 ms
+64 bytes from 10.0.0.39: icmp_seq=141 ttl=64 time=20006 ms
+64 bytes from 10.0.0.39: icmp_seq=142 ttl=64 time=20004 ms
+64 bytes from 10.0.0.39: icmp_seq=149 ttl=64 time=7996 ms
+64 bytes from 10.0.0.39: icmp_seq=141 ttl=64 time=24993 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=142 ttl=64 time=23993 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=150 ttl=64 time=9989 ms
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=24047 ms
+64 bytes from 10.0.0.39: icmp_seq=151 ttl=64 time=11988 ms
+64 bytes from 10.0.0.39: icmp_seq=152 ttl=64 time=11987 ms
+64 bytes from 10.0.0.39: icmp_seq=153 ttl=64 time=10116 ms
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=26123 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=153 ttl=64 time=10391 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=26397 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=154 ttl=64 time=9665 ms
+64 bytes from 10.0.0.39: icmp_seq=157 ttl=64 time=4796 ms
+64 bytes from 10.0.0.39: icmp_seq=156 ttl=64 time=5797 ms
+64 bytes from 10.0.0.39: icmp_seq=158 ttl=64 time=2841 ms
+64 bytes from 10.0.0.39: icmp_seq=155 ttl=64 time=7912 ms
+64 bytes from 10.0.0.39: icmp_seq=153 ttl=64 time=10948 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=26954 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=153 ttl=64 time=10948 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=26954 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=153 ttl=64 time=10949 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=143 ttl=64 time=26956 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=159 ttl=64 time=949 ms
+64 bytes from 10.0.0.39: icmp_seq=159 ttl=64 time=1584 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=160 ttl=64 time=6008 ms
+64 bytes from 10.0.0.39: icmp_seq=160 ttl=64 time=6013 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=162 ttl=64 time=10537 ms
+64 bytes from 10.0.0.39: icmp_seq=163 ttl=64 time=9556 ms
+64 bytes from 10.0.0.39: icmp_seq=162 ttl=64 time=10563 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=163 ttl=64 time=9572 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=164 ttl=64 time=8679 ms
+64 bytes from 10.0.0.39: icmp_seq=164 ttl=64 time=8729 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=165 ttl=64 time=6783 ms
+64 bytes from 10.0.0.39: icmp_seq=165 ttl=64 time=6851 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=166 ttl=64 time=5049 ms
+64 bytes from 10.0.0.39: icmp_seq=166 ttl=64 time=5049 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=167 ttl=64 time=2970 ms
+64 bytes from 10.0.0.39: icmp_seq=167 ttl=64 time=2970 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=168 ttl=64 time=1268 ms
+64 bytes from 10.0.0.39: icmp_seq=168 ttl=64 time=1333 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=161 ttl=64 time=13801 ms
+64 bytes from 10.0.0.39: icmp_seq=169 ttl=64 time=2293 ms
+64 bytes from 10.0.0.39: icmp_seq=170 ttl=64 time=2444 ms
+From 10.0.0.143 icmp_seq=174 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=175 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=176 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=177 ttl=64 time=6959 ms
+64 bytes from 10.0.0.39: icmp_seq=192 ttl=64 time=7430 ms
+64 bytes from 10.0.0.39: icmp_seq=194 ttl=64 time=4431 ms
+64 bytes from 10.0.0.39: icmp_seq=190 ttl=64 time=10449 ms
+64 bytes from 10.0.0.39: icmp_seq=183 ttl=64 time=21459 ms
+64 bytes from 10.0.0.39: icmp_seq=191 ttl=64 time=8461 ms
+64 bytes from 10.0.0.39: icmp_seq=182 ttl=64 time=23460 ms
+64 bytes from 10.0.0.39: icmp_seq=184 ttl=64 time=19468 ms
+64 bytes from 10.0.0.39: icmp_seq=195 ttl=64 time=2472 ms
+64 bytes from 10.0.0.39: icmp_seq=196 ttl=64 time=1697 ms
+64 bytes from 10.0.0.39: icmp_seq=197 ttl=64 time=1695 ms
+64 bytes from 10.0.0.39: icmp_seq=198 ttl=64 time=13346 ms
+64 bytes from 10.0.0.39: icmp_seq=202 ttl=64 time=28170 ms
+64 bytes from 10.0.0.39: icmp_seq=203 ttl=64 time=27179 ms
+64 bytes from 10.0.0.39: icmp_seq=205 ttl=64 time=24214 ms
+64 bytes from 10.0.0.39: icmp_seq=204 ttl=64 time=26179 ms
+64 bytes from 10.0.0.39: icmp_seq=206 ttl=64 time=22207 ms
+64 bytes from 10.0.0.39: icmp_seq=212 ttl=64 time=14246 ms
+64 bytes from 10.0.0.39: icmp_seq=213 ttl=64 time=12298 ms
+64 bytes from 10.0.0.39: icmp_seq=208 ttl=64 time=20334 ms
+64 bytes from 10.0.0.39: icmp_seq=209 ttl=64 time=18402 ms
+64 bytes from 10.0.0.39: icmp_seq=214 ttl=64 time=10566 ms
+64 bytes from 10.0.0.39: icmp_seq=215 ttl=64 time=8865 ms
+64 bytes from 10.0.0.39: icmp_seq=216 ttl=64 time=7318 ms
+64 bytes from 10.0.0.39: icmp_seq=217 ttl=64 time=5336 ms
+64 bytes from 10.0.0.39: icmp_seq=218 ttl=64 time=3350 ms
+64 bytes from 10.0.0.39: icmp_seq=219 ttl=64 time=3003 ms
+64 bytes from 10.0.0.39: icmp_seq=220 ttl=64 time=2381 ms
+64 bytes from 10.0.0.39: icmp_seq=221 ttl=64 time=22976 ms
+64 bytes from 10.0.0.39: icmp_seq=222 ttl=64 time=28430 ms
+64 bytes from 10.0.0.39: icmp_seq=223 ttl=64 time=27403 ms
+64 bytes from 10.0.0.39: icmp_seq=224 ttl=64 time=25453 ms
+64 bytes from 10.0.0.39: icmp_seq=225 ttl=64 time=6448 ms
+64 bytes from 10.0.0.39: icmp_seq=226 ttl=64 time=4532 ms
+64 bytes from 10.0.0.39: icmp_seq=227 ttl=64 time=2553 ms
+64 bytes from 10.0.0.39: icmp_seq=228 ttl=64 time=1538 ms
+64 bytes from 10.0.0.39: icmp_seq=229 ttl=64 time=1152 ms
+64 bytes from 10.0.0.39: icmp_seq=230 ttl=64 time=1110 ms
+64 bytes from 10.0.0.39: icmp_seq=231 ttl=64 time=1071 ms
+From 10.0.0.143 icmp_seq=232 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=233 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=234 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=235 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=236 Destination Host Unreachable
+From 10.0.0.143 icmp_seq=237 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3732 ms
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3732 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2717 ms
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2717 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1700 ms
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1700 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3861 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3861 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2839 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2853 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1840 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1840 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3897 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=278 ttl=64 time=3897 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2876 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=279 ttl=64 time=2898 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1874 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=280 ttl=64 time=1874 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=901 ms
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=901 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=901 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=910 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=912 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=912 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=917 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=917 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=281 ttl=64 time=917 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=139 ms
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=143 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=154 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=154 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=157 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=282 ttl=64 time=173 ms (DUP!)
+
+--- 10.0.0.39 ping statistics ---
+282 packets transmitted, 213 received, +51 duplicates, +9 errors, 24.4681% packet loss, time 400935ms
+rtt min/avg/max/mdev = 106.794/7739.337/56313.181/11127.969 ms, pipe 40

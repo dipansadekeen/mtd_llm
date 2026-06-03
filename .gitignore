@@ -1,0 +1,23 @@
+# secrets
+api_key.txt
+*.key
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# generated logs and outputs
+logs_generated/
+*.log
+llm_scene_log*.jsonl
+selection_log.csv
+
+# generated figures
+*.png
+

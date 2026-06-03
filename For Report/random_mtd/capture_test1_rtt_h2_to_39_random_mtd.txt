@@ -1,0 +1,637 @@
+PING 10.0.0.39 (10.0.0.39) 56(84) bytes of data.
+From 10.0.0.58 icmp_seq=1 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=2 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=3 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=4 ttl=64 time=1225 ms
+64 bytes from 10.0.0.39: icmp_seq=5 ttl=64 time=307 ms
+64 bytes from 10.0.0.39: icmp_seq=6 ttl=64 time=2239 ms
+64 bytes from 10.0.0.39: icmp_seq=7 ttl=64 time=1243 ms
+64 bytes from 10.0.0.39: icmp_seq=8 ttl=64 time=326 ms
+64 bytes from 10.0.0.39: icmp_seq=9 ttl=64 time=296 ms
+64 bytes from 10.0.0.39: icmp_seq=10 ttl=64 time=296 ms
+64 bytes from 10.0.0.39: icmp_seq=11 ttl=64 time=5940 ms
+64 bytes from 10.0.0.39: icmp_seq=12 ttl=64 time=8469 ms
+64 bytes from 10.0.0.39: icmp_seq=13 ttl=64 time=7120 ms
+64 bytes from 10.0.0.39: icmp_seq=14 ttl=64 time=5229 ms
+64 bytes from 10.0.0.39: icmp_seq=15 ttl=64 time=4313 ms
+64 bytes from 10.0.0.39: icmp_seq=16 ttl=64 time=2382 ms
+64 bytes from 10.0.0.39: icmp_seq=17 ttl=64 time=464 ms
+64 bytes from 10.0.0.39: icmp_seq=18 ttl=64 time=1001 ms
+64 bytes from 10.0.0.39: icmp_seq=19 ttl=64 time=329 ms
+64 bytes from 10.0.0.39: icmp_seq=20 ttl=64 time=323 ms
+64 bytes from 10.0.0.39: icmp_seq=21 ttl=64 time=301 ms
+64 bytes from 10.0.0.39: icmp_seq=22 ttl=64 time=306 ms
+64 bytes from 10.0.0.39: icmp_seq=23 ttl=64 time=4992 ms
+64 bytes from 10.0.0.39: icmp_seq=24 ttl=64 time=8898 ms
+64 bytes from 10.0.0.39: icmp_seq=25 ttl=64 time=9849 ms
+64 bytes from 10.0.0.39: icmp_seq=26 ttl=64 time=8186 ms
+64 bytes from 10.0.0.39: icmp_seq=27 ttl=64 time=7200 ms
+64 bytes from 10.0.0.39: icmp_seq=28 ttl=64 time=5259 ms
+64 bytes from 10.0.0.39: icmp_seq=29 ttl=64 time=3262 ms
+64 bytes from 10.0.0.39: icmp_seq=30 ttl=64 time=2266 ms
+64 bytes from 10.0.0.39: icmp_seq=31 ttl=64 time=1290 ms
+64 bytes from 10.0.0.39: icmp_seq=32 ttl=64 time=1011 ms
+64 bytes from 10.0.0.39: icmp_seq=33 ttl=64 time=504 ms
+64 bytes from 10.0.0.39: icmp_seq=34 ttl=64 time=121 ms
+64 bytes from 10.0.0.39: icmp_seq=35 ttl=64 time=6035 ms
+64 bytes from 10.0.0.39: icmp_seq=36 ttl=64 time=4057 ms
+64 bytes from 10.0.0.39: icmp_seq=37 ttl=64 time=3015 ms
+64 bytes from 10.0.0.39: icmp_seq=38 ttl=64 time=1062 ms
+64 bytes from 10.0.0.39: icmp_seq=39 ttl=64 time=2001 ms
+64 bytes from 10.0.0.39: icmp_seq=40 ttl=64 time=4057 ms
+64 bytes from 10.0.0.39: icmp_seq=41 ttl=64 time=3188 ms
+64 bytes from 10.0.0.39: icmp_seq=42 ttl=64 time=2012 ms
+64 bytes from 10.0.0.39: icmp_seq=43 ttl=64 time=2177 ms
+64 bytes from 10.0.0.39: icmp_seq=44 ttl=64 time=652 ms
+64 bytes from 10.0.0.39: icmp_seq=45 ttl=64 time=7605 ms
+64 bytes from 10.0.0.39: icmp_seq=46 ttl=64 time=6999 ms
+64 bytes from 10.0.0.39: icmp_seq=47 ttl=64 time=5610 ms
+64 bytes from 10.0.0.39: icmp_seq=48 ttl=64 time=4665 ms
+64 bytes from 10.0.0.39: icmp_seq=49 ttl=64 time=4997 ms
+64 bytes from 10.0.0.39: icmp_seq=50 ttl=64 time=8430 ms
+64 bytes from 10.0.0.39: icmp_seq=51 ttl=64 time=10336 ms
+64 bytes from 10.0.0.39: icmp_seq=52 ttl=64 time=9050 ms
+64 bytes from 10.0.0.39: icmp_seq=53 ttl=64 time=8050 ms
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=6191 ms
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=6319 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=6741 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=7387 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=9749 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=13110 ms (DUP!)
+From 10.0.0.58 icmp_seq=67 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=68 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=69 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=18806 ms
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=18843 ms (DUP!)
+From 10.0.0.58 icmp_seq=70 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=71 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=72 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=73 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=23953 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=20080 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=20090 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=22102 ms
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=24279 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=18664 ms
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=18845 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=20844 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=18876 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=20875 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=19294 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=19302 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=21555 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=22289 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=22301 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=26554 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=22604 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=26630 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=21026 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=21026 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=27109 ms (DUP!)
+From 10.0.0.58 icmp_seq=74 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=75 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=76 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=77 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=27179 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=23216 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=23675 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=25684 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=21783 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=25970 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24043 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24043 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24043 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24043 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24154 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=28234 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24420 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24420 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24772 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=24772 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=29218 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=23245 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=25269 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=29273 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=25509 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=29698 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=24430 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=28838 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=26875 ms (DUP!)
+From 10.0.0.58 icmp_seq=78 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=79 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=80 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=81 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=27576 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=32162 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=32567 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=28895 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=34482 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=30544 ms (DUP!)
+From 10.0.0.58 icmp_seq=82 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=83 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=84 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=85 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=35418 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=30443 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=36954 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=35583 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=33764 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=37979 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=34034 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=34064 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=32096 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=38876 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=34926 ms (DUP!)
+From 10.0.0.58 icmp_seq=86 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=87 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=88 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=89 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=35419 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=36032 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=34034 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=36438 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=36443 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=36458 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=36471 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=38313 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=38318 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=42536 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=42536 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=38534 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=42872 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=42998 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=39110 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=39122 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=43192 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=43197 ms (DUP!)
+From 10.0.0.58 icmp_seq=90 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=91 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=92 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=93 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=43692 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=40935 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41005 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=45284 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41639 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41664 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41664 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41735 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41744 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41744 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41744 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=41795 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=46269 ms (DUP!)
+From 10.0.0.58 icmp_seq=94 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=95 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=96 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=97 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=48012 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=48136 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=44178 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=44269 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=47994 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=51604 ms (DUP!)
+From 10.0.0.58 icmp_seq=98 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=99 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=100 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=101 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=54345 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=54360 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=54844 ms (DUP!)
+From 10.0.0.58 icmp_seq=102 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=103 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=104 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=57094 ms (DUP!)
+From 10.0.0.58 icmp_seq=105 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=106 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=107 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=55809 ms (DUP!)
+From 10.0.0.58 icmp_seq=108 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=109 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=110 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=111 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=112 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=113 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=61349 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=65432 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=61602 ms (DUP!)
+From 10.0.0.58 icmp_seq=114 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=115 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=116 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65510 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65695 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65695 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65706 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65706 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65706 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65744 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=65968 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=66041 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=66043 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=66048 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=66179 ms (DUP!)
+From 10.0.0.58 icmp_seq=117 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=118 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=119 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=69017 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=69063 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=69068 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=69068 ms (DUP!)
+From 10.0.0.58 icmp_seq=120 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=121 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=122 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=70360 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=70511 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=70802 ms (DUP!)
+From 10.0.0.58 icmp_seq=123 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=124 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=125 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=77263 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=80940 ms (DUP!)
+From 10.0.0.58 icmp_seq=126 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=127 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=128 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=129 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=77343 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=77673 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=78878 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=78878 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79239 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79240 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79247 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79247 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79269 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=79269 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=82903 ms (DUP!)
+From 10.0.0.58 icmp_seq=130 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=131 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=132 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=133 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=81850 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=82184 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=82674 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=82679 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=83022 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=84087 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=84087 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=89085 ms (DUP!)
+From 10.0.0.58 icmp_seq=134 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=135 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=136 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=137 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88083 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88083 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88132 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88270 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88270 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88293 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88293 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88293 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=90357 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88358 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88421 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92728 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92741 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=86739 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88738 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92759 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92760 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92793 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92827 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92827 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92845 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88843 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92869 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92890 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92917 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88921 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88921 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=92994 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=88996 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=89003 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93006 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=89003 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=87046 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=87063 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=87063 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93264 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93351 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=87381 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93405 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=91423 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=87426 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93466 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=89520 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=89589 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93658 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=93658 ms (DUP!)
+From 10.0.0.58 icmp_seq=138 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=139 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=140 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=141 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=91506 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=91691 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=91867 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=92365 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=92365 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=92390 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=92390 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=92454 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=96885 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=96901 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=96948 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=93088 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97091 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=93088 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97096 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97278 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97290 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97308 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97323 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97323 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97336 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97870 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97885 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=93955 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=97958 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=93972 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=98028 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=98028 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=94027 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=98035 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=98035 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=94032 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=94032 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=94045 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=94045 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99026 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99026 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95031 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95048 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95060 ms (DUP!)
+From 10.0.0.58 icmp_seq=142 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=143 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=144 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=145 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95153 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95153 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95465 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99468 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95465 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95465 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95472 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95509 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99512 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95509 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95509 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95512 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99515 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99515 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99515 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99540 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95537 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99540 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95537 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95537 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95537 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99562 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99818 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95857 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=99872 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=95914 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100492 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100503 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100503 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96500 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100504 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100517 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100517 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=94549 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96565 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96575 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100582 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100627 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=100641 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96638 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96649 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=96655 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=94657 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=99212 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=99225 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=99248 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101356 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101368 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101399 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101470 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101480 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101594 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95592 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95594 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97592 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95594 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97596 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=101602 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95600 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95600 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97598 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95600 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97602 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97642 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97654 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97654 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97696 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97697 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97710 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95712 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97710 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95715 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97718 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97722 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97762 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95764 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97769 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95938 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97950 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95952 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97950 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97950 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95952 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95952 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=97996 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=95998 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98089 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96091 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96298 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96298 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98296 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96298 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96298 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=96298 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102314 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102314 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102361 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102387 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102443 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102443 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98450 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98450 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98478 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=98478 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102485 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=102523 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=99095 ms (DUP!)
+From 10.0.0.58 icmp_seq=146 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=147 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=148 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=149 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=99106 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=99136 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=99260 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=99278 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=104362 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100358 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100368 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100378 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100409 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=98415 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100618 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100630 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=98648 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=98660 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=100669 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=98730 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=101237 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=101250 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=103256 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=103267 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=105668 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=105676 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=105718 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106056 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106064 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106067 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106078 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106090 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=106133 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=102309 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=100371 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=100383 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=102505 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=102901 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=102901 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=102991 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103045 ms (DUP!)
+From 10.0.0.58 icmp_seq=150 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=151 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=152 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=153 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103262 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103306 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103887 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103927 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=103953 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=104825 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=104835 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=104860 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=109143 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=109754 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=55 ttl=64 time=108290 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=106408 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=106644 ms (DUP!)
+From 10.0.0.58 icmp_seq=154 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=155 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=156 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=157 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=140565 ms (DUP!)
+From 10.0.0.58 icmp_seq=188 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=189 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=190 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=54 ttl=64 time=152430 ms (DUP!)
+From 10.0.0.58 icmp_seq=208 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=209 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=210 Destination Host Unreachable
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=165477 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=165544 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=164961 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=166270 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=169709 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=169709 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=56 ttl=64 time=169999 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=173263 ms (DUP!)
+64 bytes from 10.0.0.39: icmp_seq=57 ttl=64 time=174429 ms (DUP!)
+From 10.0.0.58 icmp_seq=229 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=230 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=231 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=232 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=233 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=234 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=235 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=236 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=237 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=238 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=239 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=240 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=241 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=242 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=243 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=244 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=245 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=246 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=247 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=248 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=249 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=250 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=251 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=252 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=253 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=254 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=255 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=256 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=257 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=258 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=259 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=260 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=261 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=262 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=263 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=264 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=265 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=266 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=267 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=268 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=269 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=270 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=271 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=272 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=273 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=274 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=275 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=276 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=277 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=278 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=279 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=280 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=281 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=282 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=283 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=284 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=285 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=286 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=287 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=288 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=289 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=290 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=291 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=292 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=293 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=294 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=295 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=296 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=297 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=298 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=299 Destination Host Unreachable
+From 10.0.0.58 icmp_seq=300 Destination Host Unreachable
+
+--- 10.0.0.39 ping statistics ---
+300 packets transmitted, 54 received, +406 duplicates, +172 errors, 82% packet loss, time 342500ms
+rtt min/avg/max/mdev = 120.839/70325.403/174429.474/38693.483 ms, pipe 164
