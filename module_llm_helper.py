@@ -3534,7 +3534,7 @@ Return JSON only.
 from google import genai
 from google.genai import types
 
-GEMINI_API_KEY = "AIzaSyDMYt8DsH_MIIs1ta18Wvj3iCr6B-0BlxM"
+GEMINI_API_KEY = ""
 GEMINI_MODEL_NAME = "gemini-2.5-flash"
 
 client = genai.Client(api_key=GEMINI_API_KEY)
