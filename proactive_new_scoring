@@ -1,0 +1,784 @@
+# proactive_ilp_decision_compact.py
+
+import re
+import math
+import requests
+import pandas as pd
+import numpy as np
+from requests.auth import HTTPBasicAuth
+
+import pulp
+
+
+# =========================
+# CONFIG
+# =========================
+
+ONOS_BASE_URL = "http://127.0.0.1:8181"
+ONOS_USER = "onos"
+ONOS_PASS = "rocks"
+
+HOST_PPS_MONITOR_THRESHOLD = 130.0
+HOST_RX_MBPS_THRESHOLD = 0.080
+HOST_TX_MBPS_THRESHOLD = 0.091
+
+LINK_CAPACITY_MBPS = 1.0
+LINK_MONITOR_THRESHOLD_MBPS = 0.8
+
+EXCLUDED_IP_HOSTS = {"h1"}
+
+K_IP = 10
+K_ROUTE = 10
+DEFENSE_BUDGET = 0.50
+ 
+E_IP = 0.70
+# E_IP = 0.70 #Eip​=1−23.75/39.72​
+# E_ROUTE = 0.70
+E_ROUTE = 0.60 # Eroute​=1−10.99/27.45 -- from graph​
+
+
+O_IP = 2830 / 3000
+O_ROUTE = 0.05
+
+LAMBDA_IP = 0.15
+
+DEFAULT_GRID_PRIORITY = 0.0
+
+IP_ACTIVE_ONLY = False
+
+
+# =========================
+# BASIC HELPERS
+# =========================
+
+def host_num(host):
+    m = re.search(r"\d+", str(host))
+    return int(m.group()) if m else None
+
+
+def host_from_ip(ip):
+    """
+    Example:
+        10.0.0.35/32 -> h35
+        10.0.0.35    -> h35
+    """
+    try:
+        ip = str(ip).split("/")[0]
+        return f"h{int(ip.split('.')[-1])}"
+    except Exception:
+        return None
+
+
+def host_from_mac(mac):
+    """
+    Example:
+        00:00:00:00:00:23 -> h35
+        because hex 23 = decimal 35
+    """
+    try:
+        last = str(mac).split(":")[-1]
+        return f"h{int(last, 16)}"
+    except Exception:
+        return None
+
+
+def pair_key(a, b):
+    return tuple(sorted((str(a), str(b)), key=lambda x: host_num(x) or 99999))
+
+
+def safe_norm(s):
+    s = pd.to_numeric(s, errors="coerce").fillna(0.0)
+    mn, mx = s.min(), s.max()
+    if mx == mn:
+        return pd.Series([0.0] * len(s), index=s.index)
+    return (s - mn) / (mx - mn)
+
+
+def parse_history(v):
+    if pd.isna(v):
+        return []
+    return [x.strip() for x in str(v).split(",") if x.strip()]
+
+
+def latest_same_count(values):
+    if not values:
+        return 0
+    last = values[-1]
+    c = 0
+    for v in reversed(values):
+        if v == last:
+            c += 1
+        else:
+            break
+    return c
+
+
+# def path_links(path):
+#     """
+#     Extract ONOS link IDs from hop_list path text.
+#     This is flexible; it returns strings that can be matched with link_stats link_id.
+#     """
+#     if pd.isna(path):
+#         return []
+#     text = str(path)
+#     parts = re.split(r"\s*->\s*|\s*,\s*", text)
+#     return [p.strip() for p in parts if p.strip()]
+def path_links(path):
+    links = []
+
+    if pd.isna(path):
+        return links
+
+    for item in str(path).split(","):
+        item = item.strip()
+
+        if "->" in item:
+            lk = normalize_onos_link(item)
+            if lk:
+                links.append(lk)
+
+    return links
+
+# =========================
+# ONOS REST API
+# =========================
+
+def fetch_onos_host_maps(
+    base_url=ONOS_BASE_URL,
+    user=ONOS_USER,
+    password=ONOS_PASS,
+    timeout=5,
+):
+    """
+    Fetch ONOS hosts and build:
+        ip_to_h   = {"10.0.0.35": "h35"}
+        mac_to_h  = {"00:00:00:00:00:23": "h35"}
+    """
+
+    url = f"{base_url.rstrip('/')}/onos/v1/hosts"
+    r = requests.get(url, auth=HTTPBasicAuth(user, password), timeout=timeout)
+    r.raise_for_status()
+
+    data = r.json()
+    ip_to_h = {}
+    mac_to_h = {}
+
+    for item in data.get("hosts", []):
+        mac = item.get("mac")
+        ips = item.get("ipAddresses", [])
+
+        h = None
+
+        if ips:
+            h = host_from_ip(ips[0])
+
+        if h is None and mac:
+            h = host_from_mac(mac)
+
+        if h is None:
+            continue
+
+        if mac:
+            mac_to_h[str(mac).lower()] = h
+
+        for ip in ips:
+            ip_to_h[str(ip).split("/")[0]] = h
+
+    return ip_to_h, mac_to_h
+
+
+def criterion_value(criteria, names):
+    """
+    Extract values from ONOS flow selector criteria.
+    Supports common ONOS fields:
+        IPV4_SRC, IPV4_DST, ETH_SRC, ETH_DST
+    """
+
+    for c in criteria:
+        ctype = c.get("type")
+
+        if ctype not in names:
+            continue
+
+        for key in ["ip", "mac", "value"]:
+            if key in c:
+                return c[key]
+
+    return None
+
+
+def fetch_onos_active_pairs(
+    base_url=ONOS_BASE_URL,
+    user=ONOS_USER,
+    password=ONOS_PASS,
+    timeout=5,
+):
+    """
+    Fetch active ONOS flows and extract active host pairs.
+
+    Returns:
+        active_pairs = {("h1", "h35"), ("h2", "h30")}
+        active_hosts = {"h1", "h35", "h2", "h30"}
+
+    Note:
+        This works when ONOS flow selector has source/destination IP or MAC.
+    """
+
+    ip_to_h, mac_to_h = fetch_onos_host_maps(base_url, user, password, timeout)
+
+    url = f"{base_url.rstrip('/')}/onos/v1/flows"
+    r = requests.get(url, auth=HTTPBasicAuth(user, password), timeout=timeout)
+    r.raise_for_status()
+
+    data = r.json()
+
+    active_pairs = set()
+    active_hosts = set()
+
+    for flow in data.get("flows", []):
+        if flow.get("state") != "ADDED":
+            continue
+
+        criteria = flow.get("selector", {}).get("criteria", [])
+
+        src_ip = criterion_value(criteria, {"IPV4_SRC", "IPV6_SRC"})
+        dst_ip = criterion_value(criteria, {"IPV4_DST", "IPV6_DST"})
+
+        src_mac = criterion_value(criteria, {"ETH_SRC"})
+        dst_mac = criterion_value(criteria, {"ETH_DST"})
+
+        src = None
+        dst = None
+
+        if src_ip:
+            src = ip_to_h.get(str(src_ip).split("/")[0]) or host_from_ip(src_ip)
+
+        if dst_ip:
+            dst = ip_to_h.get(str(dst_ip).split("/")[0]) or host_from_ip(dst_ip)
+
+        if src is None and src_mac:
+            src = mac_to_h.get(str(src_mac).lower()) or host_from_mac(src_mac)
+
+        if dst is None and dst_mac:
+            dst = mac_to_h.get(str(dst_mac).lower()) or host_from_mac(dst_mac)
+
+        if src and dst and src != dst:
+            p = pair_key(src, dst)
+            active_pairs.add(p)
+            active_hosts.update(p)
+
+    return active_pairs, active_hosts
+
+
+# =========================
+# OBSERVABILITY / PMU RANK
+# =========================
+
+def load_grid_priority(obs_csv):
+    """
+    PMU/bus rank gives power-grid priority.
+
+    Expected:
+        PMU 39 or gen_bus 39 means host h39.
+
+    Rank handling:
+        rank 1 -> priority 1.0
+        lower ranks -> smaller priority
+        hosts not listed -> DEFAULT_GRID_PRIORITY
+    """
+
+    obs = pd.read_csv(obs_csv)
+
+    cols = {c.lower(): c for c in obs.columns}
+
+    host_col = None
+    rank_col = None
+
+    for key in ["pmu", "gen_bus", "bus", "host"]:
+        if key in cols:
+            host_col = cols[key]
+            break
+
+    for key in ["rank", "pmu_rank", "observability_rank"]:
+        if key in cols:
+            rank_col = cols[key]
+            break
+
+    if host_col is None or rank_col is None:
+        return {}
+
+    obs["host"] = obs[host_col].apply(lambda x: f"h{int(x)}" if pd.notna(x) else None)
+    obs["rank"] = pd.to_numeric(obs[rank_col], errors="coerce")
+
+    obs = obs.dropna(subset=["host", "rank"])
+
+    if obs.empty:
+        return {}
+
+    max_rank = obs["rank"].max()
+    min_rank = obs["rank"].min()
+
+    if max_rank == min_rank:
+        obs["grid_priority"] = 1.0
+    else:
+        obs["grid_priority"] = 1.0 - ((obs["rank"] - min_rank) / (max_rank - min_rank))
+
+    return dict(zip(obs["host"], obs["grid_priority"]))
+
+
+# =========================
+# IP CANDIDATES
+# =========================
+
+def build_ip_candidates(
+    host_csv,
+    ip_hist_csv,
+    obs_csv,
+    active_hosts=None,
+):
+    h = pd.read_csv(host_csv)
+
+    h["host"] = h["host_mac"].apply(host_from_mac)
+    h = h.dropna(subset=["host"])
+
+    h = h[~h["host"].isin(EXCLUDED_IP_HOSTS)]
+
+    if IP_ACTIVE_ONLY and active_hosts is not None:
+        h = h[h["host"].isin(active_hosts)]
+
+    if h.empty:
+        return []
+
+    # Latest row per host
+    if "timestamp" in h.columns:
+        h = h.sort_values("timestamp").groupby("host", as_index=False).tail(1)
+
+    for c in ["rx_pps", "tx_pps", "rx_mbps", "tx_mbps"]:
+        h[c] = pd.to_numeric(h[c], errors="coerce").fillna(0.0)
+
+    h["rx_pps_n"] = safe_norm(h["rx_pps"])
+    h["tx_pps_n"] = safe_norm(h["tx_pps"])
+    h["rx_mbps_n"] = safe_norm(h["rx_mbps"])
+    h["tx_mbps_n"] = safe_norm(h["tx_mbps"])
+
+    h["traffic_risk"] = (
+        0.35 * h["tx_pps_n"]
+        + 0.25 * h["rx_pps_n"]
+        + 0.25 * h["tx_mbps_n"]
+        + 0.15 * h["rx_mbps_n"]
+    )
+
+    h["monitor_score"] = np.maximum.reduce([
+        (h["tx_pps"] / HOST_PPS_MONITOR_THRESHOLD).clip(0, 1),
+        (h["rx_pps"] / HOST_PPS_MONITOR_THRESHOLD).clip(0, 1),
+        (h["tx_mbps"] / HOST_TX_MBPS_THRESHOLD).clip(0, 1),
+        (h["rx_mbps"] / HOST_RX_MBPS_THRESHOLD).clip(0, 1),
+    ])
+
+    ip_hist = pd.read_csv(ip_hist_csv)
+    ip_hist["history_list"] = ip_hist["history"].apply(parse_history)
+    ip_hist["ip_exposure"] = ip_hist["history_list"].apply(
+        lambda x: latest_same_count(x) / max(1, len(x))
+    )
+
+    exposure_map = dict(zip(ip_hist["host"], ip_hist["ip_exposure"]))
+
+    grid_map = load_grid_priority(obs_csv)
+
+    candidates = []
+
+    for _, row in h.iterrows():
+        host = row["host"]
+
+        ip_exposure = float(exposure_map.get(host, 0.0))
+        grid_priority = float(grid_map.get(host, DEFAULT_GRID_PRIORITY))
+
+        p_host = (
+            0.35 * float(row["traffic_risk"])
+            + 0.30 * float(row["monitor_score"])
+            + 0.25 * grid_priority
+            + 0.10 * ip_exposure
+        )
+
+        benefit = p_host * ip_exposure * E_IP
+        cost = LAMBDA_IP * O_IP
+        score = benefit - cost
+
+        candidates.append({
+            "host": host,
+            "score": score,
+            "benefit": benefit,
+            "cost": cost,
+            "p_host": p_host,
+            "traffic_risk": float(row["traffic_risk"]),
+            "monitor_score": float(row["monitor_score"]),
+            "ip_exposure": ip_exposure,
+            "grid_priority": grid_priority,
+            "rx_pps": float(row["rx_pps"]),
+            "tx_pps": float(row["tx_pps"]),
+            "rx_mbps": float(row["rx_mbps"]),
+            "tx_mbps": float(row["tx_mbps"]),
+        })
+
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    return candidates
+
+
+# =========================
+# ROUTE CANDIDATES
+# =========================
+
+def build_route_candidates(
+    link_csv,
+    hop_csv,
+    route_hist_csv,
+    active_pairs,
+):
+    if not active_pairs:
+        return []
+
+    link = pd.read_csv(link_csv)
+
+    if "timestamp" in link.columns:
+        link = link.sort_values("timestamp").groupby("link_id", as_index=False).tail(1)
+
+    link["rx_mbps"] = pd.to_numeric(link["rx_mbps"], errors="coerce").fillna(0.0)
+    link["tx_mbps"] = pd.to_numeric(link["tx_mbps"], errors="coerce").fillna(0.0)
+    link["link_mbps"] = link[["rx_mbps", "tx_mbps"]].max(axis=1)
+
+    # max_mbps = max(link["link_mbps"].max(), 1e-9)
+    # link["link_usage_norm"] = link["link_mbps"] / max_mbps
+    # link["link_monitor"] = (link["link_mbps"] / LINK_MBPS_MONITOR_THRESHOLD).clip(0, 1)
+    link["link_usage_norm"] = (link["link_mbps"] / LINK_CAPACITY_MBPS).clip(0, 1)
+    link["link_monitor"] = (link["link_mbps"] / LINK_MONITOR_THRESHOLD_MBPS).clip(0, 1)
+
+    # usage_map = dict(zip(link["link_id"], link["link_usage_norm"]))
+    # monitor_map = dict(zip(link["link_id"], link["link_monitor"]))
+    
+    link["norm_link"] = link["link_id"].apply(normalize_onos_link)
+
+    usage_map = dict(zip(link["norm_link"], link["link_usage_norm"]))
+    monitor_map = dict(zip(link["norm_link"], link["link_monitor"]))
+
+
+    hop = pd.read_csv(
+        hop_csv,
+        header=None,
+        names=["host1", "host2", "option", "hop_count", "src_mac", "dst_mac", "path"]
+    )
+
+    hop["pair"] = hop.apply(lambda r: pair_key(r["host1"], r["host2"]), axis=1)
+    hop = hop[hop["pair"].isin(active_pairs)].copy()
+
+    if hop.empty:
+        return []
+
+    route_hist = pd.read_csv(route_hist_csv)
+    route_hist["pair"] = route_hist.apply(lambda r: pair_key(r["host_a"], r["host_b"]), axis=1)
+    route_hist["history_list"] = route_hist["history"].apply(parse_history)
+    route_hist["route_exposure"] = route_hist["history_list"].apply(
+        lambda x: latest_same_count(x) / max(1, len(x))
+    )
+
+    exposure_map = dict(zip(route_hist["pair"], route_hist["route_exposure"]))
+
+    candidates = []
+
+    grouped = hop.groupby("pair")
+
+    for pair, g in grouped:
+        g = g.copy()
+
+        default_hops = g["hop_count"].min()
+        route_exposure = float(exposure_map.get(pair, 0.0))
+
+        best = None
+
+        for _, r in g.iterrows():
+            links = path_links(r["path"])
+
+            if links:
+                link_usage = max([usage_map.get(x, 0.0) for x in links])
+                link_monitor = max([monitor_map.get(x, 0.0) for x in links])
+            else:
+                link_usage = 0.0
+                link_monitor = 0.0
+
+            hop_count = float(r["hop_count"])
+            latency_penalty = max(0.0, (hop_count - default_hops) / max(default_hops, 1))
+
+            p_route = (
+                0.45 * link_usage
+                + 0.30 * link_monitor
+                + 0.25 * route_exposure
+            )
+
+            benefit = p_route * route_exposure * E_ROUTE
+            cost = O_ROUTE + 0.10 * latency_penalty + 0.10 * link_usage
+            score = benefit - cost
+
+            cand = {
+                "pair": pair,
+                "src": pair[0],
+                "dst": pair[1],
+                "option": int(r["option"]),
+                "score": score,
+                "benefit": benefit,
+                "cost": cost,
+                "p_route": p_route,
+                "route_exposure": route_exposure,
+                "link_usage": link_usage,
+                "link_monitor": link_monitor,
+                "hop_count": hop_count,
+                "latency_penalty": latency_penalty,
+                "path": r["path"],
+            }
+
+            if best is None or cand["score"] > best["score"]:
+                best = cand
+
+        if best is not None:
+            candidates.append(best)
+
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    return candidates
+
+
+# =========================
+# MILP SOLVER
+# =========================
+
+def solve_milp(ip_candidates, route_candidates):
+    """
+    Binary MILP:
+
+    maximize:
+        sum IP scores + sum route scores
+
+    subject to:
+        z_none + z_ip + z_route = 1
+        x_h <= z_ip
+        y_f <= z_route
+        sum x_h <= K_IP z_ip
+        sum y_f <= K_ROUTE z_route
+        total defense cost <= DEFENSE_BUDGET
+    """
+
+    if pulp is None:
+        return solve_fallback(ip_candidates, route_candidates)
+
+    model = pulp.LpProblem("Proactive_MTD_Selection", pulp.LpMaximize)
+
+    z_none = pulp.LpVariable("z_none", cat="Binary")
+    z_ip = pulp.LpVariable("z_ip", cat="Binary")
+    z_route = pulp.LpVariable("z_route", cat="Binary")
+
+    x = {
+        c["host"]: pulp.LpVariable(f"x_{c['host']}", cat="Binary")
+        for c in ip_candidates
+    }
+
+    y = {
+        i: pulp.LpVariable(f"y_route_{i}", cat="Binary")
+        for i, _ in enumerate(route_candidates)
+    }
+
+    model += (
+        pulp.lpSum(c["score"] * x[c["host"]] for c in ip_candidates)
+        + pulp.lpSum(c["score"] * y[i] for i, c in enumerate(route_candidates))
+    )
+
+    model += z_none + z_ip + z_route == 1
+
+    for c in ip_candidates:
+        model += x[c["host"]] <= z_ip
+
+    for i, _ in enumerate(route_candidates):
+        model += y[i] <= z_route
+
+    model += pulp.lpSum(x.values()) <= K_IP * z_ip
+    model += pulp.lpSum(y.values()) <= K_ROUTE * z_route
+
+    model += (
+        pulp.lpSum(c["cost"] * x[c["host"]] for c in ip_candidates)
+        + pulp.lpSum(c["cost"] * y[i] for i, c in enumerate(route_candidates))
+        <= DEFENSE_BUDGET
+    )
+
+    model.solve(pulp.PULP_CBC_CMD(msg=False))
+
+    selected_hosts = [
+        h for h, var in x.items()
+        if pulp.value(var) is not None and pulp.value(var) > 0.5
+    ]
+
+    selected_routes = [
+        route_candidates[i]
+        for i, var in y.items()
+        if pulp.value(var) is not None and pulp.value(var) > 0.5
+    ]
+
+    if pulp.value(z_ip) and pulp.value(z_ip) > 0.5:
+        action = "ip_shuffle"
+    elif pulp.value(z_route) and pulp.value(z_route) > 0.5:
+        action = "route_mutation"
+    else:
+        action = "no_mtd"
+
+    return action, selected_hosts, selected_routes
+
+
+def solve_fallback(ip_candidates, route_candidates):
+    """
+    Simple fallback if PuLP is not installed.
+    Keeps the same logic for K_IP=1, K_ROUTE=1.
+    """
+
+    best_ip = None
+    for c in ip_candidates:
+        if c["cost"] <= DEFENSE_BUDGET:
+            if best_ip is None or c["score"] > best_ip["score"]:
+                best_ip = c
+
+    best_route = None
+    for c in route_candidates:
+        if c["cost"] <= DEFENSE_BUDGET:
+            if best_route is None or c["score"] > best_route["score"]:
+                best_route = c
+
+    ip_val = best_ip["score"] if best_ip else -math.inf
+    route_val = best_route["score"] if best_route else -math.inf
+
+    if ip_val <= 0 and route_val <= 0:
+        return "no_mtd", [], []
+
+    if ip_val >= route_val:
+        return "ip_shuffle", [best_ip["host"]], []
+
+    return "route_mutation", [], [best_route]
+
+
+def dpid_to_switch(device_id):
+    dev = str(device_id).strip()
+
+    if dev.startswith("of:"):
+        body = dev.replace("of:", "")
+
+        # Handles both:
+        # of:0000000000000004/1
+        # of:0000000000000004:1
+        body = body.split("/")[0]
+        body = body.split(":")[0]
+
+        return f"s{int(body, 16)}"
+
+    return dev
+
+
+def normalize_onos_link(link_str):
+    """
+    Converts ONOS link formats like:
+      of:0000000000000001/1->of:0000000000000002/2
+      of:0000000000000001:1->of:0000000000000002:2
+
+    into:
+      ('s1', 's2')
+    """
+    s = str(link_str).strip()
+
+    if "->" not in s:
+        return None
+
+    left, right = [x.strip() for x in s.split("->", 1)]
+
+    def endpoint_to_switch(endpoint):
+        return dpid_to_switch(endpoint)
+
+    return tuple(sorted([
+        endpoint_to_switch(left),
+        endpoint_to_switch(right)
+    ]))
+
+
+# =========================
+# MAIN DECISION FUNCTION
+# =========================
+
+def decide_ilp(
+    host_csv="host_stats_onos.csv",
+    link_csv="link_stats_onos.csv",
+    hop_csv="hop_list.csv",
+    ip_hist_csv="ip_history.csv",
+    route_hist_csv="route_history.csv",
+    obs_csv="observability.csv",
+):
+    active_pairs, active_hosts = fetch_onos_active_pairs()
+
+    ip_candidates = build_ip_candidates(
+        host_csv=host_csv,
+        ip_hist_csv=ip_hist_csv,
+        obs_csv=obs_csv,
+        active_hosts=active_hosts,
+    )
+
+    route_candidates = build_route_candidates(
+        link_csv=link_csv,
+        hop_csv=hop_csv,
+        route_hist_csv=route_hist_csv,
+        active_pairs=active_pairs,
+    )
+
+    action, selected_hosts, selected_routes = solve_milp(
+        ip_candidates,
+        route_candidates,
+    )
+
+    details = {
+        "active_pairs": sorted(list(active_pairs)),
+        "active_hosts": sorted(list(active_hosts), key=lambda x: host_num(x) or 99999),
+        "ip_candidates": ip_candidates,
+        "route_candidates": route_candidates,
+        "selected_routes": selected_routes,
+    }
+
+    return action, selected_hosts, selected_routes, details
+
+
+# =========================
+# RUN DIRECTLY
+# =========================
+
+if __name__ == "__main__":
+    action, hosts, routes, details = decide_ilp()
+
+    print("\nSelected action:", action)
+    print("Selected IP hosts:", hosts)
+
+    print("Selected route mutations:")
+    for r in routes:
+        print(
+            f"  {r['src']} -> {r['dst']} | "
+            f"option={r['option']} | score={r['score']:.4f} | path={r['path']}"
+        )
+
+    print("\nActive ONOS pairs:")
+    for p in details["active_pairs"]:
+        print(" ", p)
+
+    print("\nTop IP candidates:")
+    for c in details["ip_candidates"][:10]:
+        print(
+            f"  {c['host']} | score={c['score']:.4f} | "
+            f"p_host={c['p_host']:.3f} | "
+            f"ip_exp={c['ip_exposure']:.2f} | "
+            f"grid={c['grid_priority']:.2f}"
+        )
+
+    print("\nTop route candidates:")
+    for c in details["route_candidates"][:10]:
+        print(
+            f"  {c['src']}->{c['dst']} | option={c['option']} | "
+            f"score={c['score']:.4f} | "
+            f"route_exp={c['route_exposure']:.2f} | "
+            f"link_usage={c['link_usage']:.2f}"
+        )

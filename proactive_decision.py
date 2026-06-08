@@ -56,10 +56,12 @@ import os
 # K_RRM = 3       # max route reroutes per step
 # CD    = 3       # cooldown steps  (3 × 30 s = 90 s)
 # ── IP weights ─────────────────────────
-ALPHA = 6.0
+# ALPHA = 6.0
+ALPHA = 7.0
 GAMMA = 1.0
 LAM1  = 0.03
-LAM2  = 0.8
+# LAM2  = 0.8
+LAM2  = 1.5
 
 # ── Route weights ──────────────────────
 BETA1 = 3.0

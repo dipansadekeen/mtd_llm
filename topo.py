@@ -8,8 +8,10 @@ from mininet.link import TCLink
 from mininet.cli import CLI
 from mininet.log import setLogLevel
 from functools import partial
-import time, os
+import time, os, threading
 
+# new
+from proactive_files.metrics_collector import capture_all_host_metrics #new
 # ---------- CONFIG ----------
 ONOS_IP   = "127.0.0.1"
 ONOS_PORT = 6653
@@ -455,6 +457,48 @@ def ping_x(net):
             print("[PING] validation failed -> skipping pingAll")
 
         time.sleep(3)
+
+def ping_metrics_cycle(net, stop_event):
+    """Cycle: ping → metrics → repeat (no ping logging)."""
+
+    h1 = net.get('h1')
+
+    while not stop_event.is_set():
+
+        print("\n[Cycle] Pinging hosts...")
+
+        # ---- PING PHASE (NO LOGGING) ----
+        for i in range(2, 16):
+            host = net.get('h%d' % i)
+
+            result = h1.cmd('ping -c 2 %s' % host.IP())
+
+            # Optional: still compute status (for debugging only)
+            if "0% packet loss" in result:
+                status = "ok"
+            else:
+                status = "loss"
+
+            print("Ping h1 -> %s : %s" % (host.name, status))
+
+            if stop_event.is_set():
+                return
+
+        print("\n[Cycle] Running metrics...")
+
+        # ---- METRICS PHASE (THIS IS WHAT YOU LOG) ----
+        capture_all_host_metrics(
+            net,
+            output_csv="h1_to_all_metrics.csv",
+            ping_count=5,
+            iperf_duration=5,
+            udp_bandwidth="5M",
+            port=5001,
+            src_host_name="h1"
+        )
+
+        # Optional pause between cycles
+        time.sleep(120)
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -586,16 +630,22 @@ def main():
     # with open("/tmp/shuffle_flag.txt", "w") as f:
     #     f.write("1\n")
 
-    # INITIAL LEARNING 
-    print("[PING] Initial pingAll for ONOS learning...")
-    net.pingAll()
-    # start ping thread (same style as your template)
-    # ping_thread = threading.Thread(target=ping_x, args=(net,))
-    # ping_thread.daemon = True
-    # ping_thread.start()
+    # stop_event = threading.Event() #new
 
+    # cycle_thread = threading.Thread( #new
+    #     target=ping_metrics_cycle, #new
+    #     args=(net, stop_event) #new
+    # )
+    # cycle_thread.daemon = True #new
+    # cycle_thread.start() #new
 
-    CLI(net)
+    # CLI(net) #new
+
+    # stop_event.set() #new
+    # cycle_thread.join() #new
+    
+    
+    CLI(net) 
 
     # stop.set()
     net.stop()
