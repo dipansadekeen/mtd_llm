@@ -804,7 +804,7 @@ ONOS_BASE_URL = "http://127.0.0.1:8181"
 ONOS_USER = "onos"
 ONOS_PASS = "rocks"
 
-HOST_PPS_MONITOR_THRESHOLD = 20.0
+HOST_PPS_MONITOR_THRESHOLD = 100.0
 HOST_RX_MBPS_THRESHOLD = 0.080
 HOST_TX_MBPS_THRESHOLD = 0.091
 
@@ -829,6 +829,8 @@ O_ROUTE = 0.05
 LAMBDA_IP = 0.15
 
 DEFAULT_GRID_PRIORITY = 0.0
+
+RECENT_WINDOW = 10 
 
 IP_ACTIVE_ONLY = False
 # new
@@ -956,16 +958,6 @@ def latest_same_count(values):
     return c
 
 
-# def path_links(path):
-#     """
-#     Extract ONOS link IDs from hop_list path text.
-#     This is flexible; it returns strings that can be matched with link_stats link_id.
-#     """
-#     if pd.isna(path):
-#         return []
-#     text = str(path)
-#     parts = re.split(r"\s*->\s*|\s*,\s*", text)
-#     return [p.strip() for p in parts if p.strip()]
 def path_links(path):
     links = []
 
@@ -985,49 +977,6 @@ def path_links(path):
 # =========================
 # ONOS REST API
 # =========================
-
-# def fetch_onos_host_maps(
-#     base_url=ONOS_BASE_URL,
-#     user=ONOS_USER,
-#     password=ONOS_PASS,
-#     timeout=5,
-# ):
-#     """
-#     Fetch ONOS hosts and build:
-#         ip_to_h   = {"10.0.0.35": "h35"}
-#         mac_to_h  = {"00:00:00:00:00:23": "h35"}
-#     """
-
-#     url = f"{base_url.rstrip('/')}/onos/v1/hosts"
-#     r = requests.get(url, auth=HTTPBasicAuth(user, password), timeout=timeout)
-#     r.raise_for_status()
-
-#     data = r.json()
-#     ip_to_h = {}
-#     mac_to_h = {}
-
-#     for item in data.get("hosts", []):
-#         mac = item.get("mac")
-#         ips = item.get("ipAddresses", [])
-
-#         h = None
-
-#         if ips:
-#             h = host_from_ip(ips[0])
-
-#         if h is None and mac:
-#             h = host_from_mac(mac)
-
-#         if h is None:
-#             continue
-
-#         if mac:
-#             mac_to_h[str(mac).lower()] = h
-
-#         for ip in ips:
-#             ip_to_h[str(ip).split("/")[0]] = h
-
-#     return ip_to_h, mac_to_h
 
 # new
 def fetch_onos_host_maps(
@@ -1252,9 +1201,34 @@ def build_ip_candidates(
     if h.empty:
         return []
 
-    # Latest row per host
+    # # Latest row per host
+    # if "timestamp" in h.columns:
+    #     h = h.sort_values("timestamp").groupby("host", as_index=False).tail(1)
+
+    # Recent max-mean blended values per host || #new 
     if "timestamp" in h.columns:
-        h = h.sort_values("timestamp").groupby("host", as_index=False).tail(1)
+        h = h.sort_values("timestamp").groupby("host", group_keys=False).tail(RECENT_WINDOW)
+
+        agg = h.groupby("host", as_index=False).agg({
+            "host_mac": "last",
+            "rx_pps": ["max", "mean"],
+            "tx_pps": ["max", "mean"],
+            "rx_mbps": ["max", "mean"],
+            "tx_mbps": ["max", "mean"],
+        })
+
+        agg.columns = [
+            "host", "host_mac",
+            "rx_pps_max", "rx_pps_mean",
+            "tx_pps_max", "tx_pps_mean",
+            "rx_mbps_max", "rx_mbps_mean",
+            "tx_mbps_max", "tx_mbps_mean",
+        ]
+
+        for c in ["rx_pps", "tx_pps", "rx_mbps", "tx_mbps"]:
+            agg[c] = 0.9 * agg[f"{c}_max"] + 0.1 * agg[f"{c}_mean"]
+
+        h = agg[["host", "host_mac", "rx_pps", "tx_pps", "rx_mbps", "tx_mbps"]]
 
     for c in ["rx_pps", "tx_pps", "rx_mbps", "tx_mbps"]:
         h[c] = pd.to_numeric(h[c], errors="coerce").fillna(0.0)
@@ -1296,11 +1270,17 @@ def build_ip_candidates(
         ip_exposure = float(exposure_map.get(host, 0.0))
         grid_priority = float(grid_map.get(host, DEFAULT_GRID_PRIORITY))
 
+        # p_host = (
+        #     0.35 * float(row["traffic_risk"])
+        #     + 0.30 * float(row["monitor_score"])
+        #     + 0.25 * grid_priority
+        #     + 0.10 * ip_exposure
+        # )
+
         p_host = (
-            0.35 * float(row["traffic_risk"])
-            + 0.30 * float(row["monitor_score"])
+            0.40 * float(row["traffic_risk"])
+            + 0.35 * float(row["monitor_score"])
             + 0.25 * grid_priority
-            + 0.10 * ip_exposure
         )
 
         benefit = p_host * ip_exposure * E_IP
@@ -1342,21 +1322,35 @@ def build_route_candidates(
 
     link = pd.read_csv(link_csv)
 
+    # if "timestamp" in link.columns:
+    #     link = link.sort_values("timestamp").groupby("link_id", as_index=False).tail(1)
+
+    # Recent max-mean blended values per link || #new
     if "timestamp" in link.columns:
-        link = link.sort_values("timestamp").groupby("link_id", as_index=False).tail(1)
+        link = link.sort_values("timestamp").groupby("link_id", group_keys=False).tail(RECENT_WINDOW)
+
+        agg = link.groupby("link_id", as_index=False).agg({
+            "rx_mbps": ["max", "mean"],
+            "tx_mbps": ["max", "mean"],
+        })
+
+        agg.columns = [
+            "link_id",
+            "rx_mbps_max", "rx_mbps_mean",
+            "tx_mbps_max", "tx_mbps_mean",
+        ]
+
+        for c in ["rx_mbps", "tx_mbps"]:
+            agg[c] = 0.9 * agg[f"{c}_max"] + 0.1 * agg[f"{c}_mean"]
+
+        link = agg[["link_id", "rx_mbps", "tx_mbps"]]
 
     link["rx_mbps"] = pd.to_numeric(link["rx_mbps"], errors="coerce").fillna(0.0)
     link["tx_mbps"] = pd.to_numeric(link["tx_mbps"], errors="coerce").fillna(0.0)
     link["link_mbps"] = link[["rx_mbps", "tx_mbps"]].max(axis=1)
 
-    # max_mbps = max(link["link_mbps"].max(), 1e-9)
-    # link["link_usage_norm"] = link["link_mbps"] / max_mbps
-    # link["link_monitor"] = (link["link_mbps"] / LINK_MBPS_MONITOR_THRESHOLD).clip(0, 1)
     link["link_usage_norm"] = (link["link_mbps"] / LINK_CAPACITY_MBPS).clip(0, 1)
     link["link_monitor"] = (link["link_mbps"] / LINK_MONITOR_THRESHOLD_MBPS).clip(0, 1)
-
-    # usage_map = dict(zip(link["link_id"], link["link_usage_norm"]))
-    # monitor_map = dict(zip(link["link_id"], link["link_monitor"]))
     
     link["norm_link"] = link["link_id"].apply(normalize_onos_link)
 
@@ -1385,74 +1379,38 @@ def build_route_candidates(
 
     exposure_map = dict(zip(route_hist["pair"], route_hist["route_exposure"]))
 
+    # to handle it not considering opt 0 blindly.
+    route_hist["current_option"] = route_hist["history_list"].apply(
+        lambda x: int(x[-1]) if x else 0
+    )
+
+    current_option_map = dict(zip(route_hist["pair"], route_hist["current_option"]))
+    # to handle it not considering opt 0 blindly.
+
     candidates = []
 
     grouped = hop.groupby("pair")
 
-    # for pair, g in grouped:
-    #     g = g.copy()
+    # to handle it not considering opt 0 blindly.    
+    # for pair, g in hop.groupby("pair"):
+    #     g0 = g[g["option"].astype(int) == 0]
 
-    #     default_hops = g["hop_count"].min()
-    #     route_exposure = float(exposure_map.get(pair, 0.0))
+    #     if g0.empty:
+    #         continue
 
-    #     best = None
+    #     r = g0.iloc[0]
+    #     links = path_links(r["path"])
+    # to handle it not considering opt 0 blindly.
 
-    #     for _, r in g.iterrows():
-    #         links = path_links(r["path"])
-
-    #         if links:
-    #             link_usage = max([usage_map.get(x, 0.0) for x in links])
-    #             link_monitor = max([monitor_map.get(x, 0.0) for x in links])
-    #         else:
-    #             link_usage = 0.0
-    #             link_monitor = 0.0
-
-    #         hop_count = float(r["hop_count"])
-    #         latency_penalty = max(0.0, (hop_count - default_hops) / max(default_hops, 1))
-
-    #         p_route = (
-    #             0.45 * link_usage
-    #             + 0.30 * link_monitor
-    #             + 0.25 * route_exposure
-    #         )
-
-    #         benefit = p_route * route_exposure * E_ROUTE
-    #         cost = O_ROUTE + 0.10 * latency_penalty + 0.10 * link_usage
-    #         score = benefit - cost
-
-    #         cand = {
-    #             "pair": pair,
-    #             "src": pair[0],
-    #             "dst": pair[1],
-    #             "option": int(r["option"]),
-    #             "score": score,
-    #             "benefit": benefit,
-    #             "cost": cost,
-    #             "p_route": p_route,
-    #             "route_exposure": route_exposure,
-    #             "link_usage": link_usage,
-    #             "link_monitor": link_monitor,
-    #             "hop_count": hop_count,
-    #             "latency_penalty": latency_penalty,
-    #             "path": r["path"],
-    #         }
-
-    #         if best is None or cand["score"] > best["score"]:
-    #             best = cand
-
-    #     if best is not None:
-    #         candidates.append(best)
-
-    # candidates.sort(key=lambda x: x["score"], reverse=True)
-    # return candidates
-    
     for pair, g in hop.groupby("pair"):
-        g0 = g[g["option"].astype(int) == 0]
+        current_option = int(current_option_map.get(pair, 0))
 
-        if g0.empty:
+        g_current = g[g["option"].astype(int) == current_option]
+
+        if g_current.empty:
             continue
 
-        r = g0.iloc[0]
+        r = g_current.iloc[0]
         links = path_links(r["path"])
 
         link_usage = max([usage_map.get(x, 0.0) for x in links], default=0.0)
@@ -1460,10 +1418,15 @@ def build_route_candidates(
 
         route_exposure = float(exposure_map.get(pair, 0.0))
 
+        # p_route = (
+        #     0.45 * link_usage
+        #     + 0.30 * link_monitor
+        #     + 0.25 * route_exposure
+        # )
+
         p_route = (
-            0.45 * link_usage
-            + 0.30 * link_monitor
-            + 0.25 * route_exposure
+            0.60 * link_usage
+            + 0.40 * link_monitor
         )
 
         benefit = p_route * route_exposure * E_ROUTE
@@ -1474,7 +1437,7 @@ def build_route_candidates(
             "pair": pair,
             "src": pair[0],
             "dst": pair[1],
-            "current_option": 0,
+            "current_option": current_option,
             "score": score,
             "benefit": benefit,
             "cost": cost,
@@ -1703,7 +1666,8 @@ if __name__ == "__main__":
     for r in routes:
         print(
             f"  {r['src']} -> {r['dst']} | "
-            f"option={r['option']} | score={r['score']:.4f} | path={r['path']}"
+            f"current_option={r['current_option']} | "
+            f"score={r['score']:.4f} | path={r['path']}"
         )
 
     # print("\nActive ONOS pairs:")
@@ -1719,14 +1683,6 @@ if __name__ == "__main__":
             f"grid={c['grid_priority']:.2f}"
         )
 
-    # print("\nTop route candidates:")
-    # for c in details["route_candidates"][:10]:
-    #     print(
-    #         f"  {c['src']}->{c['dst']} | option={c['option']} | "
-    #         f"score={c['score']:.4f} | "
-    #         f"route_exp={c['route_exposure']:.2f} | "
-    #         f"link_usage={c['link_usage']:.2f}"
-    #     )
     print("\nTop route candidates:")
     for c in details["route_candidates"][:10]:
         print(

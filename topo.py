@@ -468,7 +468,7 @@ def ping_metrics_cycle(net, stop_event):
         print("\n[Cycle] Pinging hosts...")
 
         # ---- PING PHASE (NO LOGGING) ----
-        for i in range(2, 16):
+        for i in range(2, 40):
             host = net.get('h%d' % i)
 
             result = h1.cmd('ping -c 2 %s' % host.IP())
@@ -498,7 +498,7 @@ def ping_metrics_cycle(net, stop_event):
         )
 
         # Optional pause between cycles
-        time.sleep(120)
+        time.sleep(1)
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -630,6 +630,8 @@ def main():
     # with open("/tmp/shuffle_flag.txt", "w") as f:
     #     f.write("1\n")
 
+
+    # ///olld 
     # stop_event = threading.Event() #new
 
     # cycle_thread = threading.Thread( #new
@@ -643,9 +645,27 @@ def main():
 
     # stop_event.set() #new
     # cycle_thread.join() #new
+    # ///olld 
+
+    # # //////// ||threading to collect data.
+    # stop_event = threading.Event()
+
+    # cycle_thread = threading.Thread(
+    #     target=ping_metrics_cycle,
+    #     args=(net, stop_event)
+    # )
+
+    # cycle_thread.start()
+
+    # try:
+    #     CLI(net)
+    # finally:
+    #     stop_event.set()
+    #     cycle_thread.join()
+    # # //////// ||threading to collect data.
     
     
-    CLI(net) 
+    CLI(net) #old
 
     # stop.set()
     net.stop()
