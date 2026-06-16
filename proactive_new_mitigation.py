@@ -183,6 +183,14 @@ from mtd_utils import (
 
 
 # //////////IP shuffle/////////////
+
+GAP_HISTORY = 3      # distance from history IPs
+GAP_ASSIGN = 8       # distance between final assigned IPs
+
+def min_dist(ip, refs):
+    return min(abs(ip - r) for r in refs) if refs else 254
+
+
 def ip_octet(x):
     if x is None:
         return None
@@ -196,6 +204,17 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
         return {}
 
     current_ips = ip_manager.get_current_ips()
+
+    history_by_host = {
+        h: {
+            ip_octet(x)
+            for x in ip_manager.get_host_ips(h)
+            if ip_octet(x) is not None
+        }
+        for h in all_hosts
+    }
+
+    all_history_ips = set().union(*history_by_host.values())
 
     used_by_others = {
         ip_octet(ip)
@@ -213,7 +232,8 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
 
     for h in selected_hosts:
         current = ip_octet(current_ips.get(h))
-        recent = {ip_octet(x) for x in ip_manager.get_host_ips(h)}
+        # recent = {ip_octet(x) for x in ip_manager.get_host_ips(h)}
+        recent = history_by_host.get(h, set())
 
         cand = []
 
@@ -222,6 +242,12 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
                 continue
             if avoid_recent and ip in recent:   # C4
                 continue
+
+            # new constraint 
+            # C8: avoid IPs close to any historical IP
+            if min_dist(ip, all_history_ips) < GAP_HISTORY:
+                continue
+
             cand.append(ip)
 
         if not cand:
@@ -247,9 +273,38 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
             x[h, ip] for h in selected_hosts if (h, ip) in x
         ) <= 1
 
-    # Objective: maximize variation from current IP
+    # C7/C9: avoid sequential or too-close assigned IPs
+    for i, h1 in enumerate(selected_hosts):
+        for h2 in selected_hosts[i + 1:]:
+            for ip1 in feasible[h1]:
+                for ip2 in feasible[h2]:
+                    if abs(ip1 - ip2) < GAP_ASSIGN:
+                        model += x[h1, ip1] + x[h2, ip2] <= 1
+
+    # # Objective: maximize variation from current IP
+    # model += pulp.lpSum(
+    #     abs(ip - ip_octet(current_ips[h])) * x[h, ip]
+    #     for h in selected_hosts
+    #     for ip in feasible[h]
+    # )
+
+    # Objective: maximize distance from own current/history and global history | for new constraints
+    # model += pulp.lpSum(
+    #     (
+    #         0.4 * abs(ip - ip_octet(current_ips[h]))
+    #         + 0.3 * min_dist(ip, recent)
+    #         + 0.3 * min_dist(ip, all_history_ips)
+    #     ) * x[h, ip]
+    #     for h in selected_hosts
+    #     for ip in feasible[h]
+    #     for recent in [{ip_octet(v) for v in ip_manager.get_host_ips(h) if ip_octet(v) is not None}]
+    # )
     model += pulp.lpSum(
-        abs(ip - ip_octet(current_ips[h])) * x[h, ip]
+        (
+            0.4 * abs(ip - ip_octet(current_ips[h]))
+            + 0.3 * min_dist(ip, history_by_host[h])
+            + 0.3 * min_dist(ip, all_history_ips)
+        ) * x[h, ip]
         for h in selected_hosts
         for ip in feasible[h]
     )

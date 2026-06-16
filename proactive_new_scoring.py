@@ -1694,7 +1694,7 @@ if __name__ == "__main__":
             f"link_usage={c['link_usage']:.2f}"
         )
 
-
+    print(routes)
     # new
     if action == "route_mutation":
         selected_pairs = [(r["src"], r["dst"]) for r in routes]
