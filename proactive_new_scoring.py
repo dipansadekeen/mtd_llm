@@ -794,7 +794,9 @@ import numpy as np
 from requests.auth import HTTPBasicAuth
 
 import pulp
-
+# new
+from proactive_new_mitigation_route import run_route_ilp
+from proactive_new_mitigation import run_ip_ilp
 
 # =========================
 # CONFIG
@@ -1691,3 +1693,15 @@ if __name__ == "__main__":
             f"route_exp={c['route_exposure']:.2f} | "
             f"link_usage={c['link_usage']:.2f}"
         )
+
+
+    # new
+    if action == "route_mutation":
+        selected_pairs = [(r["src"], r["dst"]) for r in routes]
+        run_route_ilp(selected_pairs)
+
+    elif action == "ip_shuffle":
+        run_ip_ilp(hosts)
+
+    else:
+        print("[NO MTD] No mitigation executed.")
