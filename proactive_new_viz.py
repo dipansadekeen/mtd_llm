@@ -1,291 +1,465 @@
-# visualize_candidate_scores.py  (improved)
+# mtd_visualization.py
 #
-# Same pipeline as before (decide_ilp -> dataframes -> CSVs), but the figures
-# are rebuilt so they actually communicate the decision:
-#   * the 0/1 `selected` flag and the raw `score` are NO LONGER normalized into
-#     the metric heatmap (mixing a binary flag and an unbounded score with
-#     per-column min-max scaling made the old heatmap misleading);
-#   * `selected` becomes an amber gutter rail; `score` gets its own strip;
-#   * every heatmap cell is annotated with its RAW value;
-#   * two new figures: a ranked-score bar chart and a benefit-vs-cost scatter
-#     with a break-even line, both highlighting the optimizer's picks.
+# Interactive dashboard for the proactive MTD decision engine
+# (proactive_ilp_decision_compact.decide_ilp).
+#
+# It visualises:
+#   * Every IP (host) candidate  -> colour = score, with cost/benefit breakdown
+#   * Every route candidate       -> colour = score, cost-vs-benefit scatter
+#   * The MILP-selected action    -> selected hosts / routes highlighted
+#
+# Usage A (live, with ONOS reachable):
+#     python mtd_visualization.py
+#         -> calls decide_ilp() itself, writes mtd_dashboard.html
+#
+# Usage B (decoupled from ONOS):
+#     # inside your main script, after decide_ilp():
+#     from mtd_visualization import dump_details
+#     dump_details(action, hosts, routes, details, "mtd_run.json")
+#     # then, anywhere:
+#     python mtd_visualization.py mtd_run.json
+#
+# Usage C (offline preview):
+#     python mtd_visualization.py --demo
+#
+# Requires: plotly  ->  pip install plotly
 
 import os
-import numpy as np
-import pandas as pd
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-
-from proactive_ilp_decision_compact import decide_ilp
-
-OUT_DIR = "candidate_score_visuals"
-TOP_N = 20
-
-# shared palette (matches the interactive console)
-SIGNAL = "#F2B441"   # selected by the optimizer
-COOL = "#5BA8C4"     # passed over
-INK = "#10161e"
-THERMAL = LinearSegmentedColormap.from_list(
-    "thermal",
-    ["#10263B", "#1C5566", "#2A9D8F", "#E9C46A", "#F4A259"],
-)
+import sys
+import json
+import webbrowser
+import plotly
+import plotly.graph_objects as go
 
 
-def set_style():
-    mpl.rcParams.update({
-        "figure.facecolor": "white",
-        "axes.facecolor": "white",
-        "axes.edgecolor": "#cdd5dd",
-        "axes.linewidth": 0.8,
-        "axes.grid": True,
-        "grid.color": "#eef1f4",
-        "font.size": 11,
-        "axes.titlesize": 15,
-        "axes.titleweight": "semibold",
-        "xtick.color": "#3b4753",
-        "ytick.color": "#3b4753",
-        "axes.labelcolor": "#3b4753",
-    })
+# =========================
+# THEME
+# =========================
+
+# Score colour scale: low score (not worth defending) -> cool/blue,
+# high score (high-priority defence target) -> hot/red.
+SCORE_SCALE = "Turbo"
+
+SELECT_EDGE = "#FFD400"      # gold outline for MILP-selected items
+COST_COLOR = "#d9534f"       # red  (cost)
+BENEFIT_COLOR = "#5cb85c"    # green (benefit)
+GRID_BG = "#0e1117"
+PANEL_BG = "#161b22"
+TEXT_COLOR = "#e6edf3"
+
+COMPONENT_COLORS = {
+    "traffic_risk":  "#4e79a7",
+    "monitor_score": "#f28e2b",
+    "grid_priority": "#59a14f",
+    "ip_exposure":   "#e15759",
+    "p_host":        "#b07aa1",
+    "link_usage":    "#4e79a7",
+    "link_monitor":  "#f28e2b",
+    "route_exposure":"#e15759",
+    "p_route":       "#b07aa1",
+}
 
 
-def normalize_columns(df, cols):
-    out = df.copy()
-    for c in cols:
-        s = pd.to_numeric(out[c], errors="coerce").fillna(0.0)
-        mn, mx = s.min(), s.max()
-        out[c] = 0.0 if mx == mn else (s - mn) / (mx - mn)
-    return out
-
-
-def _fmt(v):
-    if pd.isna(v):
-        return "-"
-    av = abs(v)
-    if av >= 1000:
-        return f"{v/1000:.0f}k" if av >= 100000 else f"{v/1000:.1f}k"
-    if float(v).is_integer():
-        return f"{int(v)}"
-    return f"{v:.3f}" if av < 1 else f"{v:.2f}"
-
-
-# ---------------------------------------------------------------- heatmap
-def plot_heatmap(df, label_col, metric_cols, title, out_file, top_n=TOP_N):
-    if df.empty:
-        print(f"[SKIP] No data for {title}")
-        return
-
-    df = df.head(top_n).reset_index(drop=True)
-    metric_cols = [c for c in metric_cols if c in df.columns]
-    labels = df[label_col].astype(str).tolist()
-    sel = df["selected"].astype(int).values if "selected" in df else np.zeros(len(df))
-
-    norm = normalize_columns(df[metric_cols], metric_cols)[metric_cols].values
-    raw = df[metric_cols].values
-
-    n, m = len(df), len(metric_cols)
-    fig_h = max(5.5, 0.42 * n + 1.4)
-    fig_w = max(10, 1.05 * m + 3)
-    fig, (gax, hax, sax) = plt.subplots(
-        1, 3, figsize=(fig_w, fig_h),
-        gridspec_kw={"width_ratios": [0.14, m, 1.1], "wspace": 0.04},
+def _base_layout(title, height=420):
+    return dict(
+        title=dict(text=title, font=dict(size=16, color=TEXT_COLOR)),
+        paper_bgcolor=PANEL_BG,
+        plot_bgcolor=GRID_BG,
+        font=dict(color=TEXT_COLOR, family="Inter, Segoe UI, sans-serif"),
+        margin=dict(l=60, r=30, t=60, b=80),
+        height=height,
+        legend=dict(bgcolor="rgba(0,0,0,0)"),
     )
 
-    # --- gutter: selected rail ---
-    gax.imshow(sel.reshape(-1, 1), aspect="auto", cmap=
-               LinearSegmentedColormap.from_list("g", ["#e9edf1", SIGNAL]),
-               vmin=0, vmax=1)
-    gax.set_xticks([]); gax.set_yticks(range(n))
-    gax.set_yticklabels(
-        [("● " if s else "  ") + lab for s, lab in zip(sel, labels)],
-        fontsize=10)
-    gax.set_title("sel", fontsize=10, color="#6b7783")
-    for spine in gax.spines.values():
-        spine.set_visible(False)
 
-    # --- main metric heatmap (raw values annotated) ---
-    hax.imshow(norm, aspect="auto", cmap=THERMAL, vmin=0, vmax=1)
-    hax.set_yticks([])
-    hax.set_xticks(range(m))
-    hax.set_xticklabels(metric_cols, rotation=40, ha="right", fontsize=10)
-    for i in range(n):
-        for j in range(m):
-            txt = "#1a1206" if norm[i, j] > 0.55 else "#e9eef3"
-            hax.text(j, i, _fmt(raw[i, j]), ha="center", va="center",
-                     fontsize=8, color=txt)
-    hax.set_title(title, loc="left")
-    for spine in hax.spines.values():
-        spine.set_visible(False)
-
-    # --- score strip ---
-    if "score" in df:
-        sc = df["score"].values.reshape(-1, 1)
-        sn = (sc - sc.min()) / (sc.max() - sc.min() + 1e-9)
-        sax.imshow(sn, aspect="auto", cmap=
-                   LinearSegmentedColormap.from_list("s", ["#eef1f4", COOL]),
-                   vmin=0, vmax=1)
-        for i, v in enumerate(df["score"].values):
-            sax.text(0, i, f"{v:.3f}", ha="center", va="center",
-                     fontsize=8.5, color="#1f2a33", fontweight="bold")
-        sax.set_xticks([0]); sax.set_xticklabels(["score"], fontsize=10)
-    sax.set_yticks([])
-    for spine in sax.spines.values():
-        spine.set_visible(False)
-
-    fig.tight_layout()
-    fig.savefig(out_file, dpi=300, bbox_inches="tight")
-    plt.close(fig)
-    print(f"[SAVED] {out_file}")
+def _axis():
+    return dict(gridcolor="#30363d", zerolinecolor="#484f58", linecolor="#484f58")
 
 
-# ---------------------------------------------------------------- rank bars
-def plot_rank(df, label_col, title, out_file, top_n=TOP_N):
-    if df.empty:
-        return
-    df = df.sort_values("score", ascending=True).tail(top_n).reset_index(drop=True)
-    sel = df["selected"].astype(int).values if "selected" in df else np.zeros(len(df))
-    colors = [SIGNAL if s else COOL for s in sel]
+# =========================
+# HOST (IP) FIGURES
+# =========================
 
-    fig, ax = plt.subplots(figsize=(10, max(5, 0.42 * len(df) + 1)))
-    y = np.arange(len(df))
-    ax.barh(y, df["score"].values, color=colors,
-            edgecolor="white", linewidth=0.6, height=0.72)
-    ax.axvline(0, color="#aab4bd", lw=0.8)
-    ax.set_yticks(y)
-    ax.set_yticklabels([("● " if s else "") + str(l)
-                        for s, l in zip(sel, df[label_col])], fontsize=10)
-    for yi, v in zip(y, df["score"].values):
-        ax.text(v + (0.02 if v >= 0 else -0.02), yi, f"{v:.3f}",
-                va="center", ha="left" if v >= 0 else "right",
-                fontsize=9, color="#33414c")
-    ax.set_title(title, loc="left")
-    ax.set_xlabel("score")
-    ax.grid(axis="y", visible=False)
-    handles = [plt.Rectangle((0, 0), 1, 1, color=SIGNAL),
-               plt.Rectangle((0, 0), 1, 1, color=COOL)]
-    ax.legend(handles, ["selected", "passed over"], frameon=False,
-              loc="lower right", fontsize=9)
-    fig.tight_layout()
-    fig.savefig(out_file, dpi=300, bbox_inches="tight")
-    plt.close(fig)
-    print(f"[SAVED] {out_file}")
+def host_costbenefit_figure(ip_candidates, selected_hosts):
+    """Diverging bar: benefit (up) vs cost (down), net score overlaid.
+    Bars coloured by score; selected hosts get a gold outline + star."""
+    if not ip_candidates:
+        return _empty("No IP candidates")
 
+    cands = sorted(ip_candidates, key=lambda c: c["score"], reverse=True)
+    sel = set(selected_hosts or [])
 
-# ---------------------------------------------------------------- scatter
-def plot_tradeoff(df, label_col, title, out_file):
-    if df.empty or "benefit" not in df or "cost" not in df:
-        return
-    sel = df["selected"].astype(int).values if "selected" in df else np.zeros(len(df))
-    s = df["score"].values
-    size = 60 + 260 * (np.abs(s) / (np.abs(s).max() + 1e-9))
+    hosts = [c["host"] for c in cands]
+    benefit = [c["benefit"] for c in cands]
+    cost = [-c["cost"] for c in cands]          # plotted downward
+    score = [c["score"] for c in cands]
 
-    fig, ax = plt.subplots(figsize=(8.5, 7))
-    lim = max(df["benefit"].max(), df["cost"].max()) * 1.08
-    ax.plot([0, lim], [0, lim], "--", color="#9aa6b0", lw=1, zorder=1)
-    ax.text(lim, lim, " benefit = cost", color="#9aa6b0", fontsize=9,
-            ha="right", va="bottom")
+    edge_w = [3 if h in sel else 0 for h in hosts]
+    hover = [
+        f"<b>{c['host']}</b>{' ⭐SELECTED' if c['host'] in sel else ''}<br>"
+        f"score={c['score']:.4f}<br>benefit={c['benefit']:.4f}<br>"
+        f"cost={c['cost']:.4f}<br>p_host={c['p_host']:.3f}<br>"
+        f"traffic_risk={c['traffic_risk']:.3f}<br>monitor={c['monitor_score']:.3f}<br>"
+        f"grid={c['grid_priority']:.3f}<br>ip_exposure={c['ip_exposure']:.3f}<br>"
+        f"tx_pps={c.get('tx_pps',0):.1f} rx_pps={c.get('rx_pps',0):.1f}<extra></extra>"
+        for c in cands
+    ]
 
-    m0 = sel == 0
-    ax.scatter(df["cost"][m0], df["benefit"][m0], s=size[m0],
-               facecolors="none", edgecolors=COOL, linewidths=1.6,
-               label="passed over", zorder=2)
-    m1 = sel == 1
-    ax.scatter(df["cost"][m1], df["benefit"][m1], s=size[m1],
-               color=SIGNAL, edgecolors="#1a130a", linewidths=0.8,
-               label="selected", zorder=3)
-    # label the selected points
-    for _, r in df[sel == 1].iterrows():
-        ax.annotate(str(r[label_col]), (r["cost"], r["benefit"]),
-                    fontsize=8, color="#33414c",
-                    xytext=(5, 5), textcoords="offset points")
+    fig = go.Figure()
+    fig.add_bar(
+        x=hosts, y=benefit, name="benefit",
+        marker=dict(color=score, colorscale=SCORE_SCALE, showscale=True,
+                    colorbar=dict(title="score"),
+                    line=dict(color=SELECT_EDGE, width=edge_w)),
+        hovertext=hover, hovertemplate="%{hovertext}",
+    )
+    fig.add_bar(
+        x=hosts, y=cost, name="cost",
+        marker=dict(color=COST_COLOR, line=dict(color=SELECT_EDGE, width=edge_w)),
+        hovertemplate="<b>%{x}</b><br>cost=%{customdata:.4f}<extra></extra>",
+        customdata=[c["cost"] for c in cands],
+    )
+    fig.add_scatter(
+        x=hosts, y=score, name="net score", mode="lines+markers",
+        line=dict(color=TEXT_COLOR, width=1.5, dash="dot"),
+        marker=dict(size=6, color=TEXT_COLOR),
+        hovertemplate="<b>%{x}</b><br>net score=%{y:.4f}<extra></extra>",
+    )
 
-    ax.set_xlim(0, lim); ax.set_ylim(0, lim)
-    ax.set_xlabel("cost"); ax.set_ylabel("benefit")
-    ax.set_title(title, loc="left")
-    ax.legend(frameon=False, loc="lower right", fontsize=9)
-    fig.tight_layout()
-    fig.savefig(out_file, dpi=300, bbox_inches="tight")
-    plt.close(fig)
-    print(f"[SAVED] {out_file}")
+    # star annotations for selected hosts
+    for c in cands:
+        if c["host"] in sel:
+            fig.add_annotation(x=c["host"], y=c["benefit"], text="⭐",
+                               showarrow=False, yshift=14, font=dict(size=14))
+
+    lay = _base_layout("Host (IP-shuffle) candidates — cost / benefit / score")
+    lay.update(barmode="relative", xaxis=dict(**_axis(), tickangle=-45),
+               yaxis=dict(**_axis(), title="benefit (+) / cost (−)"))
+    fig.update_layout(lay)
+    return fig
 
 
-# ---------------------------------------------------------------- dataframes
-def build_ip_dataframe(ip_candidates, selected_hosts):
-    df = pd.DataFrame(ip_candidates)
-    if df.empty:
-        return df
-    sel = set(selected_hosts)
-    df["selected"] = df["host"].apply(lambda h: 1 if h in sel else 0)
-    df["candidate"] = df.apply(
-        lambda r: f"{'* ' if r['selected'] else ''}{r['host']}", axis=1)
-    return df.sort_values("score", ascending=False).reset_index(drop=True)
+def host_components_figure(ip_candidates, selected_hosts):
+    """Grouped bars of the four risk components that build p_host."""
+    if not ip_candidates:
+        return _empty("No IP candidates")
+
+    cands = sorted(ip_candidates, key=lambda c: c["score"], reverse=True)
+    sel = set(selected_hosts or [])
+    hosts = [c["host"] + (" ⭐" if c["host"] in sel else "") for c in cands]
+
+    fig = go.Figure()
+    for comp in ["traffic_risk", "monitor_score", "grid_priority", "ip_exposure"]:
+        fig.add_bar(x=hosts, y=[c[comp] for c in cands], name=comp,
+                    marker_color=COMPONENT_COLORS[comp])
+
+    lay = _base_layout("Host risk components (inputs to p_host & benefit)")
+    lay.update(barmode="group", xaxis=dict(**_axis(), tickangle=-45),
+               yaxis=dict(**_axis(), title="normalised value [0–1]"))
+    fig.update_layout(lay)
+    return fig
 
 
-def build_route_dataframe(route_candidates, selected_routes):
-    df = pd.DataFrame(route_candidates)
-    if df.empty:
-        return df
-    pairs = {(r["src"], r["dst"]) for r in selected_routes}
-    df["selected"] = df.apply(
-        lambda r: 1 if (r["src"], r["dst"]) in pairs else 0, axis=1)
-    df["candidate"] = df.apply(
-        lambda r: f"{'* ' if r['selected'] else ''}{r['src']}->{r['dst']}|opt{r['current_option']}",
-        axis=1)
-    return df.sort_values("score", ascending=False).reset_index(drop=True)
+def host_scatter_figure(ip_candidates, selected_hosts):
+    """Priority vs exposure bubble map, colour = score, size = benefit."""
+    if not ip_candidates:
+        return _empty("No IP candidates")
+
+    sel = set(selected_hosts or [])
+    scores = [c["score"] for c in ip_candidates]
+    benefits = [max(c["benefit"], 0) for c in ip_candidates]
+    smax = max(benefits) or 1.0
+    sizes = [12 + 38 * (b / smax) for b in benefits]
+    edge_w = [3 if c["host"] in sel else 0.5 for c in ip_candidates]
+
+    hover = [
+        f"<b>{c['host']}</b>{' ⭐' if c['host'] in sel else ''}<br>"
+        f"score={c['score']:.4f}<br>p_host={c['p_host']:.3f}<br>"
+        f"ip_exposure={c['ip_exposure']:.3f}<br>benefit={c['benefit']:.4f}<extra></extra>"
+        for c in ip_candidates
+    ]
+
+    fig = go.Figure(go.Scatter(
+        x=[c["p_host"] for c in ip_candidates],
+        y=[c["ip_exposure"] for c in ip_candidates],
+        mode="markers+text",
+        text=[c["host"] for c in ip_candidates],
+        textposition="top center", textfont=dict(size=9, color=TEXT_COLOR),
+        marker=dict(size=sizes, color=scores, colorscale=SCORE_SCALE,
+                    showscale=True, colorbar=dict(title="score"),
+                    line=dict(color=SELECT_EDGE, width=edge_w)),
+        hovertext=hover, hovertemplate="%{hovertext}",
+    ))
+    lay = _base_layout("Host map — priority (p_host) vs IP exposure  ·  size = benefit")
+    lay.update(xaxis=dict(**_axis(), title="p_host (defence priority)"),
+               yaxis=dict(**_axis(), title="ip_exposure"))
+    fig.update_layout(lay)
+    return fig
 
 
-def summarize(name, df):
-    if df.empty:
-        print(f"\n{name}: (no candidates)")
-        return
-    sel = df[df["selected"] == 1]
-    print(f"\n{name}: {len(df)} candidates, {len(sel)} selected")
-    show = [c for c in ["candidate", "score", "benefit", "cost"] if c in df.columns]
-    with pd.option_context("display.max_rows", 8, "display.width", 120):
-        print(df[show].head(8).to_string(index=False))
+# =========================
+# ROUTE FIGURES
+# =========================
+
+def route_costbenefit_figure(route_candidates, selected_routes):
+    """Cost-vs-benefit scatter for route mutations. Above the y=x line => score>0."""
+    if not route_candidates:
+        return _empty("No route candidates (no active pairs?)")
+
+    sel = {(r["src"], r["dst"]) for r in (selected_routes or [])}
+    labels = [f"{c['src']}→{c['dst']}" for c in route_candidates]
+    costs = [c["cost"] for c in route_candidates]
+    bens = [c["benefit"] for c in route_candidates]
+    scores = [c["score"] for c in route_candidates]
+    edge_w = [3 if (c["src"], c["dst"]) in sel else 0.5 for c in route_candidates]
+
+    hover = [
+        f"<b>{c['src']}→{c['dst']}</b>{' ⭐SELECTED' if (c['src'],c['dst']) in sel else ''}<br>"
+        f"current_option={c.get('current_option','?')}<br>"
+        f"score={c['score']:.4f}<br>benefit={c['benefit']:.4f}<br>cost={c['cost']:.4f}<br>"
+        f"p_route={c['p_route']:.3f}<br>link_usage={c['link_usage']:.3f}<br>"
+        f"link_monitor={c['link_monitor']:.3f}<br>route_exposure={c['route_exposure']:.3f}<br>"
+        f"path={str(c.get('path',''))[:80]}<extra></extra>"
+        for c in route_candidates
+    ]
+
+    fig = go.Figure(go.Scatter(
+        x=costs, y=bens, mode="markers+text", text=labels,
+        textposition="top center", textfont=dict(size=9, color=TEXT_COLOR),
+        marker=dict(size=16, color=scores, colorscale=SCORE_SCALE,
+                    showscale=True, colorbar=dict(title="score"),
+                    line=dict(color=SELECT_EDGE, width=edge_w)),
+        hovertext=hover, hovertemplate="%{hovertext}",
+    ))
+    # break-even line: benefit == cost  (score == 0)
+    lo = min(costs + bens + [0]); hi = max(costs + bens + [0.01])
+    fig.add_scatter(x=[lo, hi], y=[lo, hi], mode="lines", name="break-even (score=0)",
+                    line=dict(color="#8b949e", width=1, dash="dash"),
+                    hoverinfo="skip")
+
+    lay = _base_layout("Route candidates — cost vs benefit  (above dashed line ⇒ worth doing)")
+    lay.update(xaxis=dict(**_axis(), title="cost"),
+               yaxis=dict(**_axis(), title="benefit"))
+    fig.update_layout(lay)
+    return fig
 
 
-# ---------------------------------------------------------------- main
-def main():
-    os.makedirs(OUT_DIR, exist_ok=True)
-    set_style()
+def route_components_figure(route_candidates, selected_routes):
+    """Grouped bars of the values that build each route's p_route."""
+    if not route_candidates:
+        return _empty("No route candidates")
 
-    action, selected_hosts, selected_routes, details = decide_ilp()
-    print("Selected action:", action)
-    print("Selected IP hosts:", selected_hosts)
-    print("Selected routes:", [(r["src"], r["dst"]) for r in selected_routes])
+    cands = sorted(route_candidates, key=lambda c: c["score"], reverse=True)
+    sel = {(r["src"], r["dst"]) for r in (selected_routes or [])}
+    labels = [f"{c['src']}→{c['dst']}" + (" ⭐" if (c['src'], c['dst']) in sel else "")
+              for c in cands]
 
-    ip_df = build_ip_dataframe(details.get("ip_candidates", []), selected_hosts)
-    route_df = build_route_dataframe(details.get("route_candidates", []), selected_routes)
+    fig = go.Figure()
+    for comp in ["link_usage", "link_monitor", "route_exposure"]:
+        fig.add_bar(x=labels, y=[c[comp] for c in cands], name=comp,
+                    marker_color=COMPONENT_COLORS[comp])
+    fig.add_scatter(x=labels, y=[c["score"] for c in cands], name="score",
+                    mode="lines+markers", line=dict(color=TEXT_COLOR, dash="dot"),
+                    hovertemplate="%{x}<br>score=%{y:.4f}<extra></extra>")
 
-    # rounded CSVs for clean data display
-    for df, fn in [(ip_df, "ip_candidates_scores.csv"),
-                   (route_df, "route_candidates_scores.csv")]:
-        path = os.path.join(OUT_DIR, fn)
-        df.round(4).to_csv(path, index=False)
-        print(f"[SAVED] {path}")
+    lay = _base_layout("Route components (link usage / monitor / exposure) + score")
+    lay.update(barmode="group", xaxis=dict(**_axis(), tickangle=-45),
+               yaxis=dict(**_axis(), title="value"))
+    fig.update_layout(lay)
+    return fig
 
-    summarize("IP hosts", ip_df)
-    summarize("Routes", route_df)
 
-    ip_metrics = ["benefit", "cost", "p_host", "traffic_risk", "monitor_score",
-                  "ip_exposure", "grid_priority", "rx_pps", "tx_pps",
-                  "rx_mbps", "tx_mbps"]
-    route_metrics = ["benefit", "cost", "p_route", "route_exposure",
-                     "link_usage", "link_monitor", "current_option"]
+# =========================
+# UTILITIES
+# =========================
 
-    P = lambda f: os.path.join(OUT_DIR, f)
+def _empty(msg):
+    fig = go.Figure()
+    fig.add_annotation(text=msg, showarrow=False,
+                       font=dict(size=16, color=TEXT_COLOR), x=0.5, y=0.5,
+                       xref="paper", yref="paper")
+    fig.update_layout(_base_layout("", height=200))
+    return fig
 
-    plot_rank(ip_df, "candidate", f"Top {TOP_N} IP hosts by score", P("ip_rank.png"))
-    plot_tradeoff(ip_df, "host", "IP hosts: benefit vs cost", P("ip_tradeoff.png"))
-    plot_heatmap(ip_df, "candidate", ip_metrics,
-                 f"Top {TOP_N} IP candidates", P("ip_candidate_heatmap.png"))
 
-    plot_rank(route_df, "candidate", f"Top {TOP_N} routes by score", P("route_rank.png"))
-    plot_tradeoff(route_df, "candidate", "Routes: benefit vs cost", P("route_tradeoff.png"))
-    plot_heatmap(route_df, "candidate", route_metrics,
-                 f"Top {TOP_N} route candidates", P("route_candidate_heatmap.png"))
+def _summary_html(action, selected_hosts, selected_routes, details):
+    n_hosts = len(details.get("ip_candidates", []))
+    n_routes = len(details.get("route_candidates", []))
+    used_ip = sum(c["cost"] for c in details.get("ip_candidates", [])
+                  if c["host"] in set(selected_hosts or []))
+    sel_pairs = {(r["src"], r["dst"]) for r in (selected_routes or [])}
+    used_rt = sum(c["cost"] for c in details.get("route_candidates", [])
+                  if (c["src"], c["dst"]) in sel_pairs)
+    budget_used = used_ip + used_rt
 
+    badge = {"ip_shuffle": "#f28e2b", "route_mutation": "#4e79a7",
+             "no_mtd": "#8b949e"}.get(action, "#8b949e")
+
+    hosts_txt = ", ".join(selected_hosts) if selected_hosts else "—"
+    routes_txt = ", ".join(f"{r['src']}→{r['dst']}(opt {r.get('current_option','?')})"
+                           for r in (selected_routes or [])) or "—"
+    pairs = ", ".join(f"{a}–{b}" for a, b in details.get("active_pairs", [])) or "—"
+
+    def card(label, value, color=TEXT_COLOR):
+        return (f"<div style='background:{PANEL_BG};border:1px solid #30363d;"
+                f"border-radius:10px;padding:14px 18px;min-width:150px'>"
+                f"<div style='font-size:12px;color:#8b949e'>{label}</div>"
+                f"<div style='font-size:20px;font-weight:600;color:{color};"
+                f"margin-top:4px'>{value}</div></div>")
+
+    return f"""
+    <div style='display:flex;flex-wrap:wrap;gap:14px;margin-bottom:8px'>
+      {card("Selected action", action.upper(), badge)}
+      {card("Defence cost used", f"{budget_used:.3f}")}
+      {card("IP candidates", n_hosts)}
+      {card("Route candidates", n_routes)}
+      {card("Selected hosts", hosts_txt, "#f28e2b")}
+      {card("Selected routes", routes_txt, "#4e79a7")}
+    </div>
+    <div style='color:#8b949e;font-size:13px;margin-bottom:18px'>
+      Active host pairs: {pairs}
+    </div>"""
+
+
+def build_dashboard(action, selected_hosts, selected_routes, details,
+                    output_html="mtd_dashboard.html", auto_open=True):
+    ipc = details.get("ip_candidates", [])
+    rtc = details.get("route_candidates", [])
+
+    figs = [
+        host_costbenefit_figure(ipc, selected_hosts),
+        host_components_figure(ipc, selected_hosts),
+        host_scatter_figure(ipc, selected_hosts),
+        route_costbenefit_figure(rtc, selected_routes),
+        route_components_figure(rtc, selected_routes),
+    ]
+
+    blocks = [f.to_html(full_html=False, include_plotlyjs=("cdn" if i == 0 else False))
+              for i, f in enumerate(figs)]
+
+    html = f"""<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>MTD Decision Dashboard</title>
+<style>
+  body{{background:{GRID_BG};color:{TEXT_COLOR};
+       font-family:Inter,'Segoe UI',sans-serif;margin:0;padding:24px}}
+  h1{{font-size:22px;margin:0 0 4px}}
+  .sub{{color:#8b949e;font-size:13px;margin-bottom:18px}}
+  .fig{{background:{PANEL_BG};border:1px solid #30363d;border-radius:12px;
+        padding:8px;margin-bottom:22px}}
+  .section{{font-size:14px;color:#8b949e;letter-spacing:1px;
+           text-transform:uppercase;margin:8px 0}}
+</style></head><body>
+  <h1>Proactive MTD — Decision Dashboard</h1>
+  <div class="sub">IP-shuffle &amp; route-mutation candidate scoring · gold outline + ⭐ = MILP selected</div>
+  {_summary_html(action, selected_hosts, selected_routes, details)}
+  <div class="section">Hosts (IP shuffle)</div>
+  <div class="fig">{blocks[0]}</div>
+  <div class="fig">{blocks[1]}</div>
+  <div class="fig">{blocks[2]}</div>
+  <div class="section">Routes (route mutation)</div>
+  <div class="fig">{blocks[3]}</div>
+  <div class="fig">{blocks[4]}</div>
+</body></html>"""
+
+    with open(output_html, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"[OK] Dashboard written -> {os.path.abspath(output_html)}")
+
+    if auto_open:
+        try:
+            webbrowser.open("file://" + os.path.abspath(output_html))
+        except Exception:
+            pass
+    return output_html
+
+
+# =========================
+# JSON BRIDGE (decouple from ONOS)
+# =========================
+
+def _sanitize(obj):
+    """Make tuples JSON-safe (active_pairs, pair keys, etc.)."""
+    if isinstance(obj, dict):
+        return {k: _sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_sanitize(v) for v in obj]
+    return obj
+
+
+def dump_details(action, selected_hosts, selected_routes, details, path="mtd_run.json"):
+    """Call this from your main script to export a run for offline visualisation."""
+    payload = {
+        "action": action,
+        "selected_hosts": list(selected_hosts or []),
+        "selected_routes": _sanitize(selected_routes or []),
+        "details": _sanitize(details or {}),
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    print(f"[OK] Run exported -> {os.path.abspath(path)}")
+    return path
+
+
+def load_run(path):
+    with open(path, encoding="utf-8") as f:
+        p = json.load(f)
+    # restore tuple shape where the figures expect it
+    det = p["details"]
+    det["active_pairs"] = [tuple(x) for x in det.get("active_pairs", [])]
+    return p["action"], p["selected_hosts"], p["selected_routes"], det
+
+
+# =========================
+# DEMO DATA (offline preview)
+# =========================
+
+def _demo():
+    import random
+    random.seed(7)
+    ipc = []
+    for hid in [3, 7, 12, 18, 25, 30, 35, 39]:
+        tr, ms, gp, ex = (random.random() for _ in range(4))
+        p = 0.40 * tr + 0.35 * ms + 0.25 * gp
+        ben = p * ex * 0.70
+        cost = 0.15 * (2830 / 3000)
+        ipc.append(dict(host=f"h{hid}", score=ben - cost, benefit=ben, cost=cost,
+                        p_host=p, traffic_risk=tr, monitor_score=ms,
+                        grid_priority=gp, ip_exposure=ex,
+                        rx_pps=random.uniform(0, 150), tx_pps=random.uniform(0, 150),
+                        rx_mbps=random.random()*0.1, tx_mbps=random.random()*0.1))
+    rtc = []
+    for a, b in [("h1", "h35"), ("h2", "h30"), ("h1", "h12"), ("h7", "h25")]:
+        lu, lm, ex = random.random(), random.random(), random.random()
+        p = 0.60 * lu + 0.40 * lm
+        ben = p * ex * 0.60
+        cost = 0.05 + 0.10 * lu
+        rtc.append(dict(pair=(a, b), src=a, dst=b, current_option=random.randint(0, 3),
+                        score=ben - cost, benefit=ben, cost=cost, p_route=p,
+                        route_exposure=ex, link_usage=lu, link_monitor=lm,
+                        path=f"of:..{a}->of:..{b}"))
+    best = max(ipc, key=lambda c: c["score"])
+    details = dict(active_pairs=[("h1", "h35"), ("h2", "h30")],
+                   active_hosts=["h1", "h2", "h30", "h35"],
+                   ip_candidates=sorted(ipc, key=lambda c: c["score"], reverse=True),
+                   route_candidates=sorted(rtc, key=lambda c: c["score"], reverse=True),
+                   selected_routes=[])
+    return "ip_shuffle", [best["host"]], [], details
+
+
+# =========================
+# ENTRY POINT
+# =========================
 
 if __name__ == "__main__":
-    main()
+    args = sys.argv[1:]
+
+    if "--demo" in args:
+        action, hosts, routes, details = _demo()
+    elif args and args[0].endswith(".json"):
+        action, hosts, routes, details = load_run(args[0])
+    else:
+        # live: run the decision engine directly
+        from proactive_new_scoring import decide_ilp
+        action, hosts, routes, details = decide_ilp()
+
+    build_dashboard(action, hosts, routes, details)

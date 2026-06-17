@@ -3,7 +3,8 @@ import csv
 import os
 IP_HISTORY_FILE = "ip_history.csv"
 ROUTE_HISTORY_FILE = "route_history.csv"
-ROUTE_HISTORY_SIZE = 10
+# ROUTE_HISTORY_SIZE = 10
+ROUTE_HISTORY_SIZE = 15
 
 HOST_TO_SWITCH = {
     "h1": "s1",
@@ -24,7 +25,8 @@ SKIP_HOSTS = {"h40"}
 all_hosts = [f"h{i}" for i in range(1, 41) if f"h{i}" not in SKIP_HOSTS]
 # IP helper
 class HostIPQueueManager:
-    def __init__(self, host_count=40, queue_size=10):
+    # def __init__(self, host_count=40, queue_size=10):
+    def __init__(self, host_count=40, queue_size=15):
         self.host_count = host_count
         self.queue_size = queue_size
         self.queues = {}
@@ -102,7 +104,8 @@ class HostIPQueueManager:
     # /////////
 
 class RouteHistoryManager:
-    def __init__(self, hosts, queue_size=10):
+    # def __init__(self, hosts, queue_size=10):
+    def __init__(self, hosts, queue_size=15):
         self.queue_size = queue_size
         self.queues = {}
 

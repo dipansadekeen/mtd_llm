@@ -2,6 +2,7 @@ import requests, time, csv
 from datetime import datetime
 from collections import deque
 
+from flow_stats import collect_once as collect_flow_stats_once
 # ==================================================
 # CONFIG
 # ==================================================
@@ -418,9 +419,11 @@ try:
     while True:
         t = time.time()
 
+
+        collect_flow_stats_once()
+
         # n_links = update_link_stats(t)
         n_hosts = update_host_stats(t)
-
         # print(f"[{now_iso()}] Links: {n_links}, Edge-hosts: {n_hosts}")
         n_links = update_edge_stats(t) #------link-creation------_#
         print(f"[{now_iso()}] Links: {n_links}, Hosts: {n_hosts}")

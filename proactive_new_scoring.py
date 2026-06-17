@@ -787,11 +787,13 @@
 # proactive_ilp_decision_compact.py
 
 import re
-import math
+import math,time
 import requests
 import pandas as pd
 import numpy as np
 from requests.auth import HTTPBasicAuth
+from proactive_new_logging import log_evaluation_snapshot
+
 
 import pulp
 # new
@@ -832,7 +834,9 @@ LAMBDA_IP = 0.15
 
 DEFAULT_GRID_PRIORITY = 0.0
 
-RECENT_WINDOW = 10 
+# RECENT_WINDOW = 10 
+RECENT_WINDOW = 15
+
 
 IP_ACTIVE_ONLY = False
 # new
@@ -1432,7 +1436,9 @@ def build_route_candidates(
         )
 
         benefit = p_route * route_exposure * E_ROUTE
-        cost = O_ROUTE + 0.10 * link_usage
+        # cost = O_ROUTE + 0.10 * link_usage
+        cost = O_ROUTE
+
         score = benefit - cost
 
         candidates.append({
@@ -1654,54 +1660,119 @@ def decide_ilp(
     return action, selected_hosts, selected_routes, details
 
 
+
+# ////////////need logging /////////////////
+import csv, os
+from datetime import datetime
+
+DECISION_LOG = "decision_log.csv"
+
+def log_decision(action, hosts, routes, details, path=DECISION_LOG):
+    ipc = details.get("ip_candidates", [])
+    rtc = details.get("route_candidates", [])
+
+    sel_pairs = {(r["src"], r["dst"]) for r in (routes or [])}
+    used = (sum(c["cost"] for c in ipc if c["host"] in set(hosts or []))
+            + sum(c["cost"] for c in rtc if (c["src"], c["dst"]) in sel_pairs))
+
+    row = {
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "action": action,
+        "n_selected_hosts": len(hosts or []),
+        "selected_hosts": "|".join(hosts or []),
+        "n_selected_routes": len(routes or []),
+        "selected_routes": "|".join(
+            f"{r['src']}-{r['dst']}@opt{r.get('current_option','?')}" for r in (routes or [])
+        ),
+        "cost_used": round(used, 4),
+        "n_ip_cand": len(ipc),
+        "n_route_cand": len(rtc),
+        "top_ip": ipc[0]["host"] if ipc else "",
+        "top_ip_score": round(ipc[0]["score"], 4) if ipc else "",
+        "top_route": f"{rtc[0]['src']}-{rtc[0]['dst']}" if rtc else "",
+        "top_route_score": round(rtc[0]["score"], 4) if rtc else "",
+        "active_pairs": len(details.get("active_pairs", [])),
+    }
+
+    write_header = not os.path.exists(path)
+    with open(path, "a", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(row.keys()))
+        if write_header:
+            w.writeheader()
+        w.writerow(row)
+# ////////////need logging /////////////////
+
 # =========================
 # RUN DIRECTLY
 # =========================
 
 if __name__ == "__main__":
-    action, hosts, routes, details = decide_ilp()
 
-    print("\nSelected action:", action)
-    print("Selected IP hosts:", hosts)
+    while(True):
+        action, hosts, routes, details = decide_ilp()
 
-    print("Selected route mutations:")
-    for r in routes:
-        print(
-            f"  {r['src']} -> {r['dst']} | "
-            f"current_option={r['current_option']} | "
-            f"score={r['score']:.4f} | path={r['path']}"
+        # # ////// need logging //////////
+        # log_decision(action, hosts, routes, details)   # <-- add this
+        # # ////// need logging //////////
+
+        #detailed_logger///////////// #new
+        cycle_id = log_evaluation_snapshot(
+            action=action,
+            hosts=hosts,
+            routes=routes,
+            details=details,
+            host_csv="host_stats_onos.csv",
+            link_csv="link_stats_onos.csv",
+            link_capacity_mbps=LINK_CAPACITY_MBPS,
+            link_monitor_threshold_mbps=LINK_MONITOR_THRESHOLD_MBPS,
         )
 
-    # print("\nActive ONOS pairs:")
-    # for p in details["active_pairs"]:
-    #     print(" ", p)
+        print("[EVAL LOG CYCLE]", cycle_id)
+        #detailed_logger///////////// #new
 
-    print("\nTop IP candidates:")
-    for c in details["ip_candidates"][:10]:
-        print(
-            f"  {c['host']} | score={c['score']:.4f} | "
-            f"p_host={c['p_host']:.3f} | "
-            f"ip_exp={c['ip_exposure']:.2f} | "
-            f"grid={c['grid_priority']:.2f}"
-        )
 
-    print("\nTop route candidates:")
-    for c in details["route_candidates"][:10]:
-        print(
-            f"  {c['src']}->{c['dst']} | current_option={c['current_option']} | "
-            f"score={c['score']:.4f} | "
-            f"route_exp={c['route_exposure']:.2f} | "
-            f"link_usage={c['link_usage']:.2f}"
-        )
+        print("\nSelected action:", action)
+        print("Selected IP hosts:", hosts)
 
-    print(routes)
-    # new
-    if action == "route_mutation":
-        selected_pairs = [(r["src"], r["dst"]) for r in routes]
-        run_route_ilp(selected_pairs)
+        print("Selected route mutations:")
+        for r in routes:
+            print(
+                f"  {r['src']} -> {r['dst']} | "
+                f"current_option={r['current_option']} | "
+                f"score={r['score']:.4f} | path={r['path']}"
+            )
 
-    elif action == "ip_shuffle":
-        run_ip_ilp(hosts)
+        # print("\nActive ONOS pairs:")
+        # for p in details["active_pairs"]:
+        #     print(" ", p)
 
-    else:
-        print("[NO MTD] No mitigation executed.")
+        print("\nTop IP candidates:")
+        for c in details["ip_candidates"][:10]:
+            print(
+                f"  {c['host']} | score={c['score']:.4f} | "
+                f"p_host={c['p_host']:.3f} | "
+                f"ip_exp={c['ip_exposure']:.2f} | "
+                f"grid={c['grid_priority']:.2f}"
+            )
+
+        print("\nTop route candidates:")
+        for c in details["route_candidates"][:10]:
+            print(
+                f"  {c['src']}->{c['dst']} | current_option={c['current_option']} | "
+                f"score={c['score']:.4f} | "
+                f"route_exp={c['route_exposure']:.2f} | "
+                f"link_usage={c['link_usage']:.2f}"
+            )
+
+        print(routes)
+        # new
+        if action == "route_mutation":
+            selected_pairs = [(r["src"], r["dst"]) for r in routes]
+            run_route_ilp(selected_pairs)
+
+        elif action == "ip_shuffle":
+            run_ip_ilp(hosts)
+
+        else:
+            print("[NO MTD] No mitigation executed.")
+        time.sleep(30)
