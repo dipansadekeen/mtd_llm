@@ -21,7 +21,7 @@ HOST_TO_SWITCH = {
 
     "h34": "s7", "h35": "s7", "h36": "s7", "h37": "s7", "h38": "s7", "h39": "s7", "h40": "s7",
 }
-SKIP_HOSTS = {"h40"}
+SKIP_HOSTS = {}
 all_hosts = [f"h{i}" for i in range(1, 41) if f"h{i}" not in SKIP_HOSTS]
 # IP helper
 class HostIPQueueManager:
@@ -197,3 +197,46 @@ class RouteHistoryManager:
             value = selected_map.get(key, 0)
 
             self.queues[key].append(value)
+
+def repeat_ip_history():
+    """
+    Append one timeline step to IP history without changing any IP.
+    Each host repeats its current/latest IP.
+    """
+
+    ip_manager = HostIPQueueManager(queue_size=ROUTE_HISTORY_SIZE)
+
+    for i in range(1, 41):
+        ip_manager.set_host_ips(f"h{i}", [i])
+
+    ip_manager.load_from_csv()
+
+    current_ips = ip_manager.get_current_ips()
+
+    for h in all_hosts:
+        ip_manager.update_host_queue(h, current_ips.get(h))
+
+    ip_manager.save_to_csv()
+
+    print("[IP HISTORY] repeated last IP values.")
+
+def repeat_route_history():
+    """
+    Append one timeline step to route history without changing any route.
+    Each host pair repeats its current/latest route option.
+    """
+
+    route_manager = RouteHistoryManager(
+        all_hosts,
+        queue_size=ROUTE_HISTORY_SIZE,
+    )
+
+    route_manager.load_from_csv()
+
+    for key, q in route_manager.queues.items():
+        last_value = q[-1] if len(q) > 0 else 0
+        q.append(last_value)
+
+    route_manager.save_to_csv()
+
+    print("[ROUTE HISTORY] repeated last route values.")

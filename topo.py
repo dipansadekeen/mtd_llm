@@ -9,6 +9,7 @@ from mininet.cli import CLI
 from mininet.log import setLogLevel
 from functools import partial
 import time, os, threading
+import csv, os, re, time
 
 # new
 from proactive_files.metrics_collector import capture_all_host_metrics #new
@@ -458,47 +459,83 @@ def ping_x(net):
 
         time.sleep(3)
 
-def ping_metrics_cycle(net, stop_event):
-    """Cycle: ping → metrics → repeat (no ping logging)."""
+# def ping_metrics_cycle(net, stop_event):
+#     """Cycle: ping → metrics → repeat (no ping logging)."""
 
+#     h1 = net.get('h1')
+
+#     while not stop_event.is_set():
+
+#         print("\n[Cycle] Pinging hosts...")
+
+#         # ---- PING PHASE (NO LOGGING) ----
+#         for i in range(2, 40):
+#             host = net.get('h%d' % i)
+
+#             result = h1.cmd('ping -c 2 %s' % host.IP())
+
+#             # Optional: still compute status (for debugging only)
+#             if "0% packet loss" in result:
+#                 status = "ok"
+#             else:
+#                 status = "loss"
+
+#             print("Ping h1 -> %s : %s" % (host.name, status))
+
+#             if stop_event.is_set():
+#                 return
+
+#         print("\n[Cycle] Running metrics...")
+
+#         # ---- METRICS PHASE (THIS IS WHAT YOU LOG) ----
+#         capture_all_host_metrics(
+#             net,
+#             output_csv="h1_to_all_metrics.csv",
+#             ping_count=5,
+#             iperf_duration=5,
+#             udp_bandwidth="5M",
+#             port=5001,
+#             src_host_name="h1"
+#         )
+
+#         # Optional pause between cycles
+#         time.sleep(1)
+
+# /////////// with logging./////////////////////
+
+def ping_metrics_cycle(net, stop_event):
     h1 = net.get('h1')
+    rtt_csv = "proactive_rtt_log.csv"
+
+    if not os.path.exists(rtt_csv):
+        with open(rtt_csv, "w") as f:
+            csv.writer(f).writerow(["src_host", "dst_host", "avg_rtt_ms", "packet_loss_pct"])
 
     while not stop_event.is_set():
+        print("\n[Cycle] Pinging hosts and logging RTT/loss...")
 
-        print("\n[Cycle] Pinging hosts...")
+        with open(rtt_csv, "a") as f:
+            writer = csv.writer(f)
 
-        # ---- PING PHASE (NO LOGGING) ----
-        for i in range(2, 40):
-            host = net.get('h%d' % i)
+            for i in range(2, 40):
+                host = net.get('h%d' % i)
+                result = h1.cmd('ping -c 2 %s' % host.IP())
 
-            result = h1.cmd('ping -c 2 %s' % host.IP())
+                loss = re.search(r'(\d+(?:\.\d+)?)% packet loss', result)
+                rtt = re.search(r'=\s*([\d.]+)/([\d.]+)/([\d.]+)/([\d.]+)', result)
 
-            # Optional: still compute status (for debugging only)
-            if "0% packet loss" in result:
-                status = "ok"
-            else:
-                status = "loss"
+                loss = loss.group(1) if loss else "N/A"
+                rtt = rtt.group(2) if rtt else "N/A"
 
-            print("Ping h1 -> %s : %s" % (host.name, status))
+                writer.writerow(["h1", host.name, rtt, loss])
+                print("h1 -> %s | RTT avg: %s ms | loss: %s%%" % (host.name, rtt, loss))
 
-            if stop_event.is_set():
-                return
+                if stop_event.is_set():
+                    return
 
-        print("\n[Cycle] Running metrics...")
-
-        # ---- METRICS PHASE (THIS IS WHAT YOU LOG) ----
-        capture_all_host_metrics(
-            net,
-            output_csv="h1_to_all_metrics.csv",
-            ping_count=5,
-            iperf_duration=5,
-            udp_bandwidth="5M",
-            port=5001,
-            src_host_name="h1"
-        )
-
-        # Optional pause between cycles
-        time.sleep(1)
+        # print("\n[Cycle] Running metrics...")
+        # capture_all_host_metrics(net, output_csv="h1_to_all_metrics.csv", ping_count=5, iperf_duration=5, udp_bandwidth="5M", port=5001, src_host_name="h1")
+        time.sleep(30)
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -632,22 +669,22 @@ def main():
 
 
     # ///olld 
-    # stop_event = threading.Event() #new
+    stop_event = threading.Event() #new
 
-    # cycle_thread = threading.Thread( #new
-    #     target=ping_metrics_cycle, #new
-    #     args=(net, stop_event) #new
-    # )
-    # cycle_thread.daemon = True #new
-    # cycle_thread.start() #new
+    cycle_thread = threading.Thread( #new
+        target=ping_metrics_cycle, #new
+        args=(net, stop_event) #new
+    )
+    cycle_thread.daemon = True #new
+    cycle_thread.start() #new
 
-    # CLI(net) #new
+    CLI(net) #new
 
-    # stop_event.set() #new
-    # cycle_thread.join() #new
+    stop_event.set() #new
+    cycle_thread.join() #new
     # ///olld 
 
-    # # //////// ||threading to collect data.
+    # //////// ||threading to collect data.
     # stop_event = threading.Event()
 
     # cycle_thread = threading.Thread(
@@ -662,7 +699,7 @@ def main():
     # finally:
     #     stop_event.set()
     #     cycle_thread.join()
-    # # //////// ||threading to collect data.
+    # //////// ||threading to collect data.
     
     
     CLI(net) #old
