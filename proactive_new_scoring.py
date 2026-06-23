@@ -1867,7 +1867,8 @@ def solve_milp(ip_candidates, route_candidates):
         + pulp.lpSum(c["score"] * y[i] for i, c in enumerate(route_candidates))
     )
 
-    model += z_none + z_ip + z_route == 1
+    # model += z_none + z_ip + z_route == 1 #new select either
+    model += z_ip + z_route == 1
 
     for c in ip_candidates:
         model += x[c["host"]] <= z_ip
@@ -1877,6 +1878,10 @@ def solve_milp(ip_candidates, route_candidates):
 
     model += pulp.lpSum(x.values()) <= K_IP * z_ip
     model += pulp.lpSum(y.values()) <= K_ROUTE * z_route
+
+    # >>> add these two lines here < --- # new select either 
+    model += pulp.lpSum(x.values()) >= z_ip
+    model += pulp.lpSum(y.values()) >= z_route
 
     model += (
         pulp.lpSum(c["cost"] * x[c["host"]] for c in ip_candidates)
