@@ -1042,7 +1042,9 @@ DEFENSE_BUDGET = 0.50
 E_IP = 0.70
 # E_IP = 0.70 #Eip​=1−23.75/39.72​
 # E_ROUTE = 0.70
-E_ROUTE = 0.60 # Eroute​=1−10.99/27.45 -- from graph​
+# E_ROUTE = 0.60 # Eroute​=1−10.99/27.45 -- from graph​
+E_ROUTE = 0.70 # Eroute​=1−10.99/27.45 -- from graph​
+
 
 
 O_IP = 2830 / 3000
