@@ -1547,21 +1547,35 @@ def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, flow_summary_csv=FLOW_SU
         h[c] = pd.to_numeric(h[c], errors="coerce").fillna(0.0)
 
     h["rx_pps_n"] = safe_norm(h["rx_pps"])
-    h["tx_pps_n"] = safe_norm(h["tx_pps"])
+    # h["tx_pps_n"] = safe_norm(h["tx_pps"])
     h["rx_mbps_n"] = safe_norm(h["rx_mbps"])
-    h["tx_mbps_n"] = safe_norm(h["tx_mbps"])
+    # h["tx_mbps_n"] = safe_norm(h["tx_mbps"])
 
+    # imbalance indicator.
+    eps = 1e-9
+    h["rx_tx_imbalance"] = (
+        (h["rx_pps"] - h["tx_pps"]).clip(lower=0)
+        / (h["rx_pps"] + h["tx_pps"] + eps)
+    ).clip(0, 1)
+
+    # h["traffic_risk"] = (
+    #     0.35 * h["tx_pps_n"]
+    #     + 0.25 * h["rx_pps_n"]
+    #     + 0.25 * h["tx_mbps_n"]
+    #     + 0.15 * h["rx_mbps_n"]
+    # )
+
+    # so rx is the dos indicator.
     h["traffic_risk"] = (
-        0.35 * h["tx_pps_n"]
-        + 0.25 * h["rx_pps_n"]
-        + 0.25 * h["tx_mbps_n"]
-        + 0.15 * h["rx_mbps_n"]
+        0.55 * h["rx_pps_n"]
+    + 0.35 * h["rx_tx_imbalance"]
+    + 0.10 * h["rx_mbps_n"]
     )
 
     h["monitor_score"] = np.maximum.reduce([
-        (h["tx_pps"] / HOST_PPS_MONITOR_THRESHOLD).clip(0, 1),
+        # (h["tx_pps"] / HOST_PPS_MONITOR_THRESHOLD).clip(0, 1),
         (h["rx_pps"] / HOST_PPS_MONITOR_THRESHOLD).clip(0, 1),
-        (h["tx_mbps"] / HOST_TX_MBPS_THRESHOLD).clip(0, 1),
+        # (h["tx_mbps"] / HOST_TX_MBPS_THRESHOLD).clip(0, 1),
         (h["rx_mbps"] / HOST_RX_MBPS_THRESHOLD).clip(0, 1),
     ])
 
