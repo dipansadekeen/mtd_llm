@@ -4,7 +4,7 @@
 import csv, pulp
 from collections import defaultdict
 
-from route_mutate_endpoint import route_shuffle_endpoint
+from route_mutate_endpoint import route_shuffle_endpoint, route_shuffle_endpoint_merge_log
 from mtd_utils import RouteHistoryManager, all_hosts, ROUTE_HISTORY_SIZE
 
 HOP_LIST_FILE = "hop_list.csv"
@@ -424,14 +424,27 @@ def apply_route_assignment(route_manager, assignment):
         selected_for_history.append((hist_a, hist_b, opt))
     #///////////////////// to handle the  ||bug, sometimes h1,h28 -opt 9 is not available but h28,h1 opt-9 exist
 
-    route_shuffle_endpoint(
+    # route_shuffle_endpoint(
+    #     specific_multiple=True,
+    #     hosts=";".join(hosts_arg),
+    #     opt=";".join(opts_arg),
+    # )
+
+    # append logic/////// 
+    route_shuffle_endpoint_merge_log(
         specific_multiple=True,
         hosts=";".join(hosts_arg),
         opt=";".join(opts_arg),
     )
     
-    route_manager.update_cycle(selected_for_history)
+    # route_manager.update_cycle(selected_for_history) # commented for append logic
+    # route_manager.save_to_csv() # commented for append logic
+
+    for a, b, opt in selected_for_history:
+        route_manager.update_pair(a, b, opt)
+
     route_manager.save_to_csv()
+    # ///////new append logic above///////
 
     print("[ROUTE ILP ASSIGNMENT]", assignment)
 

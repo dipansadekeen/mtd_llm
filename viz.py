@@ -37,7 +37,7 @@ STAT_STYLES  = ["-",       "-"]
 COLS = 4
 ROWS = 6   # 4×6 = 24 cells, 21 used, 3 hidden
 
-MBPS_MAX = 15    # fixed upper limit for Mbps axis (expands if data exceeds it)
+MBPS_MAX = 1    # fixed upper limit for Mbps axis (expands if data exceeds it)
 PPS_MAX  = 100   # fixed upper limit for pps axis (expands if data exceeds it)
 
 def shorten_link(link_id: str) -> str:

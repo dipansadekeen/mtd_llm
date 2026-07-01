@@ -1445,25 +1445,66 @@ def fetch_onos_active_pairs(
 # OBSERVABILITY / PMU RANK
 # =========================
 
-def load_grid_priority(obs_csv):
-    """
-    PMU/bus rank gives power-grid priority.
+# def load_grid_priority(obs_csv):
+#     """
+#     PMU/bus rank gives power-grid priority.
 
-    Expected:
-        PMU 39 or gen_bus 39 means host h39.
+#     Expected:
+#         PMU 39 or gen_bus 39 means host h39.
 
-    Rank handling:
-        rank 1 -> priority 1.0
-        lower ranks -> smaller priority
-        hosts not listed -> DEFAULT_GRID_PRIORITY
-    """
+#     Rank handling:
+#         rank 1 -> priority 1.0
+#         lower ranks -> smaller priority
+#         hosts not listed -> DEFAULT_GRID_PRIORITY
+#     """
 
+#     obs = pd.read_csv(obs_csv)
+
+#     cols = {c.lower(): c for c in obs.columns}
+
+#     host_col = None
+#     rank_col = None
+
+#     for key in ["pmu", "gen_bus", "bus", "host"]:
+#         if key in cols:
+#             host_col = cols[key]
+#             break
+
+#     for key in ["rank", "pmu_rank", "observability_rank"]:
+#         if key in cols:
+#             rank_col = cols[key]
+#             break
+
+#     if host_col is None or rank_col is None:
+#         return {}
+
+#     obs["host"] = obs[host_col].apply(lambda x: f"h{int(x)}" if pd.notna(x) else None)
+#     obs["rank"] = pd.to_numeric(obs[rank_col], errors="coerce")
+
+#     obs = obs.dropna(subset=["host", "rank"])
+
+#     if obs.empty:
+#         return {}
+
+#     max_rank = obs["rank"].max()
+#     min_rank = obs["rank"].min()
+
+#     if max_rank == min_rank:
+#         obs["grid_priority"] = 1.0
+#     else:
+#         obs["grid_priority"] = 1.0 - ((obs["rank"] - min_rank) / (max_rank - min_rank))
+
+#     return dict(zip(obs["host"], obs["grid_priority"]))
+
+# grid reading timely
+def load_grid_priority(obs_csv, obs_time_seconds=None):
     obs = pd.read_csv(obs_csv)
 
     cols = {c.lower(): c for c in obs.columns}
 
     host_col = None
     rank_col = None
+    time_col = None
 
     for key in ["pmu", "gen_bus", "bus", "host"]:
         if key in cols:
@@ -1475,10 +1516,40 @@ def load_grid_priority(obs_csv):
             rank_col = cols[key]
             break
 
+    for key in ["time_seconds", "timestamp", "time"]:
+        if key in cols:
+            time_col = cols[key]
+            break
+
     if host_col is None or rank_col is None:
         return {}
 
-    obs["host"] = obs[host_col].apply(lambda x: f"h{int(x)}" if pd.notna(x) else None)
+    # Pick the observability phase for this MTD cycle
+    if obs_time_seconds is not None and time_col is not None:
+        obs[time_col] = pd.to_numeric(obs[time_col], errors="coerce")
+        obs = obs.dropna(subset=[time_col])
+
+        available_times = sorted(obs[time_col].unique())
+
+        if available_times:
+            # choose exact/next available phase
+            chosen_time = None
+            for t in available_times:
+                if t >= obs_time_seconds:
+                    chosen_time = t
+                    break
+
+            # if requested time exceeds file, use last available
+            if chosen_time is None:
+                chosen_time = available_times[-1]
+
+            obs = obs[obs[time_col] == chosen_time]
+
+            print(f"[OBS] using observability phase time_seconds={chosen_time}")
+
+    obs["host"] = obs[host_col].apply(
+        lambda x: f"h{int(x)}" if pd.notna(x) else None
+    )
     obs["rank"] = pd.to_numeric(obs[rank_col], errors="coerce")
 
     obs = obs.dropna(subset=["host", "rank"])
@@ -1492,17 +1563,19 @@ def load_grid_priority(obs_csv):
     if max_rank == min_rank:
         obs["grid_priority"] = 1.0
     else:
-        obs["grid_priority"] = 1.0 - ((obs["rank"] - min_rank) / (max_rank - min_rank))
+        obs["grid_priority"] = 1.0 - (
+            (obs["rank"] - min_rank) / (max_rank - min_rank)
+        )
 
     return dict(zip(obs["host"], obs["grid_priority"]))
-
 
 # =========================
 # IP CANDIDATES
 # =========================
 
 # def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, active_hosts=None,):
-def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, flow_summary_csv=FLOW_SUMMARY_CSV, active_hosts=None,): #//// Flow
+# def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, flow_summary_csv=FLOW_SUMMARY_CSV, active_hosts=None,): #//// Flow
+def build_ip_candidates(host_csv,ip_hist_csv,obs_csv,flow_summary_csv=FLOW_SUMMARY_CSV, active_hosts=None,obs_time_seconds=None,): #added grid
     h = pd.read_csv(host_csv)
 
     h["host"] = h["host_mac"].apply(host_from_mac)
@@ -1589,7 +1662,8 @@ def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, flow_summary_csv=FLOW_SU
 
     exposure_map = dict(zip(ip_hist["host"], ip_hist["ip_exposure"]))
 
-    grid_map = load_grid_priority(obs_csv)
+    # grid_map = load_grid_priority(obs_csv)
+    grid_map = load_grid_priority(obs_csv, obs_time_seconds=obs_time_seconds) # timely grid
 
     flow_suspicion_map = load_flow_suspicion(flow_summary_csv) # ///// Flow
 
@@ -1661,12 +1735,14 @@ def build_ip_candidates(host_csv, ip_hist_csv, obs_csv, flow_summary_csv=FLOW_SU
 # =========================
 
 # def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs,):
-def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_csv,): # added scoring
+# def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_csv,): # added scoring
+def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_csv, obs_time_seconds=None,): # for grid time
 
     if not active_pairs:
         return []
 
-    grid_map = load_grid_priority(obs_csv) # new added scoring
+    # grid_map = load_grid_priority(obs_csv) # new added scoring
+    grid_map = load_grid_priority(obs_csv, obs_time_seconds=obs_time_seconds) # grid time update
 
     link = pd.read_csv(link_csv)
 
@@ -2004,6 +2080,16 @@ def normalize_onos_link(link_str):
 # MAIN DECISION FUNCTION
 # =========================
 
+# def decide_ilp(
+#     host_csv="host_stats_onos.csv",
+#     link_csv="link_stats_onos.csv",
+#     hop_csv="hop_list.csv",
+#     ip_hist_csv="ip_history.csv",
+#     route_hist_csv="route_history.csv",
+#     obs_csv="observability.csv",
+# ):
+
+# for grid
 def decide_ilp(
     host_csv="host_stats_onos.csv",
     link_csv="link_stats_onos.csv",
@@ -2011,14 +2097,23 @@ def decide_ilp(
     ip_hist_csv="ip_history.csv",
     route_hist_csv="route_history.csv",
     obs_csv="observability.csv",
+    obs_time_seconds=None,
 ):
     active_pairs, active_hosts = fetch_onos_active_pairs()
 
+    # ip_candidates = build_ip_candidates(
+    #     host_csv=host_csv,
+    #     ip_hist_csv=ip_hist_csv,
+    #     obs_csv=obs_csv,
+    #     active_hosts=active_hosts,
+    # )
+    # for grid timing
     ip_candidates = build_ip_candidates(
         host_csv=host_csv,
         ip_hist_csv=ip_hist_csv,
         obs_csv=obs_csv,
         active_hosts=active_hosts,
+        obs_time_seconds=obs_time_seconds,
     )
 
     # route_candidates = build_route_candidates(
@@ -2028,13 +2123,23 @@ def decide_ilp(
     #     active_pairs=active_pairs,
     # )
 
-    # new added score
+    # # new added score w-grid 
+    # route_candidates = build_route_candidates(
+    #     link_csv=link_csv,
+    #     hop_csv=hop_csv,
+    #     route_hist_csv=route_hist_csv,
+    #     active_pairs=active_pairs,
+    #     obs_csv=obs_csv,
+    # )
+    
+    # grid timing
     route_candidates = build_route_candidates(
         link_csv=link_csv,
         hop_csv=hop_csv,
         route_hist_csv=route_hist_csv,
         active_pairs=active_pairs,
         obs_csv=obs_csv,
+        obs_time_seconds=obs_time_seconds,
     )
 
 
@@ -2101,9 +2206,24 @@ def log_decision(action, hosts, routes, details, path=DECISION_LOG):
 # =========================
 
 if __name__ == "__main__":
+    # grid time
+    cycle_idx = 0
+    MTD_INTERVAL_SECONDS = 30
+    # //////
+
 
     while(True):
-        action, hosts, routes, details = decide_ilp()
+        # action, hosts, routes, details = decide_ilp() #commented for grid time
+
+        # grid time
+        obs_time_seconds = cycle_idx * MTD_INTERVAL_SECONDS
+
+        action, hosts, routes, details = decide_ilp(
+            obs_time_seconds=obs_time_seconds
+        )
+        # grid time
+
+
 
         # # ////// need logging //////////
         # log_decision(action, hosts, routes, details)   # <-- add this
@@ -2173,4 +2293,6 @@ if __name__ == "__main__":
 
         else:
             print("[NO MTD] No mitigation executed.")
+        
+        cycle_idx += 1
         time.sleep(30)

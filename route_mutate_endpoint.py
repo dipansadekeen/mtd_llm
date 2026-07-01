@@ -8,6 +8,7 @@ import random
 import requests
 import subprocess
 
+import os #append logic
 
 class RouteMutator:
     ONOS = "http://127.0.0.1:8181/onos/v1"
@@ -246,6 +247,62 @@ class RouteMutator:
 
         return result
 
+    # ////////////// append logic /////////////////////////
+    def normalize_mac(self, mac):
+        return str(mac).strip().lower().replace("-", ":")
+
+
+    def rule_pair_key(self, rule_line):
+        row = next(csv.reader([rule_line]))
+
+        if len(row) < 2:
+            return None
+
+        a = self.normalize_mac(row[0])
+        b = self.normalize_mac(row[1])
+
+        return tuple(sorted((a, b)))
+
+
+    def write_rules_merge_by_mac_pair(self, new_rules):
+        new_rules = [r.strip('"').strip() for r in new_rules if r.strip()]
+
+        new_pairs = {
+            self.rule_pair_key(r)
+            for r in new_rules
+            if self.rule_pair_key(r) is not None
+        }
+
+        old_rules = []
+        if os.path.exists(self.log_file):
+            with open(self.log_file, "r") as f:
+                old_rules = [line.strip() for line in f if line.strip()]
+
+        kept_old = []
+
+        for r in old_rules:
+            key = self.rule_pair_key(r)
+
+            if key not in new_pairs:
+                kept_old.append(r)
+
+        final_rules = kept_old + new_rules
+
+        # remove exact duplicates
+        final_rules = list(dict.fromkeys(final_rules))
+
+        with open(self.log_file, "w") as f:
+            for r in final_rules:
+                f.write(r + "\n")
+
+        print(
+            f"[✓] Merge log: kept={len(kept_old)}, "
+            f"new={len(new_rules)}, final={len(final_rules)}"
+        )
+    # ////////////// append logic /////////////////////////
+
+
+
     # ==============================================================
     # ONE-SHOT ROUTE SHUFFLE
     # ==============================================================
@@ -260,6 +317,7 @@ class RouteMutator:
         hosts=None,
         opt=None,
         trigger_learning=False,
+        merge_log=False # append logic
     ):
         if not self.path_db:
             return False
@@ -333,9 +391,19 @@ class RouteMutator:
 
         self.clear_fwd_flows()
 
-        with open(self.log_file, "w") as f:
-            for r in all_rules:
-                f.write(r.strip('"').strip() + "\n")
+        # with open(self.log_file, "w") as f: #older one
+        #     for r in all_rules:
+        #         f.write(r.strip('"').strip() + "\n")
+
+        # /////// append logic /////////// only when merge log true.
+        if merge_log:
+            self.write_rules_merge_by_mac_pair(all_rules)
+        else:
+            with open(self.log_file, "w") as f:
+                for r in all_rules:
+                    f.write(r.strip('"').strip() + "\n")
+        # /////// append logic ///////////
+
         print(f"[✓] Wrote {len(all_rules)} clean rules → {self.log_file}")
 
         if trigger_learning:
@@ -351,6 +419,18 @@ def route_shuffle_endpoint(**kwargs):
     )
     return mutator.run_once(**kwargs)
 
+
+# ////////// append logic ////////////
+def route_shuffle_endpoint_merge_log(**kwargs):
+    kwargs["merge_log"] = True
+
+    mutator = RouteMutator(
+        csv_file=kwargs.pop("csv_file", None),
+        log_file=kwargs.pop("log_file", None),
+    )
+
+    return mutator.run_once(**kwargs)
+# /////////// append logic /////////////
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Callable Route Mutator")
