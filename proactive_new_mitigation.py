@@ -46,13 +46,23 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
 
     all_history_ips = set().union(*history_by_host.values())
 
-    used_by_others = {
+    # hard constraint error.
+    # used_by_others = {
+    #     ip_octet(ip)
+    #     for h, ip in current_ips.items()
+    #     if h not in selected_hosts and ip is not None
+    # }
+
+    # valid_pool = [ip for ip in pool if ip not in used_by_others]  # hard constraint error.
+
+    used_current_ips = {
         ip_octet(ip)
         for h, ip in current_ips.items()
-        if h not in selected_hosts and ip is not None
+        if ip is not None
     }
 
-    valid_pool = [ip for ip in pool if ip not in used_by_others]
+    valid_pool = [ip for ip in pool if ip not in used_current_ips]
+    # //////////////new 
 
     # C7: pool sufficiency
     if len(valid_pool) < len(selected_hosts):
@@ -75,8 +85,8 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
 
             # new constraint 
             # C8: avoid IPs close to any historical IP
-            if min_dist(ip, all_history_ips) < GAP_HISTORY:
-                continue
+            # if min_dist(ip, all_history_ips) < GAP_HISTORY: # too strict - commented.
+            #     continue
 
             cand.append(ip)
 
