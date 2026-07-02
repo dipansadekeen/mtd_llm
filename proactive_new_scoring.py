@@ -1047,7 +1047,9 @@ E_ROUTE = 0.70 # Eroute​=1−10.99/27.45 -- from graph​
 
 
 
-O_IP = 2830 / 3000
+# O_IP = 2830 / 3000
+O_IP = 3350 / 4000
+
 O_ROUTE = 0.05
 
 LAMBDA_IP = 0.15
@@ -2146,7 +2148,9 @@ def decide_ilp(
     action, selected_hosts, selected_routes = solve_milp(
         ip_candidates,
         route_candidates,
-    )
+    ) # temp commented
+
+    # action, selected_hosts, selected_routes = solve_milp([], route_candidates) # just to analyse
 
     details = {
         "active_pairs": sorted(list(active_pairs)),

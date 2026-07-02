@@ -46,23 +46,24 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
 
     all_history_ips = set().union(*history_by_host.values())
 
-    # hard constraint error.
     # used_by_others = {
     #     ip_octet(ip)
     #     for h, ip in current_ips.items()
     #     if h not in selected_hosts and ip is not None
     # }
 
-    # valid_pool = [ip for ip in pool if ip not in used_by_others]  # hard constraint error.
+    # valid_pool = [ip for ip in pool if ip not in used_by_others]
 
-    used_current_ips = {
-        ip_octet(ip)
-        for h, ip in current_ips.items()
-        if ip is not None
-    }
+    # ////////////////////////// constraint crash solving 
+    all_current_ips = {
+            ip_octet(ip)
+            for ip in current_ips.values()
+            if ip is not None
+        }
 
-    valid_pool = [ip for ip in pool if ip not in used_current_ips]
-    # //////////////new 
+    valid_pool = [ip for ip in pool if ip not in all_current_ips]
+    # ////////////////////////// constraint crash solving 
+
 
     # C7: pool sufficiency
     if len(valid_pool) < len(selected_hosts):
@@ -70,30 +71,51 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
 
     feasible = {}
 
+    # for h in selected_hosts:
+    #     current = ip_octet(current_ips.get(h))
+    #     # recent = {ip_octet(x) for x in ip_manager.get_host_ips(h)}
+    #     recent = history_by_host.get(h, set())
+
+    #     cand = []
+
+    #     for ip in valid_pool:
+    #         if ip == current:          # C3
+    #             continue
+    #         if avoid_recent and ip in recent:   # C4
+    #             continue
+
+    #         # new constraint 
+    #         # C8: avoid IPs close to any historical IP
+    #         if min_dist(ip, all_history_ips) < GAP_HISTORY:
+    #             continue
+
+    #         cand.append(ip)
+
+    #     if not cand:
+    #         raise RuntimeError(f"No feasible IP for {h}")
+
+    #     feasible[h] = cand
+
+
+    # ////// relaxing for ip constraint conflict 
     for h in selected_hosts:
-        current = ip_octet(current_ips.get(h))
-        # recent = {ip_octet(x) for x in ip_manager.get_host_ips(h)}
-        recent = history_by_host.get(h, set())
+            recent = history_by_host.get(h, set())
 
-        cand = []
+            cand = []
 
-        for ip in valid_pool:
-            if ip == current:          # C3
-                continue
-            if avoid_recent and ip in recent:   # C4
-                continue
+            for ip in valid_pool:
+                # C3 dropped: covered by all_current_ips pool filter above.
+                if avoid_recent and ip in recent:   # C4
+                    continue
+                # C8 removed as hard filter — now soft, via the objective's
+                # 0.3 * min_dist(ip, all_history_ips) term below.
+                cand.append(ip)
 
-            # new constraint 
-            # C8: avoid IPs close to any historical IP
-            # if min_dist(ip, all_history_ips) < GAP_HISTORY: # too strict - commented.
-            #     continue
+            if not cand:
+                raise RuntimeError(f"No feasible IP for {h}")
 
-            cand.append(ip)
-
-        if not cand:
-            raise RuntimeError(f"No feasible IP for {h}")
-
-        feasible[h] = cand
+            feasible[h] = cand
+    # ////// relaxing for ip constraint conflict 
 
     model = pulp.LpProblem("IP_Mutation_Assignment", pulp.LpMaximize)
 

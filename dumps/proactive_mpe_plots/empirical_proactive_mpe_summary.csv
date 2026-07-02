@@ -1,0 +1,2 @@
+link,selected_hits,protected_flow_intervals,total_flow_intervals,P_compromise,MPE,threshold_MPE_zeta_0.1,threshold_MPE_zeta_0.2,threshold_MPE_zeta_0.3
+s1-s11,203,367,570,0.356140350877193,0.643859649122807,0.01259537455724333,0.16043867812274812,0.33354808753320475
