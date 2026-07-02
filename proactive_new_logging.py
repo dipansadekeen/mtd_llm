@@ -468,6 +468,8 @@ def log_evaluation_snapshot(
             "link_usage": c.get("link_usage", ""),
             "link_monitor": c.get("link_monitor", ""),
             # --- new scoring: grid priority term (0.10 of p_route) ---
+            "max_flow_overlap": c.get("max_flow_overlap", ""), # flow route
+            "overlap_pressure": c.get("overlap_pressure", ""), # flow route
             "route_grid_priority": c.get("route_grid_priority", ""),
             # --- new scoring: hop penalty / hop cost ---
             # scoring dict uses `current_hop_count`; keep `hop_count` as an

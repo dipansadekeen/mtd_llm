@@ -1078,6 +1078,7 @@ MAX_HOST_ID = 40
 
 # //////////////////////////////// Flow addition
 FLOW_SUMMARY_CSV = "onos_host_summary_snapshot_v3.csv"
+ROUTE_OVERLAP_CSV = "onos_active_flow_route_overlap_v3.csv" # new
 
 
 def load_flow_suspicion(flow_summary_csv=FLOW_SUMMARY_CSV):
@@ -1159,6 +1160,38 @@ def load_flow_suspicion(flow_summary_csv=FLOW_SUMMARY_CSV):
         }
 
     return flow_map
+
+
+def load_route_overlap(csv=ROUTE_OVERLAP_CSV): # new route flow
+    try:
+        df = pd.read_csv(csv)
+    except Exception:
+        return {}
+
+    if df.empty or "flow" not in df.columns or "max_overlap_on_any_link" not in df.columns:
+        return {}
+
+    total = max(len(df), 1)
+    out = {}
+
+    for _, r in df.iterrows():
+        flow = str(r["flow"]).strip()
+
+        if "->" not in flow:
+            continue
+
+        a, b = [x.strip() for x in flow.split("->", 1)]
+        pair = pair_key(a, b)
+
+        max_overlap = float(r["max_overlap_on_any_link"])
+        pressure = min(max_overlap / total, 1.0)
+
+        out[pair] = {
+            "max_flow_overlap": max_overlap,
+            "overlap_pressure": pressure,
+        }
+
+    return out
 
 # //////////////////////////////// Flow addition
 
@@ -1816,6 +1849,8 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
     current_option_map = dict(zip(route_hist["pair"], route_hist["current_option"]))
     # to handle it not considering opt 0 blindly.
 
+    overlap_map = load_route_overlap()
+
     candidates = []
 
     grouped = hop.groupby("pair")
@@ -1835,6 +1870,14 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
         current_option = int(current_option_map.get(pair, 0))
 
         g_current = g[g["option"].astype(int) == current_option]
+
+
+        # ////// flow for route
+        ov = overlap_map.get(pair, {})
+        max_flow_overlap = ov.get("max_flow_overlap", 0.0)
+        overlap_pressure = ov.get("overlap_pressure", 0.0)
+        # ////// flow for route
+
 
         if g_current.empty:
             continue
@@ -1880,11 +1923,18 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
         #     + 0.40 * link_monitor
         # )
 
-        # new added scoring
+        # # new added scoring
+        # p_route = (
+        #     0.55 * link_usage
+        #     + 0.35 * link_monitor
+        #     + 0.10 * route_grid_priority
+        # )
+
         p_route = (
-            0.55 * link_usage
-            + 0.35 * link_monitor
+            0.45 * link_usage
+            + 0.30 * link_monitor
             + 0.10 * route_grid_priority
+            + 0.20 * overlap_pressure
         )
 
         benefit = p_route * route_exposure * E_ROUTE
@@ -1911,6 +1961,8 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
             "hop_cost": hop_cost, # hop score
             "route_grid_priority": route_grid_priority, # hop score
             "path": r["path"],
+            "max_flow_overlap": max_flow_overlap, # flow into route
+            "overlap_pressure": overlap_pressure, # flow into route
         })
 
     candidates.sort(key=lambda x: x["score"], reverse=True)

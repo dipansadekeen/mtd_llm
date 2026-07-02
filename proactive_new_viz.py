@@ -537,6 +537,7 @@ COMPONENT_COLORS = {
     "route_exposure":     "#e15759",
     "hop_penalty":        HOP_COLOR,
     "p_route":            "#b07aa1",
+    "overlap_pressure": "#76b7b2", # new
 }
 
 
@@ -712,6 +713,8 @@ def route_costbenefit_figure(route_candidates, selected_routes):
         f"total_cost={c['cost']+c.get('hop_cost',0):.4f}<br>"
         f"p_route={c['p_route']:.3f}<br>link_usage={c['link_usage']:.3f}<br>"
         f"link_monitor={c['link_monitor']:.3f}<br>"
+        f"max_flow_overlap={c.get('max_flow_overlap',0):.0f}<br>" #new
+        f"overlap_pressure={c.get('overlap_pressure',0):.3f}<br>" #new
         f"route_grid_priority={c.get('route_grid_priority',0):.3f}<br>"
         f"route_exposure={c['route_exposure']:.3f}<br>"
         f"hop_count={c.get('current_hop_count',0):.0f} (penalty={c.get('hop_penalty',0):.3f})<br>"
@@ -756,8 +759,11 @@ def route_components_figure(route_candidates, selected_routes):
     fig = go.Figure()
     # p_route inputs: link_usage, link_monitor, route_grid_priority
     # route_exposure multiplies benefit; hop_penalty drives hop_cost
-    for comp in ["link_usage", "link_monitor", "route_grid_priority",
-                 "route_exposure", "hop_penalty"]:
+    # for comp in ["link_usage", "link_monitor", "route_grid_priority",
+    #              "route_exposure", "hop_penalty"]:
+
+    for comp in ["link_usage", "link_monitor", "overlap_pressure", 
+                "route_grid_priority", "route_exposure", "hop_penalty"]: #new
         fig.add_bar(x=labels, y=[c.get(comp, 0.0) for c in cands], name=comp,
                     marker_color=COMPONENT_COLORS[comp])
     fig.add_scatter(x=labels, y=[c["score"] for c in cands], name="score",
