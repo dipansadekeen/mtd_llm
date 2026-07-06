@@ -3,6 +3,8 @@
 
 import csv, pulp
 from collections import defaultdict
+import time
+
 
 from route_mutate_endpoint import route_shuffle_endpoint, route_shuffle_endpoint_merge_log
 from mtd_utils import RouteHistoryManager, all_hosts, ROUTE_HISTORY_SIZE
@@ -368,7 +370,16 @@ def solve_route_assignment(selected_pairs, route_manager, demand=None, avoid_rec
 
     model += pulp.lpSum(obj)
 
+    # model.solve(pulp.PULP_CBC_CMD(msg=False))
+
+    # added solver time //////////
+    t0 = time.perf_counter()
     model.solve(pulp.PULP_CBC_CMD(msg=False))
+    solver_time_s = time.perf_counter() - t0
+
+    print(f"[ROUTE ILP SOLVER TIME] {solver_time_s:.6f}s | status={pulp.LpStatus[model.status]}")
+    # added solver time //////////
+
 
     if pulp.LpStatus[model.status] != "Optimal":
         raise RuntimeError(f"Route ILP failed: {pulp.LpStatus[model.status]}")

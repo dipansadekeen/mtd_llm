@@ -1,6 +1,6 @@
 # proactive_new_mitigation.py
 
-import pulp
+import pulp,time
 
 from ip_shuffle_endpoint import ip_shuffle_endpoint
 from mtd_utils import (
@@ -171,7 +171,15 @@ def solve_ip_assignment(selected_hosts, ip_manager, pool=range(1, 255), avoid_re
         for ip in feasible[h]
     )
 
+    # model.solve(pulp.PULP_CBC_CMD(msg=False))
+
+    # added solving time ///////
+    t0 = time.perf_counter()
     model.solve(pulp.PULP_CBC_CMD(msg=False))
+    solver_time_s = time.perf_counter() - t0
+
+    print(f"[IP ILP SOLVER TIME] {solver_time_s:.6f}s | status={pulp.LpStatus[model.status]}")
+    # added solving time ///////
 
     if pulp.LpStatus[model.status] != "Optimal":
         raise RuntimeError(f"IP ILP failed: {pulp.LpStatus[model.status]}")
@@ -259,7 +267,6 @@ def run_ip_ilp(selected_hosts):
     # update_ip_history(ip_manager, assignment)
     apply_ip_assignment(ip_manager, assignment)
 
-    print("[IP ILP ASSIGNMENT]", assignment)
 
 # def run_once():
 #     ip_manager = HostIPQueueManager(queue_size=ROUTE_HISTORY_SIZE)

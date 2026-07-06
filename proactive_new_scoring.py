@@ -2090,7 +2090,15 @@ def solve_milp(ip_candidates, route_candidates):
         <= DEFENSE_BUDGET
     )
 
+    # model.solve(pulp.PULP_CBC_CMD(msg=False))
+
+    # //////// with solver time /////////
+    t0 = time.perf_counter()
     model.solve(pulp.PULP_CBC_CMD(msg=False))
+    solver_time_s = time.perf_counter() - t0
+
+    print(f"[DECISION MILP SOLVER TIME] {solver_time_s:.6f}s | status={pulp.LpStatus[model.status]}")
+    # //////// with solver time /////////
 
     selected_hosts = [
         h for h, var in x.items()
@@ -2110,7 +2118,8 @@ def solve_milp(ip_candidates, route_candidates):
     else:
         action = "no_mtd"
 
-    return action, selected_hosts, selected_routes
+    # return action, selected_hosts, selected_routes
+    return action, selected_hosts, selected_routes, solver_time_s
 
 
 def solve_fallback(ip_candidates, route_candidates):
@@ -2252,7 +2261,12 @@ def decide_ilp(
     )
 
 
-    action, selected_hosts, selected_routes = solve_milp(
+    # action, selected_hosts, selected_routes = solve_milp(
+    #     ip_candidates,
+    #     route_candidates,
+    # ) # temp commented
+
+    action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp( # solving time
         ip_candidates,
         route_candidates,
     ) # temp commented
@@ -2265,6 +2279,7 @@ def decide_ilp(
         "ip_candidates": ip_candidates,
         "route_candidates": route_candidates,
         "selected_routes": selected_routes,
+        "decision_solver_time_s": decision_solver_time_s, #new
     }
 
     return action, selected_hosts, selected_routes, details
