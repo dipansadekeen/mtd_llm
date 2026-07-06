@@ -1126,28 +1126,46 @@ def load_flow_suspicion(flow_summary_csv=FLOW_SUMMARY_CSV):
 
     flow_map = {}
 
+    # /////////new
+    FLOW_CONCERN_START = 3       # 1-3 flows toward a host = usually normal
+    FLOW_CONCERN_FULL = 20       # 20+ flows toward a host = strong concern
+
+    SENDER_CONCERN_START = 2     # 1-2 sender MACs = not concerning
+    SENDER_CONCERN_FULL = 10     # 10+ sender MACs = strong concern
+
     for _, row in f.iterrows():
         host = row["host"]
 
         total_flows = float(row["unique_flow_count_towards_host"])
         short_flows = float(row["short_lived_flow_count_towards_host"])
-
         unique_sender_macs = float(row["unique_sender_mac_count"])
+
+        # Short-flow ratio only among flows toward this host
         short_flow_ratio = short_flows / max(1.0, total_flows)
-        # Direct unique sender MAC diversity.
-        # Since the maximum possible Mininet sender domain is h1-h40,
-        # normalize by MAX_HOST_ID.
-        sender_mac_diversity = unique_sender_macs
-
         short_flow_ratio = min(max(short_flow_ratio, 0.0), 1.0)
-        # new_mac_ratio = min(max(new_mac_ratio, 0.0), 1.0)
 
+        # Sender pressure:
+        # 1 or 2 sender MACs should not be suspicious by itself
+        sender_mac_diversity = (
+            (unique_sender_macs - SENDER_CONCERN_START)
+            / max(1.0, SENDER_CONCERN_FULL - SENDER_CONCERN_START)
+        )
+        sender_mac_diversity = min(max(sender_mac_diversity, 0.0), 1.0)
 
-        flow_suspicion = (
-            0.60 * short_flow_ratio
-            + 0.40 * sender_mac_diversity
+        # Flow volume gate:
+        # 1 or 2 flows should not create suspicion by itself
+        flow_volume_gate = (
+            (total_flows - FLOW_CONCERN_START)
+            / max(1.0, FLOW_CONCERN_FULL - FLOW_CONCERN_START)
+        )
+        flow_volume_gate = min(max(flow_volume_gate, 0.0), 1.0)
+
+        raw_flow_suspicion = (
+            0.70 * short_flow_ratio
+            + 0.30 * sender_mac_diversity
         )
 
+        flow_suspicion = flow_volume_gate * raw_flow_suspicion
         flow_suspicion = min(max(flow_suspicion, 0.0), 1.0)
 
         flow_map[host] = {
@@ -1160,6 +1178,43 @@ def load_flow_suspicion(flow_summary_csv=FLOW_SUMMARY_CSV):
         }
 
     return flow_map
+    # /////////new
+
+    # old
+    # for _, row in f.iterrows():
+    #     host = row["host"]
+
+    #     total_flows = float(row["unique_flow_count_towards_host"])
+    #     short_flows = float(row["short_lived_flow_count_towards_host"])
+
+    #     unique_sender_macs = float(row["unique_sender_mac_count"])
+    #     short_flow_ratio = short_flows / max(1.0, total_flows)
+    #     # Direct unique sender MAC diversity.
+    #     # Since the maximum possible Mininet sender domain is h1-h40,
+    #     # normalize by MAX_HOST_ID.
+    #     sender_mac_diversity = unique_sender_macs
+
+    #     short_flow_ratio = min(max(short_flow_ratio, 0.0), 1.0)
+    #     # new_mac_ratio = min(max(new_mac_ratio, 0.0), 1.0)
+
+
+    #     flow_suspicion = (
+    #         0.60 * short_flow_ratio
+    #         + 0.40 * sender_mac_diversity
+    #     )
+
+    #     flow_suspicion = min(max(flow_suspicion, 0.0), 1.0)
+
+    #     flow_map[host] = {
+    #         "flow_suspicion": flow_suspicion,
+    #         "short_flow_ratio": short_flow_ratio,
+    #         "unique_sender_mac_count": unique_sender_macs,
+    #         "sender_mac_diversity": sender_mac_diversity,
+    #         "unique_flow_count": total_flows,
+    #         "short_lived_flow_count": short_flows,
+    #     }
+
+    # return flow_map
 
 
 def load_route_overlap(csv=ROUTE_OVERLAP_CSV): # new route flow
