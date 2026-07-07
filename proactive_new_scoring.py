@@ -1038,7 +1038,9 @@ EXCLUDED_IP_HOSTS = {"h1"}
 K_IP = 10
 K_ROUTE = 10
 DEFENSE_BUDGET = 0.50
- 
+# DEFENSE_BUDGET = 1.0
+
+
 E_IP = 0.70
 # E_IP = 0.70 #Eip​=1−23.75/39.72​
 # E_ROUTE = 0.70
@@ -2264,14 +2266,14 @@ def decide_ilp(
     # action, selected_hosts, selected_routes = solve_milp(
     #     ip_candidates,
     #     route_candidates,
+    # )
+
+    # action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp( # solving time
+    #     ip_candidates,
+    #     route_candidates,
     # ) # temp commented
 
-    action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp( # solving time
-        ip_candidates,
-        route_candidates,
-    ) # temp commented
-
-    # action, selected_hosts, selected_routes = solve_milp([], route_candidates) # just to analyse
+    action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp([], route_candidates) # just to analyse
 
     details = {
         "active_pairs": sorted(list(active_pairs)),
