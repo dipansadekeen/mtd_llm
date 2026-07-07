@@ -1,0 +1,896 @@
+[DECISION MILP SOLVER TIME] 0.013826s | status=Optimal
+[INFO] available IP candidates = 38
+[INFO] candidates: ['h37', 'h34', 'h38', 'h36', 'h39', 'h29', 'h6', 'h19', 'h20', 'h21', 'h22', 'h24', 'h7', 'h5', 'h17', 'h12', 'h18', 'h4', 'h8', 'h13', 'h16', 'h10', 'h14', 'h2', 'h23', 'h25', 'h26', 'h3', 'h9', 'h32', 'h35', 'h30', 'h33', 'h27', 'h28', 'h31', 'h11', 'h15']
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 1.067358s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.254
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.254)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.246
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.246)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.238
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.238
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.238 DNAT 10.0.0.238:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.238)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 254, 'h34': 246, 'h38': 238}
+[DONE] hosts=3 rep=1 time=41.457764s avg=13.819255s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.322604s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.28
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.28)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.37
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.37
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.37 DNAT 10.0.0.37:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.37)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.15
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.15)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 28, 'h34': 37, 'h38': 15}
+[DONE] hosts=3 rep=2 time=41.010472s avg=13.670157s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.426441s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.238
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.238
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.238 DNAT 10.0.0.238:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.238)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.254
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.254)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.246
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.246)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 238, 'h34': 254, 'h38': 246}
+[DONE] hosts=3 rep=3 time=40.853019s avg=13.617673s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.295907s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.38
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.38
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.38 DNAT 10.0.0.38:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.38)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.15
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.15)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.28
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.28)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 38, 'h34': 15, 'h38': 28}
+[DONE] hosts=3 rep=4 time=40.988084s avg=13.662695s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.346853s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.246
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.246)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.186
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.186
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.186 DNAT 10.0.0.186:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.186)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.254
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.254)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 246, 'h34': 186, 'h38': 254}
+[DONE] hosts=3 rep=5 time=40.590116s avg=13.530039s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 3.227776s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.15
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.15)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.28
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.28)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.84
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.84
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.84 DNAT 10.0.0.84:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.84)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.252
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.252
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.252 DNAT 10.0.0.252:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.252)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.244
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.244
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.244 DNAT 10.0.0.244:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.244)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.236
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.236
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.236 DNAT 10.0.0.236:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.236)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 15, 'h34': 28, 'h38': 84, 'h36': 252, 'h39': 244, 'h29': 236}
+[DONE] hosts=6 rep=1 time=63.382947s avg=10.563824s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 3.096569s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.251
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.251
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.251 DNAT 10.0.0.251:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.251)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.234
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.234
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.234 DNAT 10.0.0.234:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.234)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.243
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.243
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.243 DNAT 10.0.0.243:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.243)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.135
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.135
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.135 DNAT 10.0.0.135:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.135)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.29
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.29
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.29 DNAT 10.0.0.29:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.29)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.37
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.37
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.37 DNAT 10.0.0.37:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.37)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 251, 'h34': 234, 'h38': 243, 'h36': 135, 'h39': 29, 'h29': 37}
+[DONE] hosts=6 rep=2 time=63.156471s avg=10.526079s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 2.397307s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.30
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.30
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.30 DNAT 10.0.0.30:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.30)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.38
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.38
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.38 DNAT 10.0.0.38:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.38)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.46
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.46
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.46 DNAT 10.0.0.46:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.46)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.15
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.15)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.254
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.254)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.246
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.246)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 30, 'h34': 38, 'h38': 46, 'h36': 15, 'h39': 254, 'h29': 246}
+[DONE] hosts=6 rep=3 time=62.590772s avg=10.431795s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 5.103139s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.225
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.225
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.225 DNAT 10.0.0.225:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.225)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.241
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.241
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.241 DNAT 10.0.0.241:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.241)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.250
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.250
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.250 DNAT 10.0.0.250:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.250)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.233
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.233
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.233 DNAT 10.0.0.233:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.233)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.36
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.36
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.36 DNAT 10.0.0.36:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.36)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.28
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.28)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 225, 'h34': 241, 'h38': 250, 'h36': 233, 'h39': 36, 'h29': 28}
+[DONE] hosts=6 rep=4 time=65.160946s avg=10.860158s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 17.208760s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.74
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.74
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.74 DNAT 10.0.0.74:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.74)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.45
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.45
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.45 DNAT 10.0.0.45:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.45)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.37
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.37
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.37 DNAT 10.0.0.37:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.37)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.29
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.29
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.29 DNAT 10.0.0.29:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.29)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.246
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.246)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.254
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.254)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 74, 'h34': 45, 'h38': 37, 'h36': 29, 'h39': 246, 'h29': 254}
+[DONE] hosts=6 rep=5 time=77.309034s avg=12.884839s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 118.350942s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.228
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.228
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.228 DNAT 10.0.0.228:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.228)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.220
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.220
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.220 DNAT 10.0.0.220:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.220)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.210
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.210
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.210 DNAT 10.0.0.210:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.210)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.196
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.196
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.196 DNAT 10.0.0.196:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.196)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.28
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.28)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.15
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.15)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.252
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.252
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.252 DNAT 10.0.0.252:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.252)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.244
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.244
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.244 DNAT 10.0.0.244:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.244)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.236
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.236
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.236 DNAT 10.0.0.236:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.236)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 228, 'h34': 220, 'h38': 210, 'h36': 196, 'h39': 28, 'h29': 15, 'h6': 252, 'h19': 244, 'h20': 236}
+[DONE] hosts=9 rep=1 time=198.196912s avg=22.021879s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 27.718372s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.6
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.6
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.6 DNAT 10.0.0.6:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.6)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.19
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.19
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.19 DNAT 10.0.0.19:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.19)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.29
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.29
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.29 DNAT 10.0.0.29:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.29)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.53
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.53
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.53 DNAT 10.0.0.53:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.53)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.251
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.251
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.251 DNAT 10.0.0.251:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.251)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.242
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.242
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.242 DNAT 10.0.0.242:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.242)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.37
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.37
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.37 DNAT 10.0.0.37:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.37)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.45
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.45
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.45 DNAT 10.0.0.45:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.45)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.69
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.69
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.69 DNAT 10.0.0.69:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.69)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 6, 'h34': 19, 'h38': 29, 'h36': 53, 'h39': 251, 'h29': 242, 'h6': 37, 'h19': 45, 'h20': 69}
+[DONE] hosts=9 rep=2 time=107.752279s avg=11.972475s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 56.657500s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.230
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.230
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.230 DNAT 10.0.0.230:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.230)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.238
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.238
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.238 DNAT 10.0.0.238:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.238)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.222
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.222
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.222 DNAT 10.0.0.222:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.222)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.246
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.246)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.15
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.15)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.32
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.32
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.32 DNAT 10.0.0.32:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.32)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.212
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.212
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.212 DNAT 10.0.0.212:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.212)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.203
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.203
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.203 DNAT 10.0.0.203:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.203)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.254
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.254)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 230, 'h34': 238, 'h38': 222, 'h36': 246, 'h39': 15, 'h29': 32, 'h6': 212, 'h19': 203, 'h20': 254}
+[DONE] hosts=9 rep=3 time=137.689980s avg=15.298887s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 23.459985s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.56
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.56
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.56 DNAT 10.0.0.56:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.56)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.109
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.109
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.109 DNAT 10.0.0.109:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.109)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.36
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.36
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.36 DNAT 10.0.0.36:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.36)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.6
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.6
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.6 DNAT 10.0.0.6:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.6)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.252
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.252
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.252 DNAT 10.0.0.252:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.252)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.244
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.244
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.244 DNAT 10.0.0.244:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.244)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.19
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.19
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.19 DNAT 10.0.0.19:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.19)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.28
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.28)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.44
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.44
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.44 DNAT 10.0.0.44:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.44)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 56, 'h34': 109, 'h38': 36, 'h36': 6, 'h39': 252, 'h29': 244, 'h6': 19, 'h19': 28, 'h20': 44}
+[DONE] hosts=9 rep=4 time=103.720510s avg=11.524501s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 126.590941s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.161
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.161
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.161 DNAT 10.0.0.161:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.161)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.222
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.222
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.222 DNAT 10.0.0.222:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.222)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.230
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.230
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.230 DNAT 10.0.0.230:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.230)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.214
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.214
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.214 DNAT 10.0.0.214:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.214)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.31
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.31
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.31 DNAT 10.0.0.31:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.31)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.20
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.20
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.20 DNAT 10.0.0.20:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.20)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.238
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.238
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.238 DNAT 10.0.0.238:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.238)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.254
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.254)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.246
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.246)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 161, 'h34': 222, 'h38': 230, 'h36': 214, 'h39': 31, 'h29': 20, 'h6': 238, 'h19': 254, 'h20': 246}
+[DONE] hosts=9 rep=5 time=207.254407s avg=23.028267s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 561.642025s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.19
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.19
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.19 DNAT 10.0.0.19:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.19)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.52
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.52
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.52 DNAT 10.0.0.52:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.52)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.6
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.6
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.6 DNAT 10.0.0.6:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.6)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.44
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.44
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.44 DNAT 10.0.0.44:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.44)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.217
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.217
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.217 DNAT 10.0.0.217:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.217)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.227
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.227
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.227 DNAT 10.0.0.227:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.227)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.64
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.64
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.64 DNAT 10.0.0.64:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.64)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.36
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.36
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.36 DNAT 10.0.0.36:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.36)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.28
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.28)
+[i] h21 PID 46308, iface h21-eth0
+[HOP] 10.0.0.244
+[WROTE] /tmp/rrm_h21_ip.txt <- 10.0.0.244
+[NAT] h21: ext=192.168.121.200/24 internal=10.0.0.244 DNAT 10.0.0.244:4751 -> 192.168.121.101:4751
+[ONOS] remove h21 (00:00:00:00:00:15): 204
+[LEARN] h1(10.0.0.1) <-> h21(10.0.0.244)
+[i] h22 PID 46310, iface h22-eth0
+[HOP] 10.0.0.252
+[WROTE] /tmp/rrm_h22_ip.txt <- 10.0.0.252
+[NAT] h22: ext=192.168.122.200/24 internal=10.0.0.252 DNAT 10.0.0.252:4753 -> 192.168.122.101:4753
+[ONOS] remove h22 (00:00:00:00:00:16): 204
+[LEARN] h1(10.0.0.1) <-> h22(10.0.0.252)
+[i] h24 PID 46314, iface h24-eth0
+[HOP] 10.0.0.236
+[WROTE] /tmp/rrm_h24_ip.txt <- 10.0.0.236
+[NAT] h24: ext=192.168.124.200/24 internal=10.0.0.236 DNAT 10.0.0.236:4757 -> 192.168.124.101:4757
+[ONOS] remove h24 (00:00:00:00:00:18): 204
+[LEARN] h1(10.0.0.1) <-> h24(10.0.0.236)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 19, 'h34': 52, 'h38': 6, 'h36': 44, 'h39': 217, 'h29': 227, 'h6': 64, 'h19': 36, 'h20': 28, 'h21': 244, 'h22': 252, 'h24': 236}
+[DONE] hosts=12 rep=1 time=661.761392s avg=55.146783s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 1237.335919s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.206
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.206
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.206 DNAT 10.0.0.206:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.206)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.246
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.246
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.246 DNAT 10.0.0.246:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.246)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.238
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.238
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.238 DNAT 10.0.0.238:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.238)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.254
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.254
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.254 DNAT 10.0.0.254:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.254)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.33
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.33
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.33 DNAT 10.0.0.33:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.33)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.24
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.24
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.24 DNAT 10.0.0.24:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.24)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.230
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.230
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.230 DNAT 10.0.0.230:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.230)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.222
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.222
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.222 DNAT 10.0.0.222:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.222)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.214
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.214
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.214 DNAT 10.0.0.214:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.214)
+[i] h21 PID 46308, iface h21-eth0
+[HOP] 10.0.0.41
+[WROTE] /tmp/rrm_h21_ip.txt <- 10.0.0.41
+[NAT] h21: ext=192.168.121.200/24 internal=10.0.0.41 DNAT 10.0.0.41:4751 -> 192.168.121.101:4751
+[ONOS] remove h21 (00:00:00:00:00:15): 204
+[LEARN] h1(10.0.0.1) <-> h21(10.0.0.41)
+[i] h22 PID 46310, iface h22-eth0
+[HOP] 10.0.0.49
+[WROTE] /tmp/rrm_h22_ip.txt <- 10.0.0.49
+[NAT] h22: ext=192.168.122.200/24 internal=10.0.0.49 DNAT 10.0.0.49:4753 -> 192.168.122.101:4753
+[ONOS] remove h22 (00:00:00:00:00:16): 204
+[LEARN] h1(10.0.0.1) <-> h22(10.0.0.49)
+[i] h24 PID 46314, iface h24-eth0
+[HOP] 10.0.0.15
+[WROTE] /tmp/rrm_h24_ip.txt <- 10.0.0.15
+[NAT] h24: ext=192.168.124.200/24 internal=10.0.0.15 DNAT 10.0.0.15:4757 -> 192.168.124.101:4757
+[ONOS] remove h24 (00:00:00:00:00:18): 204
+[LEARN] h1(10.0.0.1) <-> h24(10.0.0.15)
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h37': 206, 'h34': 246, 'h38': 238, 'h36': 254, 'h39': 33, 'h29': 24, 'h6': 230, 'h19': 222, 'h20': 214, 'h21': 41, 'h22': 49, 'h24': 15}
+[DONE] hosts=12 rep=2 time=1338.435892s avg=111.536324s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 2927.235765s | status=Optimal
+[i] h37 PID 46340, iface h37-eth0
+[HOP] 10.0.0.44
+[WROTE] /tmp/rrm_h37_ip.txt <- 10.0.0.44
+[NAT] h37: ext=192.168.137.200/24 internal=10.0.0.44 DNAT 10.0.0.44:4783 -> 192.168.137.101:4783
+[ONOS] remove h37 (00:00:00:00:00:25): 204
+[LEARN] h1(10.0.0.1) <-> h37(10.0.0.44)
+[i] h34 PID 46334, iface h34-eth0
+[HOP] 10.0.0.6
+[WROTE] /tmp/rrm_h34_ip.txt <- 10.0.0.6
+[NAT] h34: ext=192.168.134.200/24 internal=10.0.0.6 DNAT 10.0.0.6:4777 -> 192.168.134.101:4777
+[ONOS] remove h34 (00:00:00:00:00:22): 204
+[LEARN] h1(10.0.0.1) <-> h34(10.0.0.6)
+[i] h38 PID 46342, iface h38-eth0
+[HOP] 10.0.0.19
+[WROTE] /tmp/rrm_h38_ip.txt <- 10.0.0.19
+[NAT] h38: ext=192.168.138.200/24 internal=10.0.0.19 DNAT 10.0.0.19:4785 -> 192.168.138.101:4785
+[ONOS] remove h38 (00:00:00:00:00:26): 204
+[LEARN] h1(10.0.0.1) <-> h38(10.0.0.19)
+[i] h36 PID 46338, iface h36-eth0
+[HOP] 10.0.0.28
+[WROTE] /tmp/rrm_h36_ip.txt <- 10.0.0.28
+[NAT] h36: ext=192.168.136.200/24 internal=10.0.0.28 DNAT 10.0.0.28:4781 -> 192.168.136.101:4781
+[ONOS] remove h36 (00:00:00:00:00:24): 204
+[LEARN] h1(10.0.0.1) <-> h36(10.0.0.28)
+[i] h39 PID 46344, iface h39-eth0
+[HOP] 10.0.0.235
+[WROTE] /tmp/rrm_h39_ip.txt <- 10.0.0.235
+[NAT] h39: ext=192.168.139.200/24 internal=10.0.0.235 DNAT 10.0.0.235:4787 -> 192.168.139.101:4787
+[ONOS] remove h39 (00:00:00:00:00:27): 204
+[LEARN] h1(10.0.0.1) <-> h39(10.0.0.235)
+[i] h29 PID 46324, iface h29-eth0
+[HOP] 10.0.0.243
+[WROTE] /tmp/rrm_h29_ip.txt <- 10.0.0.243
+[NAT] h29: ext=192.168.129.200/24 internal=10.0.0.243 DNAT 10.0.0.243:4767 -> 192.168.129.101:4767
+[ONOS] remove h29 (00:00:00:00:00:1d): 204
+[LEARN] h1(10.0.0.1) <-> h29(10.0.0.243)
+[i] h6 PID 46278, iface h6-eth0
+[HOP] 10.0.0.52
+[WROTE] /tmp/rrm_h6_ip.txt <- 10.0.0.52
+[NAT] h6: ext=192.168.106.200/24 internal=10.0.0.52 DNAT 10.0.0.52:4721 -> 192.168.106.101:4721
+[ONOS] remove h6 (00:00:00:00:00:06): 204
+[LEARN] h1(10.0.0.1) <-> h6(10.0.0.52)
+[i] h19 PID 46304, iface h19-eth0
+[HOP] 10.0.0.61
+[WROTE] /tmp/rrm_h19_ip.txt <- 10.0.0.61
+[NAT] h19: ext=192.168.119.200/24 internal=10.0.0.61 DNAT 10.0.0.61:4747 -> 192.168.119.101:4747
+[ONOS] remove h19 (00:00:00:00:00:13): 204
+[LEARN] h1(10.0.0.1) <-> h19(10.0.0.61)
+[i] h20 PID 46306, iface h20-eth0
+[HOP] 10.0.0.36
+[WROTE] /tmp/rrm_h20_ip.txt <- 10.0.0.36
+[NAT] h20: ext=192.168.120.200/24 internal=10.0.0.36 DNAT 10.0.0.36:4749 -> 192.168.120.101:4749
+[ONOS] remove h20 (00:00:00:00:00:14): 204
+[LEARN] h1(10.0.0.1) <-> h20(10.0.0.36)
+[i] h21 PID 46308, iface h21-eth0
+[HOP] 10.0.0.226
+[WROTE] /tmp/rrm_h21_ip.txt <- 10.0.0.226
+[NAT] h21: ext=192.168.121.200/24 internal=10.0.0.226 DNAT 10.0.0.226:4751 -> 192.168.121.101:4751
+[ONOS] remove h21 (00:00:00:00:00:15): 204
+[LEARN] h1(10.0.0.1) <-> h21(10.0.0.226)
+[i] h22 PID 46310, iface h22-eth0
+[HOP] 10.0.0.218
+[WROTE] /tmp/rrm_h22_ip.txt <- 10.0.0.218
+[NAT] h22: ext=192.168.122.200/24 internal=10.0.0.218 DNAT 10.0.0.218:4753 -> 192.168.122.101:4753
+[ONOS] remove h22 (00:00:00:00:00:16): 204
+[LEARN] h1(10.0.0.1) <-> h22(10.0.0.218)
+[i] h24 PID 46314, iface h24-eth0
+[HOP] 10.0.0.252
+[WROTE] /tmp/rrm_h24_ip.txt <- 10.0.0.252
+[NAT] h24: ext=192.168.124.200/24 internal=10.0.0.252 DNAT 10.0.0.252:4757 -> 192.168.124.101:4757
+[ONOS] remove h24 (00:00:00:00:00:18): 204

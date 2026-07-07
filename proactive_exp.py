@@ -7,7 +7,7 @@
 # from proactive_new_scoring import decide_ilp
 # from proactive_new_mitigation_route import run_route_ilp
 
-# SIZES = [10, 20, 30, 40]
+# SIZES = [5, 10,15, 20,25, 30, 35, 40]
 # REPEATS = 5
 # OUT_CSV = "route_reroute_timing.csv"
 
@@ -92,7 +92,9 @@ from datetime import datetime
 from proactive_new_scoring import decide_ilp
 from proactive_new_mitigation import run_ip_ilp
 
-SIZES = [10, 20, 30, 39]   # use 39 if h1 is excluded
+# SIZES = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39]
+SIZES = [ 5,10,15,20,25,30,35,38]
+
 REPEATS = 5
 OUT_CSV = "ip_shuffle_timing.csv"
 
