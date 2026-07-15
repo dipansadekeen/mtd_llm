@@ -1987,6 +1987,18 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
         #     + 0.10 * route_grid_priority
         # )
 
+        # p_route = (
+        #     0.45 * link_usage
+        #     + 0.30 * link_monitor
+        #     + 0.10 * route_grid_priority
+        #     + 0.20 * overlap_pressure
+        # )
+
+        # benefit = p_route * route_exposure * E_ROUTE
+        # # cost = O_ROUTE + 0.10 * link_usage
+        # cost = O_ROUTE
+        # hop_cost = LAMBDA_HOP * hop_penalty
+
         p_route = (
             0.45 * link_usage
             + 0.30 * link_monitor
@@ -1997,7 +2009,8 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
         benefit = p_route * route_exposure * E_ROUTE
         # cost = O_ROUTE + 0.10 * link_usage
         cost = O_ROUTE
-        hop_cost = LAMBDA_HOP * hop_penalty
+        # hop_cost = LAMBDA_HOP * hop_penalty
+        hop_cost = .0001
 
         score = benefit - cost - hop_cost
 

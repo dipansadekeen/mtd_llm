@@ -397,3 +397,817 @@ Error: [Errno 111] Connection refused
 [-] Could not find pid for h28
 [-] Could not find pid for h39
 [-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 104, 'h35': 71, 'h30': 241, 'h33': 245, 'h37': 189, 'h27': 211, 'h34': 115, 'h38': 196, 'h36': 136, 'h28': 139, 'h39': 220, 'h31': 11, 'h29': 248, 'h6': 173, 'h19': 144, 'h20': 51, 'h21': 204, 'h22': 32, 'h24': 26, 'h7': 123}
+[DONE] hosts=20 rep=5 time=21.510402s avg=1.075520s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.108059s | status=Optimal | seed=3250525789
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 167, 'h35': 185, 'h30': 38, 'h33': 86, 'h37': 8, 'h27': 14, 'h34': 200, 'h38': 45, 'h36': 18, 'h28': 227, 'h39': 66, 'h31': 207, 'h29': 125, 'h6': 102, 'h19': 82, 'h20': 215, 'h21': 58, 'h22': 244, 'h24': 249, 'h7': 252, 'h5': 177, 'h11': 219, 'h17': 2, 'h12': 238, 'h15': 162}
+[DONE] hosts=25 rep=1 time=21.743105s avg=0.869724s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.121475s | status=Optimal | seed=3113413294
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 77, 'h35': 74, 'h30': 222, 'h33': 183, 'h37': 197, 'h27': 205, 'h34': 164, 'h38': 36, 'h36': 172, 'h28': 175, 'h39': 19, 'h31': 157, 'h29': 4, 'h6': 234, 'h19': 121, 'h20': 16, 'h21': 231, 'h22': 146, 'h24': 31, 'h7': 115, 'h5': 64, 'h11': 129, 'h17': 56, 'h12': 81, 'h15': 93}
+[DONE] hosts=25 rep=2 time=22.001475s avg=0.880059s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.099062s | status=Optimal | seed=1844219028
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 153, 'h35': 226, 'h30': 33, 'h33': 125, 'h37': 100, 'h27': 47, 'h34': 55, 'h38': 87, 'h36': 25, 'h28': 22, 'h39': 201, 'h31': 62, 'h29': 170, 'h6': 221, 'h19': 76, 'h20': 94, 'h21': 2, 'h22': 111, 'h24': 241, 'h7': 18, 'h5': 191, 'h11': 208, 'h17': 195, 'h12': 136, 'h15': 249}
+[DONE] hosts=25 rep=3 time=21.673809s avg=0.866952s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.096592s | status=Optimal | seed=2905073092
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 119, 'h35': 5, 'h30': 230, 'h33': 88, 'h37': 156, 'h27': 210, 'h34': 138, 'h38': 216, 'h36': 219, 'h28': 133, 'h39': 34, 'h31': 243, 'h29': 50, 'h6': 91, 'h19': 149, 'h20': 126, 'h21': 102, 'h22': 202, 'h24': 63, 'h7': 213, 'h5': 78, 'h11': 183, 'h17': 27, 'h12': 53, 'h15': 130}
+[DONE] hosts=25 rep=4 time=21.661779s avg=0.866471s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.099237s | status=Optimal | seed=3794998637
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 253, 'h35': 121, 'h30': 10, 'h33': 37, 'h37': 200, 'h27': 60, 'h34': 31, 'h38': 4, 'h36': 135, 'h28': 185, 'h39': 237, 'h31': 124, 'h29': 177, 'h6': 141, 'h19': 65, 'h20': 205, 'h21': 223, 'h22': 247, 'h24': 15, 'h7': 74, 'h5': 189, 'h11': 108, 'h17': 174, 'h12': 118, 'h15': 18}
+[DONE] hosts=25 rep=5 time=21.665254s avg=0.866610s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.113323s | status=Optimal | seed=393794924
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 14, 'h35': 131, 'h30': 188, 'h33': 219, 'h37': 44, 'h27': 246, 'h34': 249, 'h38': 242, 'h36': 7, 'h28': 127, 'h39': 32, 'h31': 27, 'h29': 123, 'h6': 86, 'h19': 228, 'h20': 158, 'h21': 21, 'h22': 102, 'h24': 181, 'h7': 207, 'h5': 210, 'h11': 61, 'h17': 11, 'h12': 154, 'h15': 203, 'h18': 233, 'h4': 116, 'h8': 17, 'h13': 35, 'h16': 213}
+[DONE] hosts=30 rep=1 time=21.778953s avg=0.725965s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.129323s | status=Optimal | seed=2721996661
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 218, 'h35': 199, 'h30': 184, 'h33': 107, 'h37': 138, 'h27': 129, 'h34': 16, 'h38': 162, 'h36': 60, 'h28': 171, 'h39': 95, 'h31': 253, 'h29': 191, 'h6': 132, 'h19': 141, 'h20': 9, 'h21': 178, 'h22': 227, 'h24': 196, 'h7': 54, 'h5': 76, 'h11': 104, 'h17': 6, 'h12': 125, 'h15': 71, 'h18': 85, 'h4': 117, 'h8': 165, 'h13': 247, 'h16': 30}
+[DONE] hosts=30 rep=2 time=21.825096s avg=0.727503s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.130439s | status=Optimal | seed=967158680
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 19, 'h35': 215, 'h30': 43, 'h33': 82, 'h37': 26, 'h27': 13, 'h34': 211, 'h38': 239, 'h36': 101, 'h28': 39, 'h39': 151, 'h31': 75, 'h29': 111, 'h6': 96, 'h19': 244, 'h20': 168, 'h21': 202, 'h22': 89, 'h24': 65, 'h7': 235, 'h5': 248, 'h11': 251, 'h17': 120, 'h12': 160, 'h15': 174, 'h18': 47, 'h4': 8, 'h8': 2, 'h13': 33, 'h16': 155}
+[DONE] hosts=30 rep=3 time=21.963988s avg=0.732133s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.118470s | status=Optimal | seed=3505803323
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 103, 'h35': 17, 'h30': 156, 'h33': 146, 'h37': 224, 'h27': 108, 'h34': 172, 'h38': 128, 'h36': 187, 'h28': 253, 'h39': 6, 'h31': 150, 'h29': 210, 'h6': 167, 'h19': 24, 'h20': 81, 'h21': 220, 'h22': 121, 'h24': 27, 'h7': 63, 'h5': 131, 'h11': 31, 'h17': 37, 'h12': 11, 'h15': 178, 'h18': 199, 'h4': 243, 'h8': 76, 'h13': 214, 'h16': 42}
+[DONE] hosts=30 rep=4 time=21.809272s avg=0.726976s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.136060s | status=Optimal | seed=2325813288
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 79, 'h35': 173, 'h30': 161, 'h33': 227, 'h37': 142, 'h27': 169, 'h34': 95, 'h38': 166, 'h36': 67, 'h28': 186, 'h39': 129, 'h31': 197, 'h29': 43, 'h6': 237, 'h19': 248, 'h20': 13, 'h21': 70, 'h22': 5, 'h24': 200, 'h7': 211, 'h5': 254, 'h11': 245, 'h17': 232, 'h12': 206, 'h15': 58, 'h18': 16, 'h4': 19, 'h8': 242, 'h13': 181, 'h16': 90}
+[DONE] hosts=30 rep=5 time=22.045076s avg=0.734836s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.169929s | status=Optimal | seed=1802439767
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 238, 'h35': 154, 'h30': 61, 'h33': 77, 'h37': 249, 'h27': 12, 'h34': 215, 'h38': 102, 'h36': 212, 'h28': 141, 'h39': 243, 'h31': 94, 'h29': 117, 'h6': 180, 'h19': 172, 'h20': 147, 'h21': 201, 'h22': 246, 'h24': 23, 'h7': 97, 'h5': 32, 'h11': 47, 'h17': 221, 'h12': 71, 'h15': 187, 'h18': 198, 'h4': 89, 'h8': 136, 'h13': 123, 'h16': 209, 'h10': 128, 'h14': 231, 'h2': 44, 'h23': 252, 'h25': 184}
+[DONE] hosts=35 rep=1 time=22.144921s avg=0.632712s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.180383s | status=Optimal | seed=846772655
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 45, 'h35': 222, 'h30': 236, 'h33': 200, 'h37': 48, 'h27': 204, 'h34': 21, 'h38': 185, 'h36': 120, 'h28': 4, 'h39': 55, 'h31': 25, 'h29': 29, 'h6': 15, 'h19': 80, 'h20': 41, 'h21': 142, 'h22': 60, 'h24': 100, 'h7': 125, 'h5': 138, 'h11': 193, 'h17': 88, 'h12': 151, 'h15': 216, 'h18': 161, 'h4': 64, 'h8': 52, 'h13': 239, 'h16': 34, 'h10': 174, 'h14': 8, 'h2': 227, 'h23': 93, 'h25': 103}
+[DONE] hosts=35 rep=2 time=22.346494s avg=0.638471s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.225265s | status=Optimal | seed=2054309658
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 178, 'h35': 90, 'h30': 49, 'h33': 108, 'h37': 171, 'h27': 146, 'h34': 235, 'h38': 63, 'h36': 226, 'h28': 160, 'h39': 207, 'h31': 152, 'h29': 87, 'h6': 201, 'h19': 157, 'h20': 213, 'h21': 22, 'h22': 149, 'h24': 232, 'h7': 194, 'h5': 44, 'h11': 128, 'h17': 131, 'h12': 12, 'h15': 9, 'h18': 247, 'h4': 198, 'h8': 219, 'h13': 76, 'h16': 121, 'h10': 69, 'h14': 243, 'h2': 56, 'h23': 140, 'h25': 191}
+[DONE] hosts=35 rep=3 time=22.447026s avg=0.641344s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.244369s | status=Optimal | seed=3066159139
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 51, 'h35': 159, 'h30': 173, 'h33': 100, 'h37': 68, 'h27': 186, 'h34': 39, 'h38': 177, 'h36': 83, 'h28': 77, 'h39': 203, 'h31': 24, 'h29': 134, 'h6': 10, 'h19': 105, 'h20': 5, 'h21': 242, 'h22': 224, 'h24': 61, 'h7': 93, 'h5': 111, 'h11': 209, 'h17': 48, 'h12': 250, 'h15': 123, 'h18': 33, 'h4': 36, 'h8': 118, 'h13': 165, 'h16': 126, 'h10': 183, 'h14': 42, 'h2': 239, 'h23': 234, 'h25': 115}
+[DONE] hosts=35 rep=4 time=22.431916s avg=0.640912s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.218483s | status=Optimal | seed=2837538919
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 176, 'h35': 97, 'h30': 57, 'h33': 17, 'h37': 85, 'h27': 41, 'h34': 238, 'h38': 223, 'h36': 208, 'h28': 82, 'h39': 91, 'h31': 76, 'h29': 199, 'h6': 54, 'h19': 192, 'h20': 135, 'h21': 14, 'h22': 46, 'h24': 254, 'h7': 184, 'h5': 245, 'h11': 101, 'h17': 217, 'h12': 4, 'h15': 205, 'h18': 235, 'h4': 179, 'h8': 228, 'h13': 109, 'h16': 8, 'h10': 65, 'h14': 168, 'h2': 20, 'h23': 31, 'h25': 144}
+[DONE] hosts=35 rep=5 time=22.423834s avg=0.640681s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.253111s | status=Optimal | seed=17591895
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+[-] Could not find pid for h26
+[-] Could not find pid for h3
+[-] Could not find pid for h9
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 18, 'h35': 207, 'h30': 201, 'h33': 214, 'h37': 63, 'h27': 218, 'h34': 72, 'h38': 44, 'h36': 33, 'h28': 246, 'h39': 21, 'h31': 178, 'h29': 119, 'h6': 146, 'h19': 115, 'h20': 164, 'h21': 140, 'h22': 233, 'h24': 95, 'h7': 6, 'h5': 59, 'h11': 237, 'h17': 47, 'h12': 143, 'h15': 102, 'h18': 15, 'h4': 67, 'h8': 28, 'h13': 197, 'h16': 249, 'h10': 11, 'h14': 134, 'h2': 243, 'h23': 172, 'h25': 222, 'h26': 52, 'h3': 80, 'h9': 253}
+[DONE] hosts=38 rep=1 time=22.539514s avg=0.593145s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.223178s | status=Optimal | seed=792972670
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+[-] Could not find pid for h26
+[-] Could not find pid for h3
+[-] Could not find pid for h9
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 125, 'h35': 156, 'h30': 60, 'h33': 5, 'h37': 117, 'h27': 30, 'h34': 247, 'h38': 161, 'h36': 108, 'h28': 174, 'h39': 204, 'h31': 234, 'h29': 128, 'h6': 165, 'h19': 97, 'h20': 65, 'h21': 241, 'h22': 23, 'h24': 230, 'h7': 187, 'h5': 194, 'h11': 73, 'h17': 179, 'h12': 114, 'h15': 2, 'h18': 68, 'h4': 121, 'h8': 221, 'h13': 38, 'h16': 79, 'h10': 49, 'h14': 19, 'h2': 138, 'h23': 12, 'h25': 34, 'h26': 151, 'h3': 254, 'h9': 26}
+[DONE] hosts=38 rep=2 time=22.614770s avg=0.595126s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.214879s | status=Optimal | seed=3028132559
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+[-] Could not find pid for h26
+[-] Could not find pid for h3
+[-] Could not find pid for h9
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 251, 'h35': 176, 'h30': 111, 'h33': 248, 'h37': 236, 'h27': 142, 'h34': 88, 'h38': 69, 'h36': 127, 'h28': 51, 'h39': 39, 'h31': 77, 'h29': 48, 'h6': 42, 'h19': 183, 'h20': 170, 'h21': 74, 'h22': 229, 'h24': 54, 'h7': 62, 'h5': 29, 'h11': 155, 'h17': 25, 'h12': 239, 'h15': 93, 'h18': 215, 'h4': 22, 'h8': 10, 'h13': 200, 'h16': 222, 'h10': 134, 'h14': 244, 'h2': 233, 'h23': 158, 'h25': 197, 'h26': 16, 'h3': 118, 'h9': 226}
+[DONE] hosts=38 rep=3 time=22.071740s avg=0.580835s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.185027s | status=Optimal | seed=359135509
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+[-] Could not find pid for h26
+[-] Could not find pid for h3
+[-] Could not find pid for h9
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 2, 'h35': 43, 'h30': 75, 'h33': 144, 'h37': 132, 'h27': 56, 'h34': 219, 'h38': 121, 'h36': 241, 'h28': 167, 'h39': 224, 'h31': 231, 'h29': 228, 'h6': 194, 'h19': 253, 'h20': 28, 'h21': 180, 'h22': 108, 'h24': 139, 'h7': 186, 'h5': 160, 'h11': 6, 'h17': 216, 'h12': 38, 'h15': 237, 'h18': 23, 'h4': 135, 'h8': 128, 'h13': 147, 'h16': 67, 'h10': 86, 'h14': 79, 'h2': 103, 'h23': 17, 'h25': 14, 'h26': 177, 'h3': 151, 'h9': 9}
+[DONE] hosts=38 rep=4 time=21.990667s avg=0.578702s/host
+[LOAD] loading from ip_history.csv
+[IP ILP SOLVER TIME] 0.177008s | status=Optimal | seed=121980981
+[-] Could not find pid for h32
+[-] Could not find pid for h35
+[-] Could not find pid for h30
+[-] Could not find pid for h33
+[-] Could not find pid for h37
+[-] Could not find pid for h27
+[-] Could not find pid for h34
+[-] Could not find pid for h38
+[-] Could not find pid for h36
+[-] Could not find pid for h28
+[-] Could not find pid for h39
+[-] Could not find pid for h31
+[-] Could not find pid for h29
+[-] Could not find pid for h6
+[-] Could not find pid for h19
+[-] Could not find pid for h20
+[-] Could not find pid for h21
+[-] Could not find pid for h22
+[-] Could not find pid for h24
+[-] Could not find pid for h7
+[-] Could not find pid for h5
+[-] Could not find pid for h11
+[-] Could not find pid for h17
+[-] Could not find pid for h12
+[-] Could not find pid for h15
+[-] Could not find pid for h18
+[-] Could not find pid for h4
+[-] Could not find pid for h8
+[-] Could not find pid for h13
+[-] Could not find pid for h16
+[-] Could not find pid for h10
+[-] Could not find pid for h14
+[-] Could not find pid for h2
+[-] Could not find pid for h23
+[-] Could not find pid for h25
+[-] Could not find pid for h26
+[-] Could not find pid for h3
+[-] Could not find pid for h9
+sent last octates
+[LOAD] loading from ip_history.csv
+Connecting to 192.168.10.45:5000...
+Error: [Errno 111] Connection refused
+[IP ILP ASSIGNMENT] {'h32': 171, 'h35': 164, 'h30': 140, 'h33': 31, 'h37': 65, 'h27': 175, 'h34': 47, 'h38': 207, 'h36': 20, 'h28': 35, 'h39': 76, 'h31': 39, 'h29': 130, 'h6': 87, 'h19': 218, 'h20': 227, 'h21': 116, 'h22': 125, 'h24': 13, 'h7': 44, 'h5': 191, 'h11': 239, 'h17': 84, 'h12': 248, 'h15': 109, 'h18': 244, 'h4': 222, 'h8': 159, 'h13': 210, 'h16': 236, 'h10': 55, 'h14': 198, 'h2': 27, 'h23': 230, 'h25': 93, 'h26': 8, 'h3': 106, 'h9': 179}
+[DONE] hosts=38 rep=5 time=21.977205s avg=0.578347s/host

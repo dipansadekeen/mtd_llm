@@ -295,7 +295,7 @@ class CustomTopo(Topo):
 
         for d1, d2 in links:
             # self.addLink(d1, d2)
-            self.addLink(d1, d2, cls=TCLink, bw=10, delay='10ms') # 10 Mbps
+            self.addLink(d1, d2, cls=TCLink, bw=1, delay='10ms') # 1 Mbps
             # self.addLink(d1, d2, cls=TCLink, bw=10, delay='10ms', loss=2)
 
 
