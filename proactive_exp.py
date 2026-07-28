@@ -93,7 +93,7 @@ from proactive_new_scoring import decide_ilp
 from proactive_new_mitigation import run_ip_ilp
 
 # SIZES = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39]
-SIZES = [ 5,10,15,20,25,30,35,38]
+SIZES = [ 5,10,15,20,25,30,35,39]
 
 REPEATS = 5
 OUT_CSV = "ip_shuffle_timing.csv"

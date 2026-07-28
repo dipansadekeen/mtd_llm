@@ -536,6 +536,51 @@ def ping_metrics_cycle(net, stop_event):
         # print("\n[Cycle] Running metrics...")
         # capture_all_host_metrics(net, output_csv="h1_to_all_metrics.csv", ping_count=5, iperf_duration=5, udp_bandwidth="5M", port=5001, src_host_name="h1")
         time.sleep(30)
+
+
+
+def run_iperf_traffic(net):
+    """
+    Continuously transmit UDP traffic from h1 to h2...h10.
+
+    Each flow:
+        0.3 Mbps
+        Approximately 20 packets/second
+        1875-byte UDP payload
+    """
+    h1 = net.get("h1")
+    port = 5001
+    packet_size = 1875
+
+    # Remove previously running iperf processes.
+    for host in net.hosts:
+        host.cmd("pkill -f iperf >/dev/null 2>&1 || true")
+
+    # Start destination servers.
+    for i in range(2, 11):
+        dst = net.get(f"h{i}")
+        dst.cmd(
+            f"iperf -s -u -p {port} -i 1 "
+            f"> iperf_h{i}_server.log 2>&1 &"
+        )
+
+    time.sleep(2)
+
+    # Start continuous traffic from h1.
+    for i in range(2, 11):
+        dst = net.get(f"h{i}")
+
+        h1.cmd(
+            f"iperf -c {dst.IP()} -u "
+            f"-p {port} "
+            f"-b 300K "
+            f"-l {packet_size} "
+            f"-t 0 "
+            f"-i 1 "
+            f"> iperf_h1_to_h{i}.log 2>&1 &"
+        )
+
+        print(f"[IPERF] h1 -> h{i}: continuous 0.3 Mbps, ~20 pps")
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -668,20 +713,20 @@ def main():
     #     f.write("1\n")
 
 
-    # ///olld 
-    stop_event = threading.Event() #new
+    # ///olld --use this
+    # stop_event = threading.Event() #new
 
-    cycle_thread = threading.Thread( #new
-        target=ping_metrics_cycle, #new
-        args=(net, stop_event) #new
-    )
-    cycle_thread.daemon = True #new
-    cycle_thread.start() #new
+    # cycle_thread = threading.Thread( #new
+    #     target=ping_metrics_cycle, #new
+    #     args=(net, stop_event) #new
+    # )
+    # cycle_thread.daemon = True #new
+    # cycle_thread.start() #new
 
-    CLI(net) #new
+    # CLI(net) #new
 
-    stop_event.set() #new
-    cycle_thread.join() #new
+    # stop_event.set() #new
+    # cycle_thread.join() #new
     # ///olld 
 
     # //////// ||threading to collect data.
@@ -700,8 +745,8 @@ def main():
     #     stop_event.set()
     #     cycle_thread.join()
     # //////// ||threading to collect data.
-    
-    
+    net.pingAll()
+    run_iperf_traffic(net) #new to simulate opal-rt run.
     CLI(net) #old
 
     # stop.set()
