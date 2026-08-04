@@ -2281,12 +2281,12 @@ def decide_ilp(
     #     route_candidates,
     # )
 
-    # action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp( # solving time
-    #     ip_candidates,
-    #     route_candidates,
-    # ) # temp commented
+    action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp( # solving time
+        ip_candidates,
+        route_candidates,
+    ) # temp commented
 
-    action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp([], route_candidates) # just to analyse
+    # action, selected_hosts, selected_routes, decision_solver_time_s = solve_milp([], route_candidates) # just to analyse
 
     details = {
         "active_pairs": sorted(list(active_pairs)),
