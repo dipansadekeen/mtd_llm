@@ -1,0 +1,1 @@
+snapshot_id,host,rx_pps,tx_pps,rx_mbps,tx_mbps,traffic_risk,monitor_score,ip_exposure,grid_priority,flow_suspicion,short_flow_ratio,unique_sender_mac_count,sender_mac_diversity,unique_flow_count,short_lived_flow_count,ip_capable,observability_safe,latency_ok,frequency_ok,teacher_p_host,teacher_score,teacher_benefit,teacher_cost,selected_ip_label

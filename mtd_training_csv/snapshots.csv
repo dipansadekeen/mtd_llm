@@ -1,0 +1,30 @@
+snapshot_id,run_id,scenario_id,decision_index,decision_timestamp_utc,decision_solver_time_s,action_name,action_label,n_ip_candidates,n_active_route_candidates,n_selected_hosts,n_selected_routes,rule_control_alpha,rule_observability_required,rule_ip_operation_allowed,rule_route_operation_allowed,rule_defense_budget,rule_k_ip,rule_k_route,execution_attempted,execution_success,execution_time_s,execution_error
+1,run_20260805T214428Z,unspecified,0,2026-08-05T21:44:28.697393+00:00,0.021089490997837856,route_mutation,2,0,49,0,1,0.25,1,1,1,0.5,10,10,1,0,0.1271239939997031,"Traceback (most recent call last):
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_data_collection.py"", line 76, in execute_selected_defense
+    strategy.run_route_ilp(selected_pairs)
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_mitigation_route.py"", line 1995, in run_route_ilp
+    apply_route_assignment(route_manager, assignment)
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_mitigation_route.py"", line 1959, in apply_route_assignment
+    route_shuffle_endpoint_merge_log(
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/route_mutate_endpoint.py"", line 432, in route_shuffle_endpoint_merge_log
+    return mutator.run_once(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/route_mutate_endpoint.py"", line 400, in run_once
+    self.write_rules_me"
+2,run_20260805T214503Z,unspecified,0,2026-08-05T21:45:04.494435+00:00,0.006342512999253813,route_mutation,2,0,34,0,1,0.25,1,1,1,0.5,10,10,1,0,0.13222918099927483,"Traceback (most recent call last):
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_data_collection.py"", line 76, in execute_selected_defense
+    strategy.run_route_ilp(selected_pairs)
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_mitigation_route.py"", line 1995, in run_route_ilp
+    apply_route_assignment(route_manager, assignment)
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/proactive_new_mitigation_route.py"", line 1959, in apply_route_assignment
+    route_shuffle_endpoint_merge_log(
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/route_mutate_endpoint.py"", line 432, in route_shuffle_endpoint_merge_log
+    return mutator.run_once(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/vboxuser/Downloads/v2/data_collection_codes_/Final_Main_for_Paper/route_mutate_endpoint.py"", line 400, in run_once
+    self.write_rules_me"
+3,run_20260805T214631Z,unspecified,0,2026-08-05T21:46:31.643842+00:00,0.007802468000591034,route_mutation,2,0,88,0,2,0.25,1,1,1,0.5,10,10,1,1,0.15066902000035043,
+4,run_20260805T214631Z,unspecified,1,2026-08-05T21:47:01.647402+00:00,0.0064376720001746435,route_mutation,2,0,9,0,1,0.25,1,1,1,0.5,10,10,1,1,0.1213938490000146,
+5,run_20260805T214631Z,unspecified,2,2026-08-05T21:47:31.648457+00:00,0.007269492001796607,route_mutation,2,0,9,0,1,0.25,1,1,1,0.5,10,10,1,1,0.156906940999761,
+6,run_20260805T214631Z,unspecified,3,2026-08-05T21:48:01.649467+00:00,0.006421590001991717,route_mutation,2,0,9,0,1,0.25,1,1,1,0.5,10,10,1,1,0.12450486000307137,
+7,run_20260805T214631Z,unspecified,4,2026-08-05T21:48:31.651386+00:00,0.007622749002621276,route_mutation,2,0,9,0,1,0.25,1,1,1,0.5,10,10,1,1,0.14398741199693177,
