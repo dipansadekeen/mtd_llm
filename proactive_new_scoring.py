@@ -2001,7 +2001,8 @@ def build_route_candidates(link_csv, hop_csv, route_hist_csv, active_pairs, obs_
         # hop_cost = LAMBDA_HOP * hop_penalty
 
         p_route = (
-            0.45 * link_usage
+            # 0.45 * link_usage
+            0.40 * link_usage
             + 0.30 * link_monitor
             + 0.10 * route_grid_priority
             + 0.20 * overlap_pressure
