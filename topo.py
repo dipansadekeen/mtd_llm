@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# Fully working: 1 switch (s1), 6 hosts (h1..h6), ONOS control, h1 NAT→OPAL
 
 from mininet.net import Mininet
 from mininet.node import OVSSwitch, RemoteController
@@ -119,29 +118,6 @@ H_EXT_PORTS = {
     "h40": "4711"
 
 }
-
-# H_EXT_PORTS = {
-#     "h1": "4749",
-#     "h2": "4714",
-#     "h3": "4716",
-#     "h4": "4718",
-#     "h5": "4720",
-#     "h6": "4722",
-#     "h7": "4724",
-#     "h8": "4726",
-#     "h9": "4728",
-#     "h10": "4730",
-#     "h11": "4731",
-#     "h12": "4733",
-#     "h13": "4735",
-#     "h14": "4737",
-#     "h15": "4739",
-#     "h16": "4741",
-#     "h17": "4743",
-#     "h18": "4745",
-#     "h19": "4747",
-#     "h20": "4712",
-# }
 
 OPAL_IPS = {
     "h1": "192.168.140.101",
@@ -341,66 +317,7 @@ def setup_hx_nat_to_opal(h1,HOST_EXT_IP,HOST_IP1,OPAL_IP1,OPAL_PORT1):
 
     print(f"[h1-nat] DNAT {HOST_IP1}:{OPAL_PORT1} → OPAL:{OPAL_PORT1} and MASQUERADE configured")
 # /////////////////////////////////////////////////////////////////
-import os, time, subprocess
 
-def read_flag():
-    try:
-        return open(PING_FLAG_FILE).read().strip()
-    except:
-        return ""
-
-def anchor_to_all(net):
-    # flag=1: anchor -> all AND all -> anchor (by IP)
-    if PING_ANCHOR not in [h.name for h in net.hosts]:
-        print(f"[PING] anchor {PING_ANCHOR} not found")
-        return
-
-    def _mnexec(host, cmd):
-        pid = open(f"/var/run/mininet/{host}.pid").read().strip()
-        subprocess.call(
-            f"mnexec -a {pid} -- bash -lc {cmd!r}",
-            shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-
-    a_ip = net.get(PING_ANCHOR).IP()
-    for h in net.hosts:
-        if h.name == PING_ANCHOR:
-            continue
-        h_ip = h.IP()
-        _mnexec(PING_ANCHOR, f"ping -c 1 -W 1 {h_ip} || true")
-        _mnexec(h.name,      f"ping -c 1 -W 1 {a_ip} || true")
-
-    print(f"[PING] {PING_ANCHOR}<->all done")
-
-def pingall(net, stop):
-    """
-    Listener + dispatcher:
-      flag=1 -> anchor_to_all(net)
-      flag=2 -> pingAll-like sweep (all->all, 1 ping each pair)
-    """
-    def _mnexec(host, cmd):
-        pid = open(f"/var/run/mininet/{host}.pid").read().strip()
-        subprocess.call(
-            f"mnexec -a {pid} -- bash -lc {cmd!r}",
-            shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-
-    last = None
-    print(f"[PING] watcher started (1=anchor<->all, 2=pingAll)")
-    while not stop.is_set():
-        cur = read_flag()
-        if cur and cur != last:
-            if cur == "1":
-                anchor_to_all(net)
-            elif cur == "2":
-                hosts = [(h.name, h.IP()) for h in net.hosts]
-                for sname, _ in hosts:
-                    for dname, dip in hosts:
-                        if sname != dname:
-                            _mnexec(sname, f"ping -c 1 -W 1 {dip} || true")
-                print("[PING] pingAll sweep done")
-            last = cur
-        time.sleep(PING_PERIOD)
 
 def clear_arp_cache(net):
     """Clear ARP cache on all hosts."""
@@ -417,125 +334,6 @@ def clear_arp_cache(net):
     print("ARP cache cleared on all hosts.")
 
 
-def ping_x(net):
-    print("[PING] thread started")
-
-    while True:
-        clear_arp_cache(net)
-        time.sleep(1)
-
-        h40 = net.get('h40')
-        h41 = net.get('h41')
-
-        success = True
-
-        # h40 -> all
-        for h in net.hosts:
-            if h.name == 'h40':
-                continue
-            result = h40.cmd('ping -c 2 %s' % h.IP())
-            ok = ("2 received" in result)
-            print("[PING] h40 -> %s : %s" % (h.name, "OK" if ok else "FAIL"))
-            if not ok:
-                success = False
-
-        # h41 -> all
-        for h in net.hosts:
-            if h.name == 'h41':
-                continue
-            result = h41.cmd('ping -c 2 %s' % h.IP())
-            ok = ("2 received" in result)
-            print("[PING] h41 -> %s : %s" % (h.name, "OK" if ok else "FAIL"))
-            if not ok:
-                success = False
-
-        if success:
-            print("[PING] h40 & h41 success -> running net.pingAll()")
-            clear_arp_cache(net)
-            time.sleep(1)
-            net.pingAll()
-        else:
-            print("[PING] validation failed -> skipping pingAll")
-
-        time.sleep(3)
-
-# def ping_metrics_cycle(net, stop_event):
-#     """Cycle: ping → metrics → repeat (no ping logging)."""
-
-#     h1 = net.get('h1')
-
-#     while not stop_event.is_set():
-
-#         print("\n[Cycle] Pinging hosts...")
-
-#         # ---- PING PHASE (NO LOGGING) ----
-#         for i in range(2, 40):
-#             host = net.get('h%d' % i)
-
-#             result = h1.cmd('ping -c 2 %s' % host.IP())
-
-#             # Optional: still compute status (for debugging only)
-#             if "0% packet loss" in result:
-#                 status = "ok"
-#             else:
-#                 status = "loss"
-
-#             print("Ping h1 -> %s : %s" % (host.name, status))
-
-#             if stop_event.is_set():
-#                 return
-
-#         print("\n[Cycle] Running metrics...")
-
-#         # ---- METRICS PHASE (THIS IS WHAT YOU LOG) ----
-#         capture_all_host_metrics(
-#             net,
-#             output_csv="h1_to_all_metrics.csv",
-#             ping_count=5,
-#             iperf_duration=5,
-#             udp_bandwidth="5M",
-#             port=5001,
-#             src_host_name="h1"
-#         )
-
-#         # Optional pause between cycles
-#         time.sleep(1)
-
-# /////////// with logging./////////////////////
-
-def ping_metrics_cycle(net, stop_event):
-    h1 = net.get('h1')
-    rtt_csv = "proactive_rtt_log.csv"
-
-    if not os.path.exists(rtt_csv):
-        with open(rtt_csv, "w") as f:
-            csv.writer(f).writerow(["src_host", "dst_host", "avg_rtt_ms", "packet_loss_pct"])
-
-    while not stop_event.is_set():
-        print("\n[Cycle] Pinging hosts and logging RTT/loss...")
-
-        with open(rtt_csv, "a") as f:
-            writer = csv.writer(f)
-
-            for i in range(2, 40):
-                host = net.get('h%d' % i)
-                result = h1.cmd('ping -c 2 %s' % host.IP())
-
-                loss = re.search(r'(\d+(?:\.\d+)?)% packet loss', result)
-                rtt = re.search(r'=\s*([\d.]+)/([\d.]+)/([\d.]+)/([\d.]+)', result)
-
-                loss = loss.group(1) if loss else "N/A"
-                rtt = rtt.group(2) if rtt else "N/A"
-
-                writer.writerow(["h1", host.name, rtt, loss])
-                print("h1 -> %s | RTT avg: %s ms | loss: %s%%" % (host.name, rtt, loss))
-
-                if stop_event.is_set():
-                    return
-
-        # print("\n[Cycle] Running metrics...")
-        # capture_all_host_metrics(net, output_csv="h1_to_all_metrics.csv", ping_count=5, iperf_duration=5, udp_bandwidth="5M", port=5001, src_host_name="h1")
-        time.sleep(30)
 
 
 
@@ -581,6 +379,92 @@ def run_iperf_traffic(net):
         )
 
         print(f"[IPERF] h1 -> h{i}: continuous 0.3 Mbps, ~20 pps")
+
+# def ping_h1_to_all(net, stop):
+#     h1 = net.get("h1")
+
+#     while not stop.is_set():
+#         h1.cmd("ip neigh flush all")
+
+#         for h in net.hosts:
+#             if h.name == "h1":
+#                 continue
+
+#             intf = h.defaultIntf().name
+#             ip = h.cmd(
+#                 "ip -4 -o addr show dev %s | "
+#                 "awk '$4~/^10\\./{split($4,a,\"/\"); print a[1]; exit}'"
+#                 % intf
+#             ).strip()
+
+#             if not ip:
+#                 continue
+
+#             result = h1.cmd("ping -n -c 1 -W 1 %s" % ip)
+#             rtt = re.search(r"=\s*[\d.]+/([\d.]+)/", result)
+
+#             print(
+#                 "h1 -> %s (%s): %s"
+#                 % (
+#                     h.name,
+#                     ip,
+#                     "RTT " + rtt.group(1) + " ms" if rtt else "FAIL"
+#                 )
+#             )
+
+#         stop.wait(1)
+def ping_h1_to_all(net, stop):
+    h1 = net.get("h1")
+    log = "ping_results.csv"
+
+    if not os.path.exists(log):
+        with open(log, "w", newline="") as f:
+            csv.writer(f).writerow(
+                ["time", "target", "ip", "status", "rtt_ms"]
+            )
+
+    while not stop.is_set():
+        h1.cmd("ip neigh flush all")
+
+        for h in net.hosts:
+            if h.name == "h1":
+                continue
+
+            intf = h.defaultIntf().name
+            ip = h.cmd(
+                "ip -4 -o addr show dev %s | "
+                "awk '$4~/^10\\./{split($4,a,\"/\"); print a[1]; exit}'"
+                % intf
+            ).strip()
+
+            if not ip:
+                continue
+
+            result = h1.cmd("ping -n -c 3 -W 1 %s" % ip)
+            rtt = re.search(r"=\s*[\d.]+/([\d.]+)/", result)
+
+            status = "success" if rtt else "failed"
+            rtt_value = rtt.group(1) if rtt else "N/A"
+
+            print(
+                "h1 -> %s (%s): %s"
+                % (
+                    h.name,
+                    ip,
+                    "RTT " + rtt_value + " ms" if rtt else "FAIL"
+                )
+            )
+
+            with open(log, "a", newline="") as f: # replace "a" with "w" for last one
+                csv.writer(f).writerow([
+                    time.strftime("%Y-%m-%d %H:%M:%S"),
+                    h.name,
+                    ip,
+                    status,
+                    rtt_value
+                ])
+
+        stop.wait(1)
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -676,7 +560,8 @@ def main():
 
     OVSSwitch13 = partial(OVSSwitch, protocols='OpenFlow13')
     topo = CustomTopo()
-    net  = Mininet(topo=topo, controller=None, switch=OVSSwitch13, link=TCLink, autoStaticArp=True)
+    # net  = Mininet(topo=topo, controller=None, switch=OVSSwitch13, link=TCLink, autoStaticArp=True)
+    net  = Mininet(topo=topo, controller=None, switch=OVSSwitch13, link=TCLink, autoStaticArp=False)
 
     c0 = net.addController('c0', controller=RemoteController, ip=ONOS_IP, port=ONOS_PORT)
 
@@ -729,28 +614,29 @@ def main():
     # cycle_thread.join() #new
     # ///olld 
 
+    # //////// ||threading to collect data. --last try
+    stop = threading.Event()
+
+    thread = threading.Thread(
+        target=ping_h1_to_all,
+        args=(net, stop),
+        daemon=True
+    )
+    thread.start()
+
+    try:
+        CLI(net)
+    finally:
+        stop.set()
+        thread.join()
+        net.stop()
     # //////// ||threading to collect data.
-    # stop_event = threading.Event()
+    # net.pingAll()
+    # # run_iperf_traffic(net) #new to simulate opal-rt run.
+    # CLI(net) #old
 
-    # cycle_thread = threading.Thread(
-    #     target=ping_metrics_cycle,
-    #     args=(net, stop_event)
-    # )
-
-    # cycle_thread.start()
-
-    # try:
-    #     CLI(net)
-    # finally:
-    #     stop_event.set()
-    #     cycle_thread.join()
-    # //////// ||threading to collect data.
-    net.pingAll()
-    run_iperf_traffic(net) #new to simulate opal-rt run.
-    CLI(net) #old
-
-    # stop.set()
-    net.stop()
+    # # stop.set()
+    # net.stop()
 
 
 

@@ -50,7 +50,7 @@ import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
-import traceback
+
 
 ACTION_TO_ID = {
     "no_mtd": 0,
@@ -108,7 +108,6 @@ HOST_COLUMNS = (
     "unique_flow_count",
     "short_lived_flow_count",
     "ip_capable",
-    "observability_safe",
     "latency_ok",
     "frequency_ok",
     "teacher_p_host",
@@ -135,7 +134,6 @@ ROUTE_COLUMNS = (
     "overlap_pressure",
     "path",
     "route_capable",
-    "observability_safe",
     "latency_ok",
     "frequency_ok",
     "teacher_p_route",
@@ -235,7 +233,6 @@ class MTDDatasetCollector:
                     unique_flow_count REAL,
                     short_lived_flow_count REAL,
                     ip_capable INTEGER NOT NULL DEFAULT 1,
-                    observability_safe INTEGER NOT NULL DEFAULT 1,
                     latency_ok INTEGER NOT NULL DEFAULT 1,
                     frequency_ok INTEGER NOT NULL DEFAULT 1,
                     teacher_p_host REAL,
@@ -262,7 +259,6 @@ class MTDDatasetCollector:
                     overlap_pressure REAL,
                     path TEXT,
                     route_capable INTEGER NOT NULL DEFAULT 1,
-                    observability_safe INTEGER NOT NULL DEFAULT 1,
                     latency_ok INTEGER NOT NULL DEFAULT 1,
                     frequency_ok INTEGER NOT NULL DEFAULT 1,
                     teacher_p_route REAL,
@@ -458,7 +454,6 @@ class MTDDatasetCollector:
                         _value(candidate, "unique_flow_count"),
                         _value(candidate, "short_lived_flow_count"),
                         int(bool(_value(candidate, "ip_capable", True))),
-                        int(bool(_value(candidate, "observability_safe", True))),
                         int(bool(_value(candidate, "latency_ok", True))),
                         int(bool(_value(candidate, "frequency_ok", True))),
                         _value(candidate, "p_host"),
@@ -495,7 +490,6 @@ class MTDDatasetCollector:
                         _value(candidate, "overlap_pressure"),
                         str(_value(candidate, "path", "")),
                         int(bool(_value(candidate, "route_capable", True))),
-                        int(bool(_value(candidate, "observability_safe", True))),
                         int(bool(_value(candidate, "latency_ok", True))),
                         int(bool(_value(candidate, "frequency_ok", True))),
                         _value(candidate, "p_route"),
