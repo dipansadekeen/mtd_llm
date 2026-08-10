@@ -9,6 +9,8 @@ from mininet.log import setLogLevel
 from functools import partial
 import time, os, threading
 import csv, os, re, time
+import subprocess
+from topo_mininet_random_attack_block import *
 
 # new
 from proactive_files.metrics_collector import capture_all_host_metrics #new
@@ -337,49 +339,218 @@ def clear_arp_cache(net):
 
 
 
-def run_iperf_traffic(net):
+# def run_iperf_traffic(net):
+#     """
+#     Continuously transmit UDP traffic from h1 to h2...h10.
+
+#     Each flow:
+#         0.3 Mbps
+#         Approximately 20 packets/second
+#         1875-byte UDP payload
+#     """
+#     h1 = net.get("h1")
+#     port = 5001
+#     packet_size = 1875
+
+#     # Remove previously running iperf processes.
+#     for host in net.hosts:
+#         host.cmd("pkill -f iperf >/dev/null 2>&1 || true")
+
+#     # Start destination servers.
+#     for i in range(2, 11):
+#         dst = net.get(f"h{i}")
+#         dst.cmd(
+#             f"iperf -s -u -p {port} -i 1 "
+#             f"> iperf_h{i}_server.log 2>&1 &"
+#         )
+
+#     time.sleep(2)
+
+#     # Start continuous traffic from h1.
+#     for i in range(2, 11):
+#         dst = net.get(f"h{i}")
+
+#         h1.cmd(
+#             f"iperf -c {dst.IP()} -u "
+#             f"-p {port} "
+#             f"-b 300K "
+#             f"-l {packet_size} "
+#             f"-t 0 "
+#             f"-i 1 "
+#             f"> iperf_h1_to_h{i}.log 2>&1 &"
+#         )
+
+#         print(f"[IPERF] h1 -> h{i}: continuous 0.3 Mbps, ~20 pps")
+
+
+def run_dynamic_tcp_iperf(net, stop):
     """
-    Continuously transmit UDP traffic from h1 to h2...h10.
+    Maintain dynamic TCP traffic from h1 to h2...h40.
 
     Each flow:
-        0.3 Mbps
-        Approximately 20 packets/second
-        1875-byte UDP payload
+        approximately 20 writes per second
+        approximately 0.03 Mbps application payload
     """
+
+    def current_ip(host):
+        """Return the host's current 10.x.x.x address."""
+        intf = host.defaultIntf().name
+
+        process = host.popen(
+            ["ip", "-4", "-o", "addr", "show", "dev", intf],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL
+        )
+
+        output = process.communicate()[0].decode(errors="ignore")
+        match = re.search(
+            r"\binet\s+(10(?:\.\d+){3})/",
+            output
+        )
+
+        return match.group(1) if match else None
+
+    def start_process(host, command, log_name):
+        """Start a process and redirect its output to a log."""
+        log_file = open(log_name, "a")
+
+        process = host.popen(
+            command,
+            stdout=log_file,
+            stderr=subprocess.STDOUT
+        )
+
+        log_file.close()
+        return process
+
+    def stop_process(process):
+        """Terminate a process cleanly."""
+        if process is None:
+            return
+
+        if process.poll() is not None:
+            return
+
+        process.terminate()
+
+        try:
+            process.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+
     h1 = net.get("h1")
+    targets = [
+        net.get("h%d" % i)
+        for i in range(2, 41)
+    ]
+
     port = 5001
-    packet_size = 1875
+    packet_size = 188
 
-    # Remove previously running iperf processes.
-    for host in net.hosts:
-        host.cmd("pkill -f iperf >/dev/null 2>&1 || true")
+    servers = {}
+    clients = {}
+    previous_ips = {}
 
-    # Start destination servers.
-    for i in range(2, 11):
-        dst = net.get(f"h{i}")
-        dst.cmd(
-            f"iperf -s -u -p {port} -i 1 "
-            f"> iperf_h{i}_server.log 2>&1 &"
-        )
+    try:
+        # Start one TCP server on every destination.
+        for target in targets:
+            servers[target.name] = start_process(
+                target,
+                [
+                    "iperf3",
+                    "-s",
+                    "-p", str(port),
+                    "-i", "1",
+                    "-e"
+                ],
+                "iperf_%s_tcp_server.log"
+                % target.name
+            )
 
-    time.sleep(2)
+        time.sleep(2)
 
-    # Start continuous traffic from h1.
-    for i in range(2, 11):
-        dst = net.get(f"h{i}")
+        while not stop.is_set():
+            for target in targets:
+                target_name = target.name
+                new_ip = current_ip(target)
+                old_ip = previous_ips.get(target_name)
+                client = clients.get(target_name)
 
-        h1.cmd(
-            f"iperf -c {dst.IP()} -u "
-            f"-p {port} "
-            f"-b 300K "
-            f"-l {packet_size} "
-            f"-t 0 "
-            f"-i 1 "
-            f"> iperf_h1_to_h{i}.log 2>&1 &"
-        )
+                if not new_ip:
+                    continue
 
-        print(f"[IPERF] h1 -> h{i}: continuous 0.3 Mbps, ~20 pps")
+                ip_changed = (
+                    old_ip is not None
+                    and new_ip != old_ip
+                )
 
+                client_stopped = (
+                    client is None
+                    or client.poll() is not None
+                )
+
+                if not ip_changed and not client_stopped:
+                    continue
+
+                if ip_changed:
+                    print(
+                        "[TCP RECONNECT] %s: %s -> %s"
+                        % (target_name, old_ip, new_ip)
+                    )
+
+                # Stop the old TCP connection.
+                stop_process(client)
+
+                # Remove a stale ARP entry for the new IP.
+                arp_process = h1.popen(
+                    [
+                        "ip",
+                        "neigh",
+                        "flush",
+                        "to",
+                        new_ip
+                    ],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                arp_process.wait()
+
+                # Start a new TCP connection to the current IP.
+                clients[target_name] = start_process(
+                    h1,
+                    [
+                        "iperf",
+                        "-c", new_ip,
+                        "-p", str(port),
+                        "-b", "20pps",
+                        "-l", str(packet_size),
+                        "-N",
+                        "-t", "604800",
+                        "-i", "1",
+                        "-e"
+                    ],
+                    "iperf_h1_to_%s_tcp.log"
+                    % target_name
+                )
+
+                previous_ips[target_name] = new_ip
+
+                print(
+                    "[TCP IPERF] h1 -> %s (%s): started"
+                    % (target_name, new_ip)
+                )
+
+            stop.wait(1)
+
+    finally:
+        # Stop all TCP clients.
+        for process in clients.values():
+            stop_process(process)
+
+        # Stop all TCP servers.
+        for process in servers.values():
+            stop_process(process)
 # def ping_h1_to_all(net, stop):
 #     h1 = net.get("h1")
 
@@ -413,7 +584,8 @@ def run_iperf_traffic(net):
 #             )
 
 #         stop.wait(1)
-def ping_h1_to_all(net, stop):
+
+def ping_h1_to_all(net, stop): # last working
     h1 = net.get("h1")
     log = "ping_results.csv"
 
@@ -465,6 +637,150 @@ def ping_h1_to_all(net, stop):
                 ])
 
         stop.wait(1)
+
+
+import re
+import time
+import subprocess
+
+
+class DynamicIperfManager:
+
+    def __init__(self, net):
+        self.net = net
+        self.h1 = net.get("h1")
+        self.targets = [
+            net.get("h%d" % i)
+            for i in range(2, 41)
+        ]
+
+        self.servers = {}
+        self.clients = {}
+        self.previous_ips = {}
+        self.port = 5001
+
+    def _current_ip(self, host):
+        """Fetch the host's live 10.x.x.x address."""
+        process = host.popen(
+            [
+                "ip", "-4", "-o", "addr", "show",
+                "dev", host.defaultIntf().name
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL
+        )
+
+        output = process.communicate()[0].decode(
+            errors="ignore"
+        )
+
+        match = re.search(
+            r"\binet\s+(10(?:\.\d+){3})/",
+            output
+        )
+
+        return match.group(1) if match else None
+
+    def _stop_process(self, process):
+        if process is None or process.poll() is not None:
+            return
+
+        process.terminate()
+
+        try:
+            process.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+
+    def start(self):
+        """Start one iperf3 server on each destination."""
+        for target in self.targets:
+            self.servers[target.name] = target.popen(
+                [
+                    "iperf3",
+                    "-s",
+                    "-p", str(self.port)
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+        time.sleep(2)
+        self.synchronize()
+
+    def synchronize(self):
+        """Restart a client only if its IP changed or it stopped."""
+        for target in self.targets:
+            name = target.name
+            new_ip = self._current_ip(target)
+            old_ip = self.previous_ips.get(name)
+            client = self.clients.get(name)
+
+            if not new_ip:
+                continue
+
+            client_running = (
+                client is not None
+                and client.poll() is None
+            )
+
+            # Nothing changed
+            if new_ip == old_ip and client_running:
+                continue
+
+            if old_ip and new_ip != old_ip:
+                print(
+                    "[IPERF IP CHANGE] %s: %s -> %s"
+                    % (name, old_ip, new_ip)
+                )
+
+            self._stop_process(client)
+
+            # Remove stale ARP information
+            arp = self.h1.popen(
+                ["ip", "neigh", "flush", "to", new_ip],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+            arp.wait()
+
+            # Start UDP traffic:
+            # 188 bytes × 8 × 20 pps = 30,080 bps
+            self.clients[name] = self.h1.popen(
+                [
+                    "iperf3",
+                    "-c", new_ip,
+                    "-u",
+                    "-p", str(self.port),
+                    "-b", "30080",
+                    "-l", "188",
+                    "-t", "604800"
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+            self.previous_ips[name] = new_ip
+
+            print(
+                "[UDP IPERF] h1 -> %s (%s): active"
+                % (name, new_ip)
+            )
+
+    def watch(self, stop_event):
+        """Check for externally changed IPs every second."""
+        while not stop_event.is_set():
+            self.synchronize()
+            stop_event.wait(1)
+
+    def stop(self):
+        """Stop every client and server."""
+        for process in self.clients.values():
+            self._stop_process(process)
+
+        for process in self.servers.values():
+            self._stop_process(process)
 # //////////////////////////////////////////////////////////////////# //////////////////////////////////////////////////////////////////
 
 # def main():
@@ -594,43 +910,95 @@ def main():
         if h.name in H_EXT_IPS:
             setup_hx_nat_to_opal(h, H_EXT_IPS[h.name], h.IP(), OPAL_IPS[h.name], H_EXT_PORTS[h.name])
 
-    # with open("/tmp/shuffle_flag.txt", "w") as f:
-    #     f.write("1\n")
 
+    # # //////// ||threading to collect data. --last try #start --best
+    # stop = threading.Event()
 
-    # ///olld --use this
-    # stop_event = threading.Event() #new
-
-    # cycle_thread = threading.Thread( #new
-    #     target=ping_metrics_cycle, #new
-    #     args=(net, stop_event) #new
+    # thread = threading.Thread(
+    #     target=ping_h1_to_all,
+    #     args=(net, stop),
+    #     daemon=True
     # )
-    # cycle_thread.daemon = True #new
-    # cycle_thread.start() #new
+    # thread.start()
 
-    # CLI(net) #new
+    # try:
+    #     CLI(net)
+    # finally:
+    #     stop.set()
+    #     thread.join()
 
-    # stop_event.set() #new
-    # cycle_thread.join() #new
-    # ///olld 
+    #     net.stop()
+    # # //////// ||threading to collect data. #end
 
-    # //////// ||threading to collect data. --last try
+
+
+    # # .///////////////////// --iperf somehow works
+    # stop = threading.Event()
+
+    # # Start iperf
+    # iperf_manager = DynamicIperfManager(net)
+    # iperf_manager.start()
+
+    # # Ping thread
+    # ping_thread = threading.Thread(
+    #     target=ping_h1_to_all,
+    #     args=(net, stop),
+    #     daemon=True
+    # )
+
+    # # Iperf IP-watcher thread
+    # iperf_thread = threading.Thread(
+    #     target=iperf_manager.watch,
+    #     args=(stop,),
+    #     daemon=True
+    # )
+
+    # ping_thread.start()
+    # iperf_thread.start()
+
+    # try:
+    #     CLI(net)
+
+    # finally:
+    #     # Tell both threads to stop
+    #     stop.set()
+
+    #     # Wait for both threads
+    #     ping_thread.join()
+    #     iperf_thread.join()
+
+    #     # Stop iperf processes
+    #     iperf_manager.stop()
+
+    #     # Stop Mininet once
+    #     net.stop()
+    # # ./////////////////////
+
+    # ///////////////////////////////////// ---new attack sample tryout
+    net.pingAll()
     stop = threading.Event()
 
-    thread = threading.Thread(
-        target=ping_h1_to_all,
+    attack_thread = threading.Thread(
+        target=random_attack_loop,
         args=(net, stop),
+        kwargs={"seed": None},
+        name="random-attack-generator",
         daemon=True
     )
-    thread.start()
+    attack_thread.start()
 
     try:
         CLI(net)
     finally:
         stop.set()
-        thread.join()
+        attack_thread.join()
         net.stop()
-    # //////// ||threading to collect data.
+    # ///////////////////////////////////// ---new attack sample tryout
+
+
+
+
+    # just normal mininet run below:
     # net.pingAll()
     # # run_iperf_traffic(net) #new to simulate opal-rt run.
     # CLI(net) #old
