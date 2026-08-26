@@ -932,7 +932,9 @@ def main():
 
 
 
-    # # .///////////////////// --iperf somehow works
+    # .///////////////////// --iperf somehow works
+    # net.pingAll()
+
     # stop = threading.Event()
 
     # # Start iperf
@@ -972,7 +974,7 @@ def main():
 
     #     # Stop Mininet once
     #     net.stop()
-    # # ./////////////////////
+    # ./////////////////////
 
     # ///////////////////////////////////// ---new attack sample tryout
     net.pingAll()
