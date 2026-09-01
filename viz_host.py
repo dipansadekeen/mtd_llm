@@ -1,6 +1,4 @@
-Try AI directly in your favourite apps … Use Gemini to generate drafts and refine content, plus get Gemini Pro with access to Google's next-gen AI for US$19.99 US$4.99 for 3 months
-1
-100%
+
 """
 viz_host_fixed_pps_mbps.py
 ---------------------------

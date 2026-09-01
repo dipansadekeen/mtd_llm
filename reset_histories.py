@@ -124,6 +124,18 @@ def set_shuffle_flag() -> None:
     )
     print("[flag] wrote 1 to /tmp/shuffle_flag.txt")
 
+def delete_path_match_log() -> None:
+    """Delete /tmp/path_match_log.txt if it exists."""
+    log_path = Path("/tmp/path_match_log.txt")
+
+    try:
+        log_path.unlink()
+        print(f"[log] deleted {log_path}")
+    except FileNotFoundError:
+        print(f"[log] {log_path} does not exist; nothing to delete")
+    except PermissionError:
+        subprocess.run(["sudo", "rm", "-f", str(log_path)], check=True)
+        print(f"[log] deleted {log_path} using sudo")
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -142,7 +154,7 @@ def main() -> None:
 
     reset_route_history(route_path)
     reset_ip_history(ip_path)
-
+    delete_path_match_log()
     if not args.skip_flag:
         set_shuffle_flag()
 

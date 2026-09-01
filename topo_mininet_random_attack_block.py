@@ -520,6 +520,102 @@ def random_attack_loop(net, stop_event, seed=None):
     _print("[ATTACK GENERATOR] stopped cleanly")
 
 
+def proactive_attack_demo(net, stop_event, seed=None):
+    rng = random.Random(seed)
+    MUTATION_WAIT, BETWEEN_EVENTS, HOST_SECONDS, PROBE_SECONDS, LINK_SECONDS = 8, 5, 15, 3, 15
+    _print("\n" + "=" * 72); _print("PROACTIVE MTD DEMO: 3 HOST + 2 LINK EVENTS"); _print("=" * 72)
+
+    # HOSTS: UDP ~500 pps, SYN ~1000 pps, then random UDP/SYN.
+    victims = rng.sample([_host_name(i) for i in range(2, 41)], 3)
+    modes = ["udp", "syn", rng.choice(["udp", "syn"])]
+
+    for event, (victim, mode) in enumerate(zip(victims, modes), 1):
+        if stop_event.is_set(): return
+        candidates = [_host_name(i) for i in range(2, 41) if _host_name(i) != victim]
+        probers, victim_host = rng.sample(candidates, rng.randint(5, 10)), net.get(victim)
+        learned_ip = _live_ip(victim_host)
+        if not learned_ip: _print("[HOST {}] {} has no live IP; skipping".format(event, victim)); continue
+
+        # Recon: 5-10 hosts each send exactly 10 pings.
+        _print("\n" + "-" * 72); _print("[HOST EVENT {}/3] RECON | mode={}".format(event, mode.upper())); _print("-" * 72)
+        _print("[RECON] victim={} | learned IP={} | probers={} | ping -c 10".format(victim, learned_ip, len(probers)))
+        _print("[RECON] {}".format(",".join(probers)))
+        processes = [net.get(h).popen(["ping", "-n", "-c", "10", "-W", "1", learned_ip], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) for h in probers]
+        for p in processes:
+            try: p.wait(timeout=15)
+            except subprocess.TimeoutExpired: _stop_process(p)
+
+        # Attacker freezes its knowledge here.
+        _print("[RECON] complete | attacker stores {}".format(learned_ip))
+        _print("[MTD WINDOW] {}s for proactive mutation".format(MUTATION_WAIT))
+        if stop_event.wait(MUTATION_WAIT): return
+
+        current_ip = _live_ip(victim_host)
+        stale = bool(current_ip and current_ip != learned_ip)
+        _print("[KNOWLEDGE] learned={} | current={} | STALE={}".format(learned_ip, current_ip, "YES" if stale else "NO"))
+
+        # Attack uses OLD IP only. No address refresh.
+        source = rng.choice(candidates)
+
+        if mode == "udp":
+            # 2,000 us interval = ~500 packets/sec.
+            _print("[ATTACK] UDP | {} -> OLD {} | ~500 pps | {}s".format(source, learned_ip, HOST_SECONDS))
+            p = net.get(source).popen(["hping3", "--udp", "-p", "5001", "-d", "120", "-i", "u2000", learned_ip], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            # 1,000 us interval = ~1,000 SYN packets/sec.
+            _print("[ATTACK] SYN | {} -> OLD {} | ~1000 pps | {}s".format(source, learned_ip, HOST_SECONDS))
+            p = net.get(source).popen(["hping3", "-S", "-p", "80", "-d", "20", "-i", "u1000", learned_ip], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        stop_event.wait(HOST_SECONDS); _stop_process(p)
+
+        final_ip = _live_ip(victim_host)
+        invalidated = bool(final_ip and final_ip != learned_ip)
+        _print("[HOST RESULT {}] learned={} | actual={} | invalidated={} | attacked OLD IP={}".format(event, learned_ip, final_ip, "YES" if invalidated else "NO", learned_ip))
+        if stop_event.wait(BETWEEN_EVENTS): return
+
+
+    # LINKS: 2 separate link demonstrations.
+    for event, pattern in enumerate(rng.sample(sorted(LINK_PATTERNS), 2), 1):
+        if stop_event.is_set(): return
+
+        # Select endpoints ONCE. Recon and attack reuse exactly these endpoints.
+        base = [{"source": _host_name(rng.choice(list(src))), "destination": _host_name(rng.choice(list(dst))), "port": port} for src, dst, _, port in LINK_PATTERNS[pattern]]
+        names = sorted({n for f in base for n in (f["source"], f["destination"])})
+        learned = _current_addresses(net, names)
+        if any(ip is None for ip in learned.values()): _print("[LINK {}] invalid IP; skipping".format(event)); continue
+
+        # Recon traffic is deliberately light: 0.05 Mbps per flow.
+        probe_flows = [{"source": f["source"], "destination": f["destination"], "rate": ".05M", "port": f["port"]} for f in base]
+
+        # Attack = two 1 Mbps flows => 2 Mbps offered load toward the shared bottleneck.
+        attack_flows = [{"source": f["source"], "destination": f["destination"], "rate": "1M", "port": f["port"]} for f in base]
+
+        _print("\n" + "-" * 72); _print("[LINK EVENT {}/2] RECON | pattern={}".format(event, pattern)); _print("-" * 72)
+        for i, f in enumerate(base, 1): _print("[RECON] flow{} {} -> {} ({})".format(i, f["source"], f["destination"], learned[f["destination"]]))
+
+        # Short non-congesting reconnaissance.
+        _print("[RECON] light probe | 2 x 0.05 Mbps | {}s".format(PROBE_SECONDS))
+        processes = _launch_link_processes(net, probe_flows, learned, PROBE_SECONDS)
+        stop_event.wait(PROBE_SECONDS + 1); _stop_processes(processes)
+
+        _print("[RECON] endpoints/path knowledge stored")
+        _print("[MTD WINDOW] {}s for proactive route mutation".format(MUTATION_WAIT))
+        if stop_event.wait(MUTATION_WAIT): return
+
+        current = _current_addresses(net, names)
+        for f in base: _print("[KNOWLEDGE] {} -> {} | learned={} | current={}".format(f["source"], f["destination"], learned[f["destination"]], current.get(f["destination"])))
+
+        # Reuse the exact same endpoints, but now overload a 1-Mbps bottleneck.
+        _print("[ATTACK] SAME endpoints | 1 Mbps + 1 Mbps = 2 Mbps offered load | {}s".format(LINK_SECONDS))
+        _print("[ATTACK] expected bottleneck capacity=1 Mbps | offered load=200%")
+        processes = _launch_link_processes(net, attack_flows, learned, LINK_SECONDS)
+        stop_event.wait(LINK_SECONDS); _stop_processes(processes)
+
+        _print("[LINK RESULT {}] pattern={} | same endpoints=YES | refreshed knowledge=NO".format(event, pattern))
+        _print("[LINK RESULT {}] verify old target link stays uncongested after route mutation".format(event))
+        if stop_event.wait(BETWEEN_EVENTS): return
+
+    _print("\n" + "=" * 72); _print("DEMO COMPLETE: 3 HOST + 2 LINK EVENTS"); _print("=" * 72)
 # ---------------------------------------------------------------------------
 # INTEGRATION BLOCK
 # Replace only the final CLI(net), stop_event.set(), net.stop() section inside

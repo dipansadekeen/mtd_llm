@@ -977,16 +977,38 @@ def main():
     # ./////////////////////
 
     # ///////////////////////////////////// ---new attack sample tryout
+    # net.pingAll()
+    # stop = threading.Event()
+
+    # attack_thread = threading.Thread(
+    #     target=random_attack_loop,
+    #     args=(net, stop),
+    #     kwargs={"seed": None},
+    #     name="random-attack-generator",
+    #     daemon=True
+    # )
+    # attack_thread.start()
+
+    # try:
+    #     CLI(net)
+    # finally:
+    #     stop.set()
+    #     attack_thread.join()
+    #     net.stop()
+    # ///////////////////////////////////// ---new attack sample tryout
+
+    # /////////// proactive demo ///////////////////////////
     net.pingAll()
     stop = threading.Event()
 
     attack_thread = threading.Thread(
-        target=random_attack_loop,
+        target=proactive_attack_demo,
         args=(net, stop),
-        kwargs={"seed": None},
-        name="random-attack-generator",
-        daemon=True
+        kwargs={"seed": None},   # integer if you want repeatable demo
+        name="proactive-attack-demo",
+        daemon=True,
     )
+
     attack_thread.start()
 
     try:
@@ -995,18 +1017,19 @@ def main():
         stop.set()
         attack_thread.join()
         net.stop()
-    # ///////////////////////////////////// ---new attack sample tryout
+    # /////////// proactive demo ///////////////////////////
 
 
 
 
-    # just normal mininet run below:
+
+    # ####just normal mininet run below:
     # net.pingAll()
     # # run_iperf_traffic(net) #new to simulate opal-rt run.
     # CLI(net) #old
 
-    # # stop.set()
-    # net.stop()
+    # # # stop.set()
+    # # net.stop()
 
 
 
