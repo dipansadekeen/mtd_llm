@@ -1110,7 +1110,7 @@ class IPHopper:
         if send_octets:
             try:
                 print('sent last octates')
-                self.send_last_octets(send_target_ip, send_target_port)
+                # self.send_last_octets(send_target_ip, send_target_port)
             except Exception as e:
                 print(f"[!] send_last_octets failed: {e}")
 

@@ -2438,4 +2438,4 @@ if __name__ == "__main__":
             print("[NO MTD] No mitigation executed.")
         
         cycle_idx += 1
-        time.sleep(30)
+        time.sleep(5)

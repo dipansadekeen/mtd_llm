@@ -2542,4 +2542,4 @@ if __name__ == "__main__":
         # the CPU allowed. Keep cycles aligned to the intended interval.
         cycle_elapsed = time.monotonic() - cycle_started
         time.sleep(max(0.0, MTD_INTERVAL_SECONDS - cycle_elapsed))
-        time.sleep(10)
+        time.sleep(5)
