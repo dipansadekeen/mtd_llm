@@ -2332,8 +2332,8 @@ def decide_ilp(
     )
 
     print(
-        f"[DNN DECISION] action={action} | "
-        f"RM_conf={rm_conf:.4f} | time={decision_solver_time_s:.6f}s"
+        f"\n\n[DNN DECISION] action={action} | "
+        f"RM_conf={rm_conf:.4f} | time={decision_solver_time_s:.6f}s\n\n"
     )
 
     details = {
@@ -2541,5 +2541,5 @@ if __name__ == "__main__":
         # which would repeatedly query ONOS and execute decisions as fast as
         # the CPU allowed. Keep cycles aligned to the intended interval.
         cycle_elapsed = time.monotonic() - cycle_started
-        time.sleep(max(0.0, MTD_INTERVAL_SECONDS - cycle_elapsed))
+        # time.sleep(max(0.0, MTD_INTERVAL_SECONDS - cycle_elapsed))
         time.sleep(5)

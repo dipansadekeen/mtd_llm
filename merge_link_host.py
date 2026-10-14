@@ -10,7 +10,7 @@ ONOS_BASE = "http://localhost:8181/onos/v1"
 AUTH = ("onos", "rocks")
 
 INTERVAL = 30                 # seconds
-WINDOW_SECONDS = 10 * 60      # 50 minutes rolling
+WINDOW_SECONDS = 30 * 60      # 50 minutes rolling
 
 LINK_CSV = "link_stats_onos.csv"
 HOST_CSV = "host_stats_onos.csv"
