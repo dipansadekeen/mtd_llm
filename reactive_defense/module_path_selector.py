@@ -340,6 +340,11 @@ import time
 import os
 from requests.auth import HTTPBasicAuth
 
+from route_observation_extraction import load_route_observations_from_v3
+
+DEFAULT_DEMAND = 1.0                          # Mbps; also used by path_selector's fallback
+
+
 def path_selector(final_obj, hoplist_csv, max_blocked_use=2,
                   link_stats_csv="link_stats_onos.csv",
                   threshold_mbps=9.0, link_capacity_mbps=100.0,
